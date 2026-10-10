@@ -5,7 +5,7 @@
 window.TY_SITE = window.TY_SITE || {
   whatsapp: "923100007049",            // country code + number, no "+" or spaces
   whatsappText: "Hi Tajir Yahya Creative & Co., I'd like to discuss a project.",
-  email: "hello@tajiryahya.com",
+  email: "tajiryahyacreativeco@gmail.com",
   formEndpoint: ""                     // optional: Formspree / backend URL for the contact form
 };
 
@@ -42,9 +42,19 @@ window.TY_SITE = window.TY_SITE || {
       nav.querySelectorAll("a").forEach(function (a) { a.addEventListener("click", closeMenu); });
     }
 
+    var wa = document.querySelector(".tyh-wa"), lastY = window.scrollY;
+    var small = window.matchMedia("(max-width: 960px)");
     function onScroll() {
-      if (header) header.classList.toggle("scrolled", window.scrollY > 20);
-      if (backTop) backTop.classList.toggle("show", window.scrollY > 600);
+      var y = window.scrollY;
+      if (header) header.classList.toggle("scrolled", y > 20);
+      if (backTop) backTop.classList.toggle("show", y > 600);
+      // phones/tablets: tuck the WhatsApp button away while reading downwards
+      if (wa) {
+        if (small.matches && y > 240 && y > lastY + 6) wa.classList.add("tyh-hide");
+        else if (y < lastY - 6 || y <= 240) wa.classList.remove("tyh-hide");
+        if (y + window.innerHeight >= document.documentElement.scrollHeight - 40) wa.classList.remove("tyh-hide");
+        if (Math.abs(y - lastY) > 6) lastY = y;
+      }
     }
     window.addEventListener("scroll", onScroll, { passive: true });
     onScroll();

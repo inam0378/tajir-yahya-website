@@ -135,3 +135,17 @@ body{margin:0}
   .tyh-wa{height:46px}.tyh-wa svg{width:36px;height:36px;padding:8px}
   .tyh-back-top{width:40px;height:40px}
 }
+
+/* WhatsApp button on phones/tablets: smaller, hides while scrolling down
+   (so it never covers text or buttons), comes back on scroll up / stop */
+.tyh-wa,.tyh-back-top{will-change:transform}
+.tyh-wa.tyh-hide{transform:translateY(140%)!important;opacity:0;pointer-events:none}
+.tyh-wa{transition:transform .3s ease,opacity .3s ease,padding .3s}
+@media(max-width:960px){
+  .tyh-wa{height:50px;left:14px;bottom:14px}.tyh-wa svg{width:40px;height:40px;padding:9px}
+  .tyh-wa::before{animation-iteration-count:3}
+  .tyh-back-top{right:14px;bottom:14px;width:42px;height:42px}
+  .tyh-footer-bottom{padding-bottom:84px}
+}
+/* readability floor for footer small print */
+.tyh-footer-bottom{font-size:15px}

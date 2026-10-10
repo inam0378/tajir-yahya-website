@@ -1,0 +1,1 @@
+{"rewrites":[{"source":"/assets/work/:file","destination":"/assets/:file"}]}

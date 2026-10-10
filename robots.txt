@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tajir-yahya-website.vercel.app/sitemap.xml

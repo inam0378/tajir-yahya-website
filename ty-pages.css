@@ -410,3 +410,52 @@
 .typ-price.pop .amt .cur{color:var(--sky)}
 .typ-price .amt .amt-val{font-weight:800}
 @media(max-width:560px){.typ-switch button{padding:10px 14px;font-size:15px}}
+
+/* ---------- blog + recent work ---------- */
+.tyb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+.tyb-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .3s,box-shadow .3s,border-color .3s}
+.tyb-card:hover{transform:translateY(-6px);box-shadow:0 26px 60px rgba(19,36,93,.14);border-color:#c5d3fb}
+.tyb-card>a{display:flex;flex-direction:column;height:100%}
+.tyb-cover{aspect-ratio:16/10;overflow:hidden;background:var(--ice)}
+.tyb-cover img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .5s}
+.tyb-card:hover .tyb-cover img{transform:scale(1.05)}
+.tyb-cover-text{display:flex;align-items:center;justify-content:center;gap:14px;background:radial-gradient(circle at 20% 10%,rgba(91,184,247,.35),transparent 50%),linear-gradient(135deg,#13245d,#2f6bff);color:#fff;font-weight:800;font-size:clamp(20px,2vw,26px);letter-spacing:-.02em}
+.tyb-cover-text b{font-size:15.5px;padding:6px 10px;border-radius:30px;background:rgba(255,255,255,.18)}
+.tyb-card-body{padding:24px 24px 26px;display:flex;flex-direction:column;gap:10px;flex:1}
+.tyb-cat{font-size:13.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.tyb-card h3{font-size:20px;line-height:1.25;letter-spacing:-.02em;color:var(--ink)}
+.tyb-card p{color:var(--text);font-size:16.5px}
+.tyb-more{margin-top:auto;padding-top:6px;color:var(--navy);font-size:15.5px}
+.tyb-note{text-align:center;margin-top:44px;color:var(--text);font-size:16.5px}
+.tyb-note a{color:var(--blue);font-weight:700}
+.tyb-narrow{max-width:820px}
+.tyb-back{display:inline-block;color:#c9d6ff;font-size:15.5px;font-weight:700;margin-bottom:18px}
+.tyb-back:hover{color:#fff}
+.tyb-title{font-size:clamp(34px,4.6vw,58px);line-height:1.05}
+.tyb-meta{color:#a9b6dc;font-size:16.5px}
+.tyb-article-sec{padding-top:64px}
+.tyb-hero-img{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 70px rgba(19,36,93,.12);margin-bottom:44px;max-width:640px;margin-inline:auto}
+.tyb-hero-img img{width:100%;height:auto}
+.tyb-hero-img.tyb-cover-text{aspect-ratio:16/8;font-size:clamp(26px,4vw,40px)}
+.tyb-article{font-size:17.5px;line-height:1.8;color:var(--text)}
+.tyb-article>*+*{margin-top:18px}
+.tyb-article h2{font-size:clamp(24px,2.6vw,30px);letter-spacing:-.03em;line-height:1.2;color:var(--ink);margin-top:40px}
+.tyb-article strong{color:var(--ink)}
+.tyb-article ul{padding-left:22px;display:grid;gap:8px}
+.tyb-article li::marker{color:var(--blue)}
+.tyb-callout{margin-top:34px;padding:24px 26px;border-radius:18px;background:var(--ice);border-left:4px solid var(--blue);color:var(--ink)}
+.tyb-cta{margin-top:54px;padding:30px;border-radius:var(--radius);background:linear-gradient(135deg,#13245d,#1f3d9a);color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.tyb-cta strong{display:block;font-size:21px;letter-spacing:-.02em}
+.tyb-cta span{color:#c9d6ff;font-size:16.5px}
+.tyb-cta .typ-btns{margin-top:0}
+.tyb-related{background:var(--ice)}
+.tyb-home{padding:128px 0;background:var(--ice)}
+.tyw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-bottom:12px}
+.tyw-item{position:relative;display:block;border-radius:var(--radius);overflow:hidden;background:var(--ice);border:1px solid var(--line);aspect-ratio:1/1;box-shadow:0 18px 44px rgba(19,36,93,.08)}
+.tyw-item img{width:100%;height:100%;object-fit:cover;object-position:top}
+.tyw-cap{position:absolute;left:12px;right:12px;bottom:12px;padding:12px 16px;border-radius:14px;background:rgba(15,29,75,.88);color:#fff;display:grid;gap:2px;transform:translateY(8px);opacity:.96;transition:transform .3s}
+.tyw-item:hover .tyw-cap{transform:none}
+.tyw-cap small{font-size:13.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--sky)}
+.tyw-cap strong{font-size:16.8px}
+@media(max-width:1000px){.tyb-grid,.tyw-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:620px){.tyb-grid,.tyw-grid{grid-template-columns:1fr}.tyb-cta{padding:24px}.tyb-article{font-size:17px}.tyb-home{padding:90px 0}}

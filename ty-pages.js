@@ -15,8 +15,8 @@
       const io = new IntersectionObserver((es) => es.forEach((e) => {
         if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
       }), { threshold: .12 });
-      page.querySelectorAll(".typ-reveal").forEach((el) => io.observe(el));
-      setTimeout(() => page.querySelectorAll(".typ-reveal").forEach((el) => el.classList.add("in")), 2500);
+      document.querySelectorAll(".typ-page .typ-reveal").forEach((el) => io.observe(el));
+      setTimeout(() => document.querySelectorAll(".typ-page .typ-reveal").forEach((el) => el.classList.add("in")), 2500);
     }
 
     /* cursor-driven 3D scenes */

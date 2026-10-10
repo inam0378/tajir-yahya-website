@@ -154,3 +154,26 @@
     });
   });
 })();
+
+/* ===== pricing tabs + monthly/quarterly billing (web + graphic pages) ===== */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("[data-tabs]").forEach((tabs) => {
+    const root = tabs.closest("section");
+    tabs.querySelectorAll("[data-tab]").forEach((btn) => btn.addEventListener("click", () => {
+      tabs.querySelectorAll("[data-tab]").forEach((b) => { b.classList.toggle("on", b === btn); b.setAttribute("aria-selected", b === btn); });
+      root.querySelectorAll("[data-panel]").forEach((p) => { p.hidden = p.dataset.panel !== btn.dataset.tab; });
+      root.querySelectorAll(".typ-reveal").forEach((el) => el.classList.add("in"));
+    }));
+  });
+  document.querySelectorAll("[data-billing]").forEach((sw) => {
+    const panel = sw.parentElement;
+    sw.querySelectorAll("[data-bill]").forEach((btn) => btn.addEventListener("click", () => {
+      const q = btn.dataset.bill === "q";
+      sw.querySelectorAll("[data-bill]").forEach((b) => b.classList.toggle("on", b === btn));
+      panel.querySelectorAll(".amt-val[data-m]").forEach((v) => { v.textContent = q ? v.dataset.q : v.dataset.m; });
+      panel.querySelectorAll(".amt-unit").forEach((u) => { u.textContent = q ? "/ month, billed quarterly" : "/ month"; });
+      const note = panel.querySelector("[data-bill-note]");
+      if (note) note.textContent = q ? "Billed every 3 months in one payment — you save 10% compared with monthly billing." : "Billed every month. Cancel or change plan with 30 days' notice.";
+    }));
+  });
+});

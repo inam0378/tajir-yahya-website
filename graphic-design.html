@@ -11,9 +11,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="graphic-design.css">
+  <link rel="stylesheet" href="ty-pages.css">
   <link rel="stylesheet" href="assets/site.css">
   <script src="assets/site.js" defer></script>
   <script src="graphic-design.js" defer></script>
+  <script src="ty-pages.js" defer></script>
 </head>
 <body data-page="graphic">
   <!-- ============ SHARED TOP BAR + HEADER (same on every page) ============ -->
@@ -856,7 +858,74 @@
          CTA
     ====================================================== -->
 
-    <section class="tygd-cta">
+    
+<!-- ============ PRICING (PKR: one-time projects + monthly/quarterly retainers) ============ -->
+<div class="typ-page typ-embed">
+  <section class="typ-section" id="pricing">
+    <div class="typ-wrap">
+      <div class="typ-head center typ-reveal"><span class="typ-eyebrow">Design packages</span><h2 class="typ-h2">Pay once, or keep a <em>designer on call.</em></h2><p>Choose a one-time project for a logo or brand identity, or a monthly retainer for ongoing design. Retainers can be billed monthly or quarterly.</p></div>
+      <div class="typ-switch typ-reveal" data-tabs role="tablist">
+        <button type="button" class="on" data-tab="once" role="tab" aria-selected="true">One-time projects</button>
+        <button type="button" data-tab="retainer" role="tab" aria-selected="false">Monthly retainer</button>
+      </div>
+      <div data-panel="once"><div class="typ-grid c3" style="align-items:stretch">
+          <article class="typ-price typ-reveal">
+            
+            <small>STARTER</small><h3>Logo Design</h3><p>For new businesses that need a strong, clear mark.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" >15,000</b> <span class="amt-unit">one-time</span></div>
+            <ul><li>3 logo concepts</li><li>3 revision rounds</li><li>AI, SVG, PDF &amp; PNG files</li><li>Social profile &amp; favicon versions</li><li>Delivery in 5 working days</li></ul>
+            <a class="typ-btn typ-btn-line" href="contact.html?service=graphic&amp;plan=Logo%20Design">Choose Logo Design ↗</a>
+          </article>
+          <article class="typ-price pop typ-reveal">
+            <span class="tag">MOST POPULAR</span>
+            <small>RECOMMENDED</small><h3>Brand Identity</h3><p>A complete identity your whole team can use consistently.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" >40,000</b> <span class="amt-unit">one-time</span></div>
+            <ul><li>5 logo concepts, 5 revision rounds</li><li>Colour palette &amp; typography</li><li>Brand guidelines PDF</li><li>Business card &amp; letterhead</li><li>Social kit: profile, cover + 5 post templates</li><li>Delivery in 10–14 days</li></ul>
+            <a class="typ-btn typ-btn-primary" href="contact.html?service=graphic&amp;plan=Brand%20Identity">Choose Brand Identity ↗</a>
+          </article>
+          <article class="typ-price typ-reveal">
+            
+            <small>COMPLETE</small><h3>Brand Launch Kit</h3><p>Everything you need to launch a brand in print and online.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" >75,000</b> <span class="amt-unit">one-time</span></div>
+            <ul><li>Everything in Brand Identity</li><li>Company profile / brochure (up to 8 pages)</li><li>10 social media templates</li><li>Flyer, poster &amp; email signature</li><li>Brand presentation deck</li><li>Delivery in 3 weeks</li></ul>
+            <a class="typ-btn typ-btn-line" href="contact.html?service=graphic&amp;plan=Brand%20Launch%20Kit">Choose Brand Launch Kit ↗</a>
+          </article>
+      </div></div>
+      <div data-panel="retainer" hidden>
+        <div class="typ-switch small" data-billing>
+          <button type="button" class="on" data-bill="m">Monthly</button>
+          <button type="button" data-bill="q">Quarterly <em>save 10%</em></button>
+        </div>
+        <div class="typ-grid c3" style="align-items:stretch">
+          <article class="typ-price typ-reveal">
+            
+            <small>RETAINER</small><h3>Design Starter</h3><p>Steady design support for a small brand.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" data-m="25,000" data-q="22,500">25,000</b> <span class="amt-unit">/ month</span></div>
+            <ul><li>15 designs a month</li><li>Social posts, stories &amp; ad creatives</li><li>2 revisions per design</li><li>48-hour turnaround</li></ul>
+            <a class="typ-btn typ-btn-line" href="contact.html?service=graphic&amp;plan=Design%20Starter">Choose Design Starter ↗</a>
+          </article>
+          <article class="typ-price pop typ-reveal">
+            <span class="tag">MOST POPULAR</span>
+            <small>RECOMMENDED</small><h3>Design Growth</h3><p>A dedicated designer for an active brand.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" data-m="45,000" data-q="40,500">45,000</b> <span class="amt-unit">/ month</span></div>
+            <ul><li>30 designs a month</li><li>Social, ads &amp; print pieces</li><li>Dedicated designer</li><li>24-hour turnaround on priority items</li><li>Monthly brand consistency check</li></ul>
+            <a class="typ-btn typ-btn-primary" href="contact.html?service=graphic&amp;plan=Design%20Growth">Choose Design Growth ↗</a>
+          </article>
+          <article class="typ-price typ-reveal">
+            
+            <small>RETAINER</small><h3>Design Pro</h3><p>Full creative support for busy marketing teams.</p>
+            <div class="amt"><b class="cur">PKR</b> <b class="amt-val" data-m="80,000" data-q="72,000">80,000</b> <span class="amt-unit">/ month</span></div>
+            <ul><li>60 designs a month</li><li>Animated posts &amp; campaign creative</li><li>Priority campaign delivery</li><li>Brand management across channels</li><li>Monthly creative strategy call</li></ul>
+            <a class="typ-btn typ-btn-line" href="contact.html?service=graphic&amp;plan=Design%20Pro">Choose Design Pro ↗</a>
+          </article>
+        </div>
+        <p class="typ-note" data-bill-note>Billed every month. Cancel or change plan with 30 days' notice.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="tygd-cta">
 
         <div class="tygd-cta-glow"></div>
 

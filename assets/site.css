@@ -1,0 +1,137 @@
+/* =========================================================
+   Tajir Yahya Creative & Co. — SHARED HEADER / FOOTER / FLOATING UI
+   One file for every page. All classes use the "tyh-" prefix
+   so they never clash with page styles (Elementor-safe).
+   Palette: navy + blue + white
+   ========================================================= */
+:root{
+  --tyh-navy:#13245d;--tyh-navy-2:#0f1d4b;--tyh-navy-3:#1a2f73;
+  --tyh-blue:#2f6bff;--tyh-blue-2:#4d8bff;--tyh-sky:#5bb8f7;
+  --tyh-white:#ffffff;--tyh-soft:#c9d6ff;--tyh-muted:#8d9bc7;
+  --tyh-line:rgba(255,255,255,.10);--tyh-max:1240px;
+  --ty-max:1240px;--ty-gutter:40px;
+  --tyh-font:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+html{scroll-behavior:smooth;scroll-padding-top:100px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{margin:0}
+
+.tyh-topbar,.tyh-header,.tyh-footer,.tyh-float{font-family:var(--tyh-font);line-height:1.6;-webkit-font-smoothing:antialiased}
+.tyh-topbar *,.tyh-header *,.tyh-footer *,.tyh-float *{box-sizing:border-box;margin:0;padding:0}
+.tyh-topbar a,.tyh-header a,.tyh-footer a,.tyh-float a{text-decoration:none;color:inherit}
+.tyh-header button{font:inherit}
+
+
+/* Top bar */
+.tyh-topbar{background:var(--tyh-navy-2);color:var(--tyh-soft);font-size:12px;letter-spacing:.04em;border-bottom:1px solid var(--tyh-line)}
+.tyh-topbar-inner{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:8px 0}
+.tyh-topbar-inner>div{display:flex;gap:24px;align-items:center}
+.tyh-topbar a:hover{color:#fff}
+.tyh-topbar .tyh-tag{color:var(--tyh-sky);font-weight:700;letter-spacing:.14em;font-size:10px}
+
+/* Header */
+.tyh-header{position:sticky;top:0;z-index:1000;background:rgba(19,36,93,.9);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border-bottom:1px solid var(--tyh-line);transition:background .3s,box-shadow .3s;color:#fff}
+.tyh-header.scrolled{background:rgba(15,29,75,.97);box-shadow:0 12px 40px rgba(2,6,25,.45)}
+.tyh-nav-wrap{height:82px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.tyh-logo{display:flex;align-items:center;flex:none}
+.tyh-logo img{display:block;height:50px;width:auto;transition:transform .35s}
+.tyh-logo:hover img{transform:scale(1.03)}
+.tyh-nav{display:flex;align-items:center;gap:26px;font-size:13px;font-weight:600}
+.tyh-nav>a,.tyh-dropdown>button{border:0;background:none;cursor:pointer;color:var(--tyh-soft);padding:30px 0;position:relative;font-size:13px;font-weight:600;transition:color .2s}
+.tyh-nav>a:hover,.tyh-dropdown>button:hover,.tyh-nav>a.is-active,.tyh-dropdown.is-active>button{color:#fff}
+.tyh-nav>a:not(.tyh-cta)::after,.tyh-dropdown>button::after{content:"";position:absolute;left:0;right:0;bottom:24px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--tyh-sky),var(--tyh-blue));transform:scaleX(0);transform-origin:left;transition:transform .25s}
+.tyh-nav>a:not(.tyh-cta):hover::after,.tyh-nav>a.is-active::after,.tyh-dropdown.is-active>button::after{transform:scaleX(1)}
+.tyh-dropdown{position:relative}
+.tyh-dropdown>button span{font-size:15px;margin-left:4px;display:inline-block;transition:transform .2s}
+.tyh-dropdown:hover>button span{transform:rotate(180deg)}
+.tyh-menu{position:absolute;top:74px;left:-20px;min-width:200px;background:#142663;border:1px solid var(--tyh-line);color:#fff;padding:12px;border-radius:16px;box-shadow:0 30px 60px rgba(2,6,25,.5);opacity:0;visibility:hidden;transform:translateY(10px);transition:.22s}
+.tyh-dropdown:hover .tyh-menu,.tyh-dropdown:focus-within .tyh-menu{opacity:1;visibility:visible;transform:none}
+.tyh-menu a{display:flex;align-items:center;gap:10px;padding:10px 11px;border-radius:10px;color:var(--tyh-soft);font-size:12.5px;transition:background .2s,color .2s}
+.tyh-menu a i{font-style:normal;width:28px;height:28px;flex:none;display:grid;place-items:center;border-radius:8px;background:rgba(77,139,255,.14);color:var(--tyh-sky);font-size:13px}
+.tyh-menu a:hover,.tyh-menu a.is-active{background:rgba(77,139,255,.16);color:#fff}
+.tyh-menu.mega{display:grid;grid-template-columns:1fr 1fr;width:520px;left:-180px;gap:2px}
+.tyh-menu.mega .tyh-all{grid-column:1/-1;justify-content:space-between;background:linear-gradient(90deg,rgba(47,107,255,.25),rgba(91,184,247,.1));color:#fff;font-weight:700;margin-bottom:6px}
+.tyh-nav>a.tyh-cta{background:linear-gradient(135deg,var(--tyh-blue),var(--tyh-sky));color:#fff;padding:12px 20px;border-radius:100px;box-shadow:0 10px 26px rgba(47,107,255,.35);transition:transform .25s,box-shadow .25s}
+.tyh-nav>a.tyh-cta:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(47,107,255,.5)}
+.tyh-menu-toggle{display:none;border:1px solid var(--tyh-line);background:rgba(255,255,255,.04);width:44px;height:44px;border-radius:12px;font-size:20px;cursor:pointer;color:#fff}
+
+/* Footer */
+.tyh-footer{background:radial-gradient(circle at 85% 0%,rgba(47,107,255,.18),transparent 40%),var(--tyh-navy-2);color:#fff;border-top:1px solid var(--tyh-line);padding-top:70px;position:relative;overflow:hidden}
+.tyh-footer-cta{display:flex;justify-content:space-between;align-items:center;gap:30px;padding:30px 34px;margin-bottom:60px;border:1px solid var(--tyh-line);border-radius:22px;background:linear-gradient(135deg,rgba(47,107,255,.22),rgba(91,184,247,.06))}
+.tyh-footer-cta h3{font-size:clamp(22px,3vw,32px);letter-spacing:-.03em;line-height:1.15}
+.tyh-footer-cta h3 span{color:var(--tyh-sky)}
+.tyh-footer-cta p{color:var(--tyh-muted);font-size:13px;margin-top:6px}
+.tyh-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:100px;font-size:13px;font-weight:800;background:#fff;color:var(--tyh-navy);transition:transform .25s,box-shadow .25s;white-space:nowrap}
+.tyh-btn:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.tyh-footer-grid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1.1fr;gap:50px;padding-bottom:60px}
+.tyh-footer .tyh-logo img{height:56px}
+.tyh-footer-brand p{color:var(--tyh-muted);font-size:13px;max-width:300px;margin:20px 0}
+.tyh-footer h4{font-size:11px;text-transform:uppercase;letter-spacing:.15em;color:var(--tyh-sky);margin-bottom:18px}
+.tyh-footer-grid>div:not(.tyh-footer-brand) a,.tyh-footer-grid>div:not(.tyh-footer-brand) span{display:block;color:var(--tyh-soft);font-size:13px;margin:10px 0;transition:color .2s,transform .2s}
+.tyh-footer-grid>div:not(.tyh-footer-brand) a:hover{color:#fff;transform:translateX(4px)}
+.tyh-socials{display:flex;gap:10px}
+.tyh-socials a{width:38px;height:38px;border:1px solid var(--tyh-line);border-radius:50%;display:grid;place-items:center;color:#fff;transition:.25s}
+.tyh-socials a svg{width:16px;height:16px;fill:currentColor}
+.tyh-socials a:hover{background:var(--tyh-blue);border-color:var(--tyh-blue);transform:translateY(-3px)}
+.tyh-footer-bottom{border-top:1px solid var(--tyh-line);padding:20px 0;display:flex;justify-content:space-between;color:var(--tyh-muted);font-size:11px}
+.tyh-footer-bottom a{color:var(--tyh-soft)}.tyh-footer-bottom a:hover{color:#fff}
+
+/* Floating buttons: WhatsApp (left) + back to top (right) */
+.tyh-wa{position:fixed;left:22px;bottom:22px;z-index:999;display:flex;align-items:center;gap:10px;height:56px;padding:0 6px;border-radius:100px;background:linear-gradient(135deg,var(--tyh-blue),var(--tyh-sky));color:#fff;box-shadow:0 16px 36px rgba(47,107,255,.45);transition:transform .25s,padding .3s}
+.tyh-wa svg{width:44px;height:44px;padding:10px;fill:#fff;flex:none}
+.tyh-wa span{max-width:0;overflow:hidden;white-space:nowrap;font-size:13px;font-weight:700;transition:max-width .35s}
+.tyh-wa:hover span{max-width:160px;padding-right:12px}
+.tyh-wa:hover{transform:translateY(-3px)}
+.tyh-wa::before{content:"";position:absolute;inset:0;border-radius:inherit;border:2px solid var(--tyh-blue-2);animation:tyhPulse 2.2s ease-out infinite;pointer-events:none}
+@keyframes tyhPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.35);opacity:0}}
+.tyh-back-top{position:fixed;right:22px;bottom:22px;width:46px;height:46px;border:1px solid var(--tyh-line);border-radius:50%;background:var(--tyh-navy);color:#fff;font-size:20px;cursor:pointer;opacity:0;visibility:hidden;transition:.25s;z-index:999;box-shadow:0 12px 26px rgba(2,6,25,.35)}
+.tyh-back-top.show{opacity:1;visibility:visible}
+.tyh-back-top:hover{background:var(--tyh-blue)}
+
+@media(prefers-reduced-motion:reduce){.tyh-wa::before{animation:none}}
+@media(max-width:1080px){.tyh-nav{gap:18px}.tyh-menu.mega{left:-260px}}
+@media(max-width:960px){
+  .tyh-topbar-inner{justify-content:center;flex-wrap:wrap;gap:10px}.tyh-topbar .tyh-tag{display:none}
+  .tyh-nav-wrap{height:72px}.tyh-logo img{height:42px}
+  .tyh-menu-toggle{display:block}
+  .tyh-nav{position:absolute;top:72px;left:0;right:0;background:#13245d;display:none;padding:12px 20px 20px;flex-direction:column;align-items:stretch;gap:0;box-shadow:0 30px 40px rgba(2,6,25,.5);max-height:calc(100vh - 72px);overflow:auto;border-top:1px solid var(--tyh-line)}
+  .tyh-nav.open{display:flex}
+  .tyh-nav>a,.tyh-dropdown>button{padding:14px 0;color:#fff;text-align:left;width:100%;border-bottom:1px solid var(--tyh-line)}
+  .tyh-nav>a:not(.tyh-cta)::after,.tyh-dropdown>button::after{display:none}
+  .tyh-nav>a.is-active,.tyh-dropdown.is-active>button{color:var(--tyh-sky)}
+  .tyh-menu,.tyh-menu.mega{position:static;width:100%!important;display:none!important;background:rgba(255,255,255,.04);box-shadow:none;opacity:1;visibility:visible;transform:none;margin:6px 0 10px;grid-template-columns:1fr}
+  .tyh-dropdown.open .tyh-menu{display:grid!important}
+  .tyh-nav>a.tyh-cta{margin-top:14px;text-align:center;justify-content:center;border-bottom:0}
+  .tyh-footer-grid{grid-template-columns:1fr 1fr}
+  .tyh-footer-cta{flex-direction:column;align-items:flex-start}
+}
+@media(max-width:560px){
+  .tyh-topbar{display:none}
+  .tyh-footer-grid{grid-template-columns:1fr}
+  .tyh-footer-bottom{flex-direction:column;gap:8px}
+  .tyh-wa{left:14px;bottom:14px}.tyh-back-top{right:14px;bottom:14px}
+}
+
+/* =========================================================
+   ONE ALIGNMENT GRID FOR EVERY PAGE
+   All page containers share the same max width and side gutters,
+   so headings, cards and the header line up on every page.
+   ========================================================= */
+.tyh-container,.container,.typ-wrap,.ty-cpa-container,.typrint-container,.tydmbs-container,
+.tygd-container,.tyma-container,.tysmm-container,.tyvc-container{
+  width:min(calc(100% - var(--ty-gutter) * 2),var(--ty-max))!important;margin-inline:auto!important;max-width:none!important}
+@media(max-width:1199px){:root{--ty-gutter:32px}}
+@media(max-width:767px){:root{--ty-gutter:20px}}
+
+/* Courses "coming soon" badges in the menu */
+.tyh-soon{margin-left:auto;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 7px;border-radius:100px;background:rgba(91,184,247,.15);color:var(--tyh-sky);border:1px solid rgba(91,184,247,.3);white-space:nowrap}
+.tyh-menu.courses{width:340px;left:-60px}
+.tyh-menu.courses a{gap:10px}
+
+/* Phones in landscape: compact header, no top bar, scrollable menu */
+@media(max-height:520px) and (orientation:landscape){
+  .tyh-topbar{display:none}
+  .tyh-nav-wrap{height:60px}.tyh-logo img{height:36px}
+  .tyh-nav{top:60px;max-height:calc(100vh - 60px)}
+  .tyh-wa{height:46px}.tyh-wa svg{width:36px;height:36px;padding:8px}
+  .tyh-back-top{width:40px;height:40px}
+}

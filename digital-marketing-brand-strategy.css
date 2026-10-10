@@ -208,7 +208,7 @@
     align-items: center;
     gap: 10px;
 
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1;
     font-weight: 800;
     letter-spacing: .18em;
@@ -285,7 +285,7 @@
     border-radius: 999px;
     border: 1px solid var(--ty-border);
 
-    font-size: 13px;
+    font-size: 15px;
     font-weight: 800;
     letter-spacing: .01em;
 
@@ -331,7 +331,7 @@
     margin-top: 35px;
 
     color: #6e778c;
-    font-size: 9px;
+    font-size: 11.5px;
     font-weight: 800;
     letter-spacing: .16em;
 }
@@ -500,7 +500,7 @@
 }
 
 .cube-front small {
-    font-size: 9px;
+    font-size: 11.5px;
     letter-spacing: .3em;
     color: #4766ff;
 }
@@ -539,7 +539,7 @@
 }
 
 .tydmbs-cube-face span {
-    font-size: 9px;
+    font-size: 11.5px;
     letter-spacing: .18em;
     font-weight: 800;
 }
@@ -578,7 +578,7 @@
     margin-bottom: 5px;
 
     color: #6a7387;
-    font-size: 8px;
+    font-size: 10.5px;
     font-weight: 800;
     letter-spacing: .12em;
 }
@@ -586,7 +586,7 @@
 .tydmbs-float-card strong {
     display: block;
     color: #fff;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .card-strategy {
@@ -723,7 +723,7 @@
 
     color: var(--ty-muted-2);
 
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 800;
     letter-spacing: .13em;
     text-transform: uppercase;
@@ -764,7 +764,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.8;
 }
 
@@ -797,7 +797,7 @@
     top: 4px;
 
     color: #526df4;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
 }
 
@@ -817,7 +817,7 @@
     color: var(--ty-muted);
 
     line-height: 1.8;
-    font-size: 16px;
+    font-size: 17px;
 }
 
 .tydmbs-intro-card-wrap {
@@ -866,7 +866,7 @@
     display: block;
 
     color: #4766ff;
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
 }
 
@@ -927,7 +927,7 @@
 
     color: #656d81;
 
-    font-size: 9px;
+    font-size: 11.5px;
     font-weight: 800;
     letter-spacing: .15em;
 }
@@ -974,7 +974,7 @@
 .service-number {
     color: #6d768a;
 
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 800;
     letter-spacing: .14em;
 }
@@ -1016,7 +1016,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 14px;
+    font-size: 15.5px;
     line-height: 1.75;
 }
 
@@ -1033,7 +1033,7 @@
 .tydmbs-service-card li {
     color: #7d8598;
 
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .tydmbs-service-card li::before {
@@ -1084,7 +1084,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 1.85;
 }
 
@@ -1097,7 +1097,7 @@
 
     color: #4766ff;
 
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 800;
 
     transition: gap .3s ease;
@@ -1154,7 +1154,7 @@
 .tydmbs-system-core span {
     color: #526df4;
 
-    font-size: 9px;
+    font-size: 11.5px;
     font-weight: 800;
     letter-spacing: .2em;
 }
@@ -1229,7 +1229,7 @@
 
     color: #c7cbd3;
 
-    font-size: 8px;
+    font-size: 10.5px;
     font-weight: 800;
     letter-spacing: .1em;
 
@@ -1337,7 +1337,7 @@
 .tydmbs-process-card > span {
     color: #526df4;
 
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 800;
     letter-spacing: .15em;
 }
@@ -1356,7 +1356,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.8;
 }
 
@@ -1439,7 +1439,7 @@
 
     color: #c3c7d0;
 
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .tydmbs-check-list span {
@@ -1455,7 +1455,7 @@
 
     color: #4766ff;
 
-    font-size: 11px;
+    font-size: 13px;
 }
 
 
@@ -1545,7 +1545,7 @@
 
     color: #fff;
 
-    font-size: 8px;
+    font-size: 10.5px;
     font-weight: 900;
     letter-spacing: .12em;
 }
@@ -1559,7 +1559,7 @@
 .price-label {
     color: #526df4;
 
-    font-size: 9px;
+    font-size: 11.5px;
     font-weight: 900;
     letter-spacing: .17em;
 }
@@ -1594,7 +1594,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.7;
 }
 
@@ -1607,7 +1607,7 @@
 
     color: #60687a;
 
-    font-size: 8px;
+    font-size: 10.5px;
     font-weight: 800;
     letter-spacing: .15em;
 }
@@ -1625,7 +1625,7 @@
 
 .tydmbs-price > span {
     color: #5f6779;
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .tydmbs-price-divider {
@@ -1654,7 +1654,7 @@
 
     color: #939aaa;
 
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.5;
 }
 
@@ -1677,7 +1677,7 @@
 
     color: #fff;
 
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
 
     transition:
@@ -1708,7 +1708,7 @@
 
     color: #5f6779;
 
-    font-size: 11px;
+    font-size: 13px;
     text-align: center;
 }
 
@@ -1765,19 +1765,19 @@
 
     color: #6e778b;
 
-    font-size: 9px;
+    font-size: 11.5px;
     font-weight: 800;
     letter-spacing: .15em;
 }
 
 .matrix-row strong {
     color: #dcdee3;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .matrix-row span {
     color: #687185;
-    font-size: 12px;
+    font-size: 14px;
 }
 
 .matrix-row .positive {
@@ -1816,7 +1816,7 @@
 
     color: #e1e5f0;
 
-    font-size: 14px;
+    font-size: 15.5px;
     font-weight: 700;
 }
 
@@ -1844,7 +1844,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.8;
 }
 
@@ -1927,7 +1927,7 @@
 
     color: var(--ty-muted);
 
-    font-size: 15px;
+    font-size: 16.5px;
     line-height: 1.8;
 }
 
@@ -1944,7 +1944,7 @@
 
     color: #6e778c;
 
-    font-size: 11px;
+    font-size: 13px;
     letter-spacing: .05em;
 }
 
@@ -2268,12 +2268,12 @@
     }
 
     .tydmbs-hero-text {
-        font-size: 15px;
+        font-size: 16.5px;
     }
 
     .tydmbs-trust-line {
         gap: 9px;
-        font-size: 7px;
+        font-size: 9.5px;
     }
 
     .tydmbs-hero-visual {
@@ -2447,7 +2447,7 @@
     .tydmbs-faq-item summary {
         min-height: 70px;
         gap: 20px;
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .tydmbs-cta {

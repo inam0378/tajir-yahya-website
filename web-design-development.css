@@ -91,7 +91,7 @@ button {
 
     font-family: Manrope, sans-serif;
     font-weight: 800;
-    font-size: 12px;
+    font-size: 14px;
 
     position: relative;
 }
@@ -117,13 +117,13 @@ button {
 
 .brand-text strong {
     font-family: Manrope;
-    font-size: 15px;
+    font-size: 16.5px;
 }
 
 .brand-text small {
     margin-top: 5px;
 
-    font-size: 8px;
+    font-size: 10.5px;
     letter-spacing: .18em;
     text-transform: uppercase;
 
@@ -134,7 +134,7 @@ button {
     display: flex;
     gap: 28px;
 
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
 }
 
@@ -154,7 +154,7 @@ button {
 
     border-radius: 100px;
 
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 700;
 }
 
@@ -258,7 +258,7 @@ button {
 
     color: #676f83;
 
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 800;
 
     letter-spacing: .18em;
@@ -306,7 +306,7 @@ button {
 
     color: #5a6172;
 
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
 }
 
@@ -328,7 +328,7 @@ button {
 
     border-radius: 100px;
 
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
 
     transition: .3s;
@@ -384,7 +384,7 @@ button {
 .hero-trust span {
     color: #747d91;
 
-    font-size: 9px;
+    font-size: 11.5px;
 
     text-transform: uppercase;
     letter-spacing: .12em;
@@ -503,7 +503,7 @@ button {
 .preview-nav b {
     margin-right: auto;
 
-    font-size: 11px;
+    font-size: 13px;
 }
 
 .preview-nav span {
@@ -520,7 +520,7 @@ button {
 }
 
 .preview-hero small {
-    font-size: 6px;
+    font-size: 9px;
 
     letter-spacing: .16em;
 }
@@ -564,7 +564,7 @@ button {
 
     border-radius: 20px;
 
-    font-size: 6px;
+    font-size: 9px;
 }
 
 .preview-cards {
@@ -686,7 +686,7 @@ button {
 
     border-radius: 20px;
 
-    font-size: 7px;
+    font-size: 9.5px;
 }
 
 .mobile-circle {
@@ -791,7 +791,7 @@ button {
 
     border-radius: 8px;
 
-    font-size: 15px;
+    font-size: 16.5px;
 }
 
 .floating-card strong,
@@ -800,7 +800,7 @@ button {
 }
 
 .floating-card strong {
-    font-size: 10px;
+    font-size: 12.5px;
 }
 
 .floating-card small {
@@ -808,7 +808,7 @@ button {
 
     color: #7a8296;
 
-    font-size: 8px;
+    font-size: 10.5px;
 }
 
 .card-top {
@@ -961,7 +961,7 @@ button {
 .intro-text p {
     color: #5b6374;
 
-    font-size: 16px;
+    font-size: 17px;
 
     line-height: 1.8;
 }
@@ -975,7 +975,7 @@ button {
 
     padding-bottom: 5px;
 
-    font-size: 11px;
+    font-size: 13px;
     font-weight: 800;
 }
 
@@ -1010,7 +1010,7 @@ button {
 
     color: #8d94a5;
 
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .services-grid {
@@ -1074,7 +1074,7 @@ button {
 }
 
 .service-number {
-    font-size: 10px;
+    font-size: 12.5px;
 
     color: #7a8296;
 }
@@ -1108,7 +1108,7 @@ button {
 
     color: #a0a6b4;
 
-    font-size: 11px;
+    font-size: 13px;
 
     line-height: 1.7;
 }
@@ -1118,7 +1118,7 @@ button {
 }
 
 .service-card a {
-    font-size: 10px;
+    font-size: 12.5px;
     font-weight: 800;
 }
 
@@ -1256,7 +1256,7 @@ button {
 
     font-family: monospace;
 
-    font-size: 12px;
+    font-size: 14px;
 
     line-height: 1.8;
 }
@@ -1281,7 +1281,7 @@ button {
 
     color: #5e6678;
 
-    font-size: 14px;
+    font-size: 15.5px;
 
     line-height: 1.8;
 }
@@ -1314,7 +1314,7 @@ button {
 
     border-radius: 50%;
 
-    font-size: 9px;
+    font-size: 11.5px;
 }
 
 .feature-item strong,
@@ -1323,7 +1323,7 @@ button {
 }
 
 .feature-item strong {
-    font-size: 13px;
+    font-size: 15px;
 }
 
 .feature-item small {
@@ -1331,7 +1331,7 @@ button {
 
     color: #697185;
 
-    font-size: 10px;
+    font-size: 12.5px;
 }
 
 
@@ -1387,7 +1387,7 @@ button {
 .process-card > span {
     color: #8d94a5;
 
-    font-size: 10px;
+    font-size: 12.5px;
 }
 
 .process-icon {
@@ -1411,13 +1411,13 @@ button {
 
     font-family: Manrope;
 
-    font-size: 16px;
+    font-size: 17px;
 }
 
 .process-card p {
     color: #697185;
 
-    font-size: 11px;
+    font-size: 13px;
 
     line-height: 1.6;
 }
@@ -1465,7 +1465,7 @@ button {
 
     color: #8d94a5;
 
-    font-size: 13px;
+    font-size: 15px;
 
     line-height: 1.7;
 }
@@ -1489,7 +1489,7 @@ button {
 
     color: #b3b8c3;
 
-    font-size: 10px;
+    font-size: 12.5px;
 
     transition: .25s;
 }
@@ -1578,7 +1578,7 @@ button {
 }
 
 .project-ui small {
-    font-size: 8px;
+    font-size: 10.5px;
 
     letter-spacing: .2em;
 }
@@ -1616,7 +1616,7 @@ button {
 
     border-radius: 100px;
 
-    font-size: 9px;
+    font-size: 11.5px;
 }
 
 .dashboard {
@@ -1685,7 +1685,7 @@ button {
 }
 
 .store-card span {
-    font-size: 8px;
+    font-size: 10.5px;
 
     letter-spacing: .15em;
 }
@@ -1712,7 +1712,7 @@ button {
 
     border-radius: 100px;
 
-    font-size: 8px;
+    font-size: 10.5px;
 }
 
 .project-meta {
@@ -1726,7 +1726,7 @@ button {
 .project-meta small {
     color: #7a8296;
 
-    font-size: 8px;
+    font-size: 10.5px;
 
     letter-spacing: .12em;
 }
@@ -1804,7 +1804,7 @@ button {
 .cta p {
     color: #8d94a5;
 
-    font-size: 14px;
+    font-size: 15.5px;
 }
 
 .cta-buttons {
@@ -1854,7 +1854,7 @@ button {
 
     color: #7a8296;
 
-    font-size: 11px;
+    font-size: 13px;
 
     line-height: 1.7;
 
@@ -1878,7 +1878,7 @@ button {
 
     border-radius: 50%;
 
-    font-size: 9px;
+    font-size: 11.5px;
 }
 
 .footer-column h4 {
@@ -1886,7 +1886,7 @@ button {
 
     color: #697185;
 
-    font-size: 9px;
+    font-size: 11.5px;
 
     text-transform: uppercase;
 
@@ -1901,7 +1901,7 @@ button {
 
     color: #a0a6b4;
 
-    font-size: 10px;
+    font-size: 12.5px;
 }
 
 .footer-column a:hover {
@@ -1919,7 +1919,7 @@ button {
 
     color: #5a6172;
 
-    font-size: 9px;
+    font-size: 11.5px;
 }
 
 
@@ -2203,7 +2203,7 @@ button {
     }
 
     .code-window pre {
-        font-size: 9px;
+        font-size: 11.5px;
     }
 
     .footer-grid {

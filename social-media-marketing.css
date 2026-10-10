@@ -1,0 +1,4260 @@
+/* ============================================================
+        TAJIR YAHYA CREATIVE & CO.
+        SOCIAL MEDIA MANAGEMENT PAGE
+        IMPORTANT:
+        All CSS is scoped to .tysmm-page.
+        No global body/header/footer styles are used.
+     ============================================================ */
+     
+     
+     /* ============================================================
+        VARIABLES
+     ============================================================ */
+     
+     .tysmm-page {
+     
+         --tysmm-bg: #0e1b46;
+         --tysmm-bg-soft: #0f1d4b;
+         --tysmm-surface: #101f4f;
+         --tysmm-surface-2: #112154;
+     
+         --tysmm-white: #ffffff;
+         --tysmm-text: #edf0f6;
+         --tysmm-muted: #9ea4b3;
+     
+         --tysmm-line: rgba(255,255,255,.10);
+     
+         --tysmm-purple: #516cf5;
+         --tysmm-violet: #506cf7;
+         --tysmm-pink: #41b8f3;
+         --tysmm-blue: #3b86f6;
+     
+         --tysmm-gradient:
+             linear-gradient(
+                 135deg,
+                 #516cf5,
+                 #41b8f3,
+                 #3b86f6
+             );
+     
+         --tysmm-radius: 24px;
+     
+         position: relative;
+     
+         width: 100%;
+     
+         overflow: hidden;
+     
+         background:
+             radial-gradient(
+                 circle at 20% 10%,
+                 rgba(81,108,245,.10),
+                 transparent 30%
+             ),
+             radial-gradient(
+                 circle at 90% 40%,
+                 rgba(65,184,243,.07),
+                 transparent 30%
+             ),
+             var(--tysmm-bg);
+     
+         color: var(--tysmm-text);
+     
+         font-family:
+             Inter,
+             ui-sans-serif,
+             system-ui,
+             -apple-system,
+             BlinkMacSystemFont,
+             "Segoe UI",
+             sans-serif;
+     
+         line-height: 1.6;
+     
+         isolation: isolate;
+     }
+     
+     
+     /* ============================================================
+        RESET INSIDE PAGE
+     ============================================================ */
+     
+     .tysmm-page *,
+     .tysmm-page *::before,
+     .tysmm-page *::after {
+     
+         box-sizing: border-box;
+     
+     }
+     
+     
+     .tysmm-page a {
+     
+         color: inherit;
+     
+         text-decoration: none;
+     
+     }
+     
+     
+     .tysmm-page button,
+     .tysmm-page input,
+     .tysmm-page textarea,
+     .tysmm-page select {
+     
+         font: inherit;
+     
+     }
+     
+     
+     /* ============================================================
+        CONTAINER
+     ============================================================ */
+     
+     .tysmm-container {
+     
+         width: min(
+             1180px,
+             calc(100% - 48px)
+         );
+     
+         margin-inline: auto;
+     
+     }
+     
+     
+     /* ============================================================
+        LABEL
+     ============================================================ */
+     
+     .tysmm-label {
+     
+         display: inline-block;
+     
+         margin-bottom: 18px;
+     
+         color: rgba(255,255,255,.55);
+     
+         font-size: 11px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .18em;
+     
+     }
+     
+     
+     /* ============================================================
+        REVEAL
+     ============================================================ */
+     
+     .tysmm-reveal {
+     
+         opacity: 0;
+     
+         transform:
+             translateY(35px);
+     
+         transition:
+             opacity .8s ease,
+             transform .8s cubic-bezier(.2,.7,.2,1);
+     
+     }
+     
+     
+     .tysmm-reveal.tysmm-visible {
+     
+         opacity: 1;
+     
+         transform:
+             translateY(0);
+     
+     }
+     
+     
+     /* ============================================================
+        HERO
+     ============================================================ */
+     
+     .tysmm-hero {
+     
+         position: relative;
+     
+         min-height: 820px;
+     
+         display: flex;
+     
+         align-items: center;
+     
+         padding:
+             120px
+             0
+             90px;
+     
+         overflow: hidden;
+     
+         background:
+             radial-gradient(
+                 circle at 15% 30%,
+                 rgba(81,108,245,.12),
+                 transparent 35%
+             ),
+             radial-gradient(
+                 circle at 85% 45%,
+                 rgba(59,134,246,.10),
+                 transparent 32%
+             );
+     
+     }
+     
+     
+     .tysmm-grid-bg {
+     
+         position: absolute;
+     
+         inset: 0;
+     
+         opacity: .35;
+     
+         background-image:
+             linear-gradient(
+                 rgba(255,255,255,.045) 1px,
+                 transparent 1px
+             ),
+             linear-gradient(
+                 90deg,
+                 rgba(255,255,255,.045) 1px,
+                 transparent 1px
+             );
+     
+         background-size:
+             55px 55px;
+     
+         mask-image:
+             linear-gradient(
+                 to bottom,
+                 black,
+                 transparent
+             );
+     
+         pointer-events: none;
+     
+     }
+     
+     
+     .tysmm-glow {
+     
+         position: absolute;
+     
+         width: 420px;
+     
+         height: 420px;
+     
+         border-radius: 50%;
+     
+         filter: blur(80px);
+     
+         opacity: .15;
+     
+         pointer-events: none;
+     
+     }
+     
+     
+     .tysmm-glow-1 {
+     
+         top: -160px;
+     
+         left: -100px;
+     
+         background: var(--tysmm-purple);color:#ffffff}
+     
+     
+     .tysmm-glow-2 {
+     
+         right: -150px;
+     
+         bottom: -100px;
+     
+         background: var(--tysmm-pink);color:#ffffff}
+     
+     
+     .tysmm-hero .tysmm-container {
+     
+         position: relative;
+     
+         z-index: 3;
+     
+         display: grid;
+     
+         grid-template-columns:
+             minmax(0, .95fr)
+             minmax(420px, 1.05fr);
+     
+         align-items: center;
+     
+         gap: 50px;
+     
+     }
+     
+     
+     /* ============================================================
+        HERO CONTENT
+     ============================================================ */
+     
+     .tysmm-eyebrow {
+     
+         display: inline-flex;
+     
+         align-items: center;
+     
+         gap: 10px;
+     
+         margin-bottom: 25px;
+     
+         color: rgba(255,255,255,.62);
+     
+         font-size: 11px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .2em;
+     
+     }
+     
+     
+     .tysmm-eyebrow > span {
+     
+         width: 30px;
+     
+         height: 1px;
+     
+         background:
+             var(--tysmm-gradient);color:#ffffff}
+     
+     
+     .tysmm-hero h1 {
+     
+         max-width: 720px;
+     
+         margin: 0;
+     
+         color: var(--tysmm-white);
+     
+         font-size:
+             clamp(
+                 54px,
+                 7vw,
+                 92px
+             );
+     
+         line-height: .94;
+     
+         letter-spacing: -.065em;
+     
+         font-weight: 800;
+     
+     }
+     
+     
+     .tysmm-hero h1 em {
+     
+         display: block;
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+         font-style: normal;
+     
+     }
+     
+     
+     .tysmm-hero h1 span {
+     
+         display: block;
+     
+         color: rgba(255,255,255,.35);
+     
+     }
+     
+     
+     .tysmm-hero-content > p {
+     
+         max-width: 650px;
+     
+         margin:
+             30px
+             0;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 17px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     /* ============================================================
+        BUTTONS
+     ============================================================ */
+     
+     .tysmm-buttons {
+     
+         display: flex;
+     
+         flex-wrap: wrap;
+     
+         gap: 13px;
+     
+     }
+     
+     
+     .tysmm-btn {
+     
+         min-height: 54px;
+     
+         display: inline-flex;
+     
+         align-items: center;
+     
+         justify-content: center;
+     
+         gap: 15px;
+     
+         padding:
+             0
+             23px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.13);
+     
+         border-radius: 100px;
+     
+         font-size: 12px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .08em;
+     
+         transition:
+             transform .3s ease,
+             box-shadow .3s ease,
+             background .3s ease;
+     
+     }
+     
+     
+     .tysmm-btn:hover {
+     
+         transform:
+             translateY(-4px);
+     
+     }
+     
+     
+     .tysmm-btn span {
+     
+         font-size: 18px;
+     
+     }
+     
+     
+     .tysmm-btn-primary {
+     
+         color: #fff;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         border-color: transparent;
+     
+         box-shadow:
+             0 15px 45px
+             rgba(81,108,245,.25);
+     
+     }
+     
+     
+     .tysmm-btn-primary:hover {
+     
+         box-shadow:
+             0 20px 55px
+             rgba(81,108,245,.4);
+     
+     }
+     
+     
+     .tysmm-btn-outline {
+     
+         color: #fff;
+     
+         background:
+             rgba(255,255,255,.025);
+     
+         backdrop-filter: blur(12px);
+     
+     }
+     
+     
+     .tysmm-btn-outline:hover {
+     
+         background:
+             rgba(255,255,255,.08);
+     
+     }
+     
+     
+     /* ============================================================
+        TRUST
+     ============================================================ */
+     
+     .tysmm-trust {
+     
+         display: flex;
+     
+         align-items: center;
+     
+         gap: 15px;
+     
+         margin-top: 38px;
+     
+     }
+     
+     
+     .tysmm-mini-avatars {
+     
+         display: flex;
+     
+     }
+     
+     
+     .tysmm-mini-avatars span {
+     
+         width: 38px;
+     
+         height: 38px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         margin-left: -7px;
+     
+         border:
+             2px solid
+             var(--tysmm-bg);
+     
+         border-radius: 50%;
+     
+         color: white;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         font-size: 9px;
+     
+         font-weight: 900;
+     
+     }
+     
+     
+     .tysmm-mini-avatars span:first-child {
+     
+         margin-left: 0;
+     
+     }
+     
+     
+     .tysmm-trust strong {
+     
+         display: block;
+     
+         color: white;
+     
+         font-size: 12px;
+     
+     }
+     
+     
+     .tysmm-trust small {
+     
+         display: block;
+     
+         margin-top: 2px;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 10px;
+     
+     }
+     
+     
+     /* ============================================================
+        HERO 3D SCENE
+     ============================================================ */
+     
+     .tysmm-hero-visual {
+     
+         min-height: 620px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         perspective: 1200px;
+     
+     }
+     
+     
+     .tysmm-social-scene {
+     
+         position: relative;
+     
+         width: 520px;
+     
+         height: 600px;
+     
+         transform-style: preserve-3d;
+     
+         transform:
+             rotateX(
+                 calc(var(--mouse-y, 0) * 1deg)
+             )
+             rotateY(
+                 calc(var(--mouse-x, 0) * 1deg)
+             );
+     
+         transition:
+             transform .15s ease-out;
+     
+     }
+     
+     
+     /* ============================================================
+        ORBITS
+     ============================================================ */
+     
+     .tysmm-orbit {
+     
+         position: absolute;
+     
+         top: 50%;
+     
+         left: 50%;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.09);
+     
+         border-radius: 50%;
+     
+         transform:
+             translate(-50%,-50%)
+             rotateX(68deg)
+             rotateZ(20deg);
+     
+     }
+     
+     
+     .tysmm-orbit-1 {
+     
+         width: 480px;
+     
+         height: 480px;
+     
+         animation:
+             tysmmOrbit 16s linear infinite;
+     
+     }
+     
+     
+     .tysmm-orbit-2 {
+     
+         width: 380px;
+     
+         height: 380px;
+     
+         transform:
+             translate(-50%,-50%)
+             rotateX(65deg)
+             rotateZ(-25deg);
+     
+         animation:
+             tysmmOrbitReverse 13s linear infinite;
+     
+     }
+     
+     
+     @keyframes tysmmOrbit {
+     
+         to {
+             transform:
+                 translate(-50%,-50%)
+                 rotateX(68deg)
+                 rotateZ(380deg);
+         }
+     
+     }
+     
+     
+     @keyframes tysmmOrbitReverse {
+     
+         to {
+             transform:
+                 translate(-50%,-50%)
+                 rotateX(65deg)
+                 rotateZ(-385deg);
+         }
+     
+     }
+     
+     
+     /* ============================================================
+        PHONE
+     ============================================================ */
+     
+     .tysmm-phone {
+     
+         position: absolute;
+     
+         top: 50%;
+     
+         left: 50%;
+     
+         width: 275px;
+     
+         height: 545px;
+     
+         padding: 10px;
+     
+         border:
+             2px solid
+             rgba(255,255,255,.18);
+     
+         border-radius: 40px;
+     
+         background:
+             linear-gradient(
+                 145deg,
+                 #142661,
+                 #0f1c48
+             );
+     
+         box-shadow:
+             0 50px 100px
+             rgba(13,25,63,.7),
+             0 0 80px
+             rgba(81,108,245,.12);
+     
+         transform:
+             translate(-50%,-50%)
+             rotateY(-10deg)
+             rotateX(4deg)
+             translateZ(40px);
+     
+         transform-style: preserve-3d;
+     
+         animation:
+             tysmmPhoneFloat 5s ease-in-out infinite;
+     
+     }
+     
+     
+     @keyframes tysmmPhoneFloat {
+     
+         0%,
+         100% {
+             margin-top: 0;
+         }
+     
+         50% {
+             margin-top: -15px;
+         }
+     
+     }
+     
+     
+     .tysmm-phone-notch {
+     
+         position: absolute;
+     
+         top: 16px;
+     
+         left: 50%;
+     
+         z-index: 5;
+     
+         width: 90px;
+     
+         height: 20px;
+     
+         transform:
+             translateX(-50%);
+     
+         border-radius: 20px;
+     
+         background: #0e1b44;
+     
+     }
+     
+     
+     .tysmm-phone-screen {
+     
+         position: relative;
+     
+         height: 100%;
+     
+         padding:
+             28px
+             15px
+             15px;
+     
+         overflow: hidden;
+     
+         border-radius: 31px;
+     
+         background:
+             #f3f5fb;
+     
+         color: #101e4c;
+     
+     }
+     
+     
+     /* ============================================================
+        PHONE CONTENT
+     ============================================================ */
+     
+     .tysmm-instagram-top {
+     
+         display: flex;
+     
+         align-items: center;
+     
+         justify-content: space-between;
+     
+         margin:
+             4px
+             3px
+             20px;
+     
+         font-size: 11px;
+     
+     }
+     
+     
+     .tysmm-profile {
+     
+         display: flex;
+     
+         align-items: center;
+     
+         gap: 9px;
+     
+         margin-bottom: 14px;
+     
+     }
+     
+     
+     .tysmm-profile-image {
+     
+         width: 37px;
+     
+         height: 37px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border-radius: 50%;
+     
+         color: white;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         font-size: 9px;
+     
+         font-weight: 900;
+     
+     }
+     
+     
+     .tysmm-profile strong {
+     
+         display: block;
+     
+         font-size: 9px;
+     
+     }
+     
+     
+     .tysmm-profile small {
+     
+         display: block;
+     
+         color: #697185;
+     
+         font-size: 7px;
+     
+     }
+     
+     
+     .tysmm-social-post {
+     
+         overflow: hidden;
+     
+         border-radius: 14px;
+     
+         box-shadow:
+             0 10px 30px
+             rgba(13,25,63,.15);
+     
+     }
+     
+     
+     .tysmm-post-gradient {
+     
+         height: 270px;
+     
+         display: flex;
+     
+         flex-direction: column;
+     
+         justify-content: flex-end;
+     
+         padding: 22px;
+     
+         color: white;
+     
+         background:
+             radial-gradient(
+                 circle at 20% 20%,
+                 #16adf9,
+                 transparent 28%
+             ),
+             radial-gradient(
+                 circle at 80% 40%,
+                 #516cf5,
+                 transparent 32%
+             ),
+             linear-gradient(
+                 145deg,
+                 #112052,
+                 #152968
+             );
+     
+     }
+     
+     
+     .tysmm-post-gradient > span {
+     
+         font-size: 8px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-post-gradient strong {
+     
+         margin:
+             5px
+             0
+             15px;
+     
+         font-size: 28px;
+     
+         line-height: .9;
+     
+         letter-spacing: -.05em;
+     
+     }
+     
+     
+     .tysmm-post-gradient small {
+     
+         font-size: 7px;
+     
+         opacity: .65;
+     
+     }
+     
+     
+     .tysmm-post-actions {
+     
+         display: flex;
+     
+         justify-content: space-between;
+     
+         padding:
+             12px
+             3px;
+     
+         font-size: 17px;
+     
+     }
+     
+     
+     .tysmm-engagement strong {
+     
+         display: block;
+     
+         font-size: 9px;
+     
+     }
+     
+     
+     .tysmm-engagement span {
+     
+         color: #697185;
+     
+         font-size: 7px;
+     
+     }
+     
+     
+     /* ============================================================
+        FLOATING CARDS
+     ============================================================ */
+     
+     .tysmm-floating-card {
+     
+         position: absolute;
+     
+         z-index: 4;
+     
+         padding: 15px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.12);
+     
+         border-radius: 17px;
+     
+         background:
+             rgba(16,30,78,.82);
+     
+         backdrop-filter:
+             blur(18px);
+     
+         box-shadow:
+             0 25px 50px
+             rgba(13,25,63,.4);
+     
+         transform-style: preserve-3d;
+     
+     }
+     
+     
+     .tysmm-floating-card small {
+     
+         display: block;
+     
+         color: rgba(255,255,255,.45);
+     
+         font-size: 7px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .13em;
+     
+     }
+     
+     
+     .tysmm-floating-card strong {
+     
+         display: block;
+     
+         margin-top: 3px;
+     
+         color: white;
+     
+         font-size: 18px;
+     
+     }
+     
+     
+     .tysmm-engagement-card {
+     
+         top: 145px;
+     
+         left: -5px;
+     
+         display: flex;
+     
+         align-items: center;
+     
+         gap: 10px;
+     
+         animation:
+             tysmmFloat 4.5s ease-in-out infinite;
+     
+     }
+     
+     
+     .tysmm-floating-icon {
+     
+         width: 35px;
+     
+         height: 35px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border-radius: 11px;
+     
+         color: white;
+     
+         background:
+             var(--tysmm-gradient);
+     
+     }
+     
+     
+     .tysmm-growth-card {
+     
+         right: -5px;
+     
+         bottom: 125px;
+     
+         width: 145px;
+     
+         animation:
+             tysmmFloat 5.5s ease-in-out infinite
+             .5s;
+     
+     }
+     
+     
+     @keyframes tysmmFloat {
+     
+         0%,
+         100% {
+             transform:
+                 translateY(0)
+                 translateZ(30px);
+         }
+     
+         50% {
+             transform:
+                 translateY(-12px)
+                 translateZ(45px);
+         }
+     
+     }
+     
+     
+     /* ============================================================
+        CHART
+     ============================================================ */
+     
+     .tysmm-chart {
+     
+         height: 45px;
+     
+         display: flex;
+     
+         align-items: end;
+     
+         gap: 5px;
+     
+         margin-top: 10px;
+     
+     }
+     
+     
+     .tysmm-chart i {
+     
+         flex: 1;
+     
+         display: block;
+     
+         border-radius: 4px;
+     
+         background:
+             var(--tysmm-gradient);color:#ffffff}
+     
+     
+     .tysmm-chart i:nth-child(1) {
+         height: 25%;
+     }
+     
+     .tysmm-chart i:nth-child(2) {
+         height: 42%;
+     }
+     
+     .tysmm-chart i:nth-child(3) {
+         height: 35%;
+     }
+     
+     .tysmm-chart i:nth-child(4) {
+         height: 55%;
+     }
+     
+     .tysmm-chart i:nth-child(5) {
+         height: 65%;
+     }
+     
+     .tysmm-chart i:nth-child(6) {
+         height: 80%;
+     }
+     
+     .tysmm-chart i:nth-child(7) {
+         height: 100%;
+     }
+     
+     
+     /* ============================================================
+        PLATFORM ICONS
+     ============================================================ */
+     
+     .tysmm-floating-icon-card {
+     
+         position: absolute;
+     
+         z-index: 3;
+     
+         width: 55px;
+     
+         height: 55px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.12);
+     
+         border-radius: 17px;
+     
+         color: white;
+     
+         background:
+             rgba(255,255,255,.05);
+     
+         backdrop-filter: blur(15px);
+     
+         font-size: 24px;
+     
+         font-weight: 800;
+     
+         box-shadow:
+             0 20px 40px
+             rgba(13,25,63,.3);
+     
+     }
+     
+     
+     .tysmm-instagram {
+     
+         top: 60px;
+     
+         right: 80px;
+     
+         animation:
+             tysmmFloat 4s ease-in-out infinite
+             .2s;
+     
+     }
+     
+     
+     .tysmm-tiktok {
+     
+         bottom: 50px;
+     
+         left: 85px;
+     
+         animation:
+             tysmmFloat 5s ease-in-out infinite
+             .8s;
+     
+     }
+     
+     
+     .tysmm-facebook {
+     
+         top: 320px;
+     
+         right: -5px;
+     
+         animation:
+             tysmmFloat 4.8s ease-in-out infinite
+             1s;
+     
+     }
+     
+     
+     /* ============================================================
+        CUBE
+     ============================================================ */
+     
+     .tysmm-3d-cube {
+     
+         position: absolute;
+     
+         right: 60px;
+     
+         bottom: 80px;
+     
+         width: 40px;
+     
+         height: 40px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.25);
+     
+         transform:
+             rotate(35deg)
+             rotateX(45deg);
+     
+         box-shadow:
+             0 0 30px
+             rgba(81,108,245,.25);
+     
+         animation:
+             tysmmCube 7s linear infinite;
+     
+     }
+     
+     
+     @keyframes tysmmCube {
+     
+         to {
+             transform:
+                 rotate(395deg)
+                 rotateX(405deg);
+         }
+     
+     }
+     
+     
+     /* ============================================================
+        SCROLL
+     ============================================================ */
+     
+     .tysmm-scroll {
+     
+         position: absolute;
+     
+         bottom: 28px;
+     
+         left: 50%;
+     
+         transform:
+             translateX(-50%);
+     
+         display: flex;
+     
+         align-items: center;
+     
+         gap: 10px;
+     
+         color: rgba(255,255,255,.35);
+     
+         font-size: 9px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-scroll span {
+     
+         width: 28px;
+     
+         height: 1px;
+     
+         background:
+             rgba(255,255,255,.3);
+     
+     }
+     
+     
+     /* ============================================================
+        INTRO
+     ============================================================ */
+     
+     .tysmm-intro {
+     
+         padding:
+             150px
+             0;
+     
+         border-top:
+             1px solid
+             var(--tysmm-line);
+     
+     }
+     
+     
+     .tysmm-intro-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             .35fr
+             1fr;
+     
+         gap: 70px;
+     
+     }
+     
+     
+     .tysmm-section-number {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 10px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-section-number span {
+     
+         display: block;
+     
+         margin-bottom: 10px;
+     
+         color: white;
+     
+         font-size: 45px;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-intro-content {
+     
+         max-width: 800px;
+     
+     }
+     
+     
+     .tysmm-intro-content h2 {
+     
+         margin: 0 0 30px;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 42px,
+                 6vw,
+                 78px
+             );
+     
+         line-height: .98;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-intro-content h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-intro-content p {
+     
+         max-width: 700px;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 18px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     .tysmm-divider {
+     
+         width: 100%;
+     
+         height: 1px;
+     
+         margin:
+             40px
+             0;
+     
+         background:
+             var(--tysmm-line);
+     
+     }
+     
+     
+     .tysmm-muted-text {
+     
+         color:
+             rgba(255,255,255,.42) !important;
+     
+         font-size: 14px !important;
+     
+     }
+     
+     
+     /* ============================================================
+        SERVICES
+     ============================================================ */
+     
+     .tysmm-services {
+     
+         padding:
+             130px
+             0;
+     
+         background:
+             linear-gradient(
+                 180deg,
+                 transparent,
+                 rgba(255,255,255,.018),
+                 transparent
+             );
+     
+     }
+     
+     
+     .tysmm-heading {
+     
+         display: flex;
+     
+         align-items: end;
+     
+         justify-content: space-between;
+     
+         gap: 50px;
+     
+         margin-bottom: 65px;
+     
+     }
+     
+     
+     .tysmm-heading h2 {
+     
+         max-width: 700px;
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 42px,
+                 5.5vw,
+                 72px
+             );
+     
+         line-height: 1;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-heading h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-heading > p {
+     
+         max-width: 340px;
+     
+         margin: 0;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 14px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     /* ============================================================
+        SERVICES GRID
+     ============================================================ */
+     
+     .tysmm-services-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             repeat(3, 1fr);
+     
+         gap: 18px;
+     
+     }
+     
+     
+     .tysmm-service-card {
+     
+         position: relative;
+     
+         min-height: 390px;
+     
+         padding: 30px;
+     
+         overflow: hidden;
+     
+         border:
+             1px solid
+             var(--tysmm-line);
+     
+         border-radius:
+             var(--tysmm-radius);
+     
+         background:
+             linear-gradient(
+                 145deg,
+                 rgba(255,255,255,.055),
+                 rgba(255,255,255,.018)
+             );
+     
+         transform-style: preserve-3d;
+     
+         transition:
+             border-color .35s ease,
+             background .35s ease,
+             box-shadow .35s ease;
+     
+     }
+     
+     
+     .tysmm-service-card::before {
+     
+         content: "";
+     
+         position: absolute;
+     
+         width: 180px;
+     
+         height: 180px;
+     
+         right: -80px;
+     
+         top: -80px;
+     
+         border-radius: 50%;
+     
+         background:
+             var(--tysmm-purple);
+     
+         opacity: .06;
+     
+         filter: blur(30px);color:#ffffff}
+     
+     
+     .tysmm-service-card:hover {
+     
+         border-color:
+             rgba(80,108,247,.4);
+     
+         background:
+             linear-gradient(
+                 145deg,
+                 rgba(81,108,245,.09),
+                 rgba(255,255,255,.025)
+             );
+     
+         box-shadow:
+             0 30px 70px
+             rgba(13,25,63,.28);
+     
+     }
+     
+     
+     .tysmm-service-top {
+     
+         display: flex;
+     
+         justify-content: space-between;
+     
+         margin-bottom: 50px;
+     
+     }
+     
+     
+     .tysmm-service-top span {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 10px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .1em;
+     
+     }
+     
+     
+     .tysmm-service-top b {
+     
+         color:
+             rgba(255,255,255,.75);
+     
+         font-size: 22px;
+     
+     }
+     
+     
+     .tysmm-service-card h3 {
+     
+         margin: 0 0 15px;
+     
+         color: white;
+     
+         font-size: 24px;
+     
+         line-height: 1.15;
+     
+         letter-spacing: -.03em;
+     
+     }
+     
+     
+     .tysmm-service-card p {
+     
+         margin: 0 0 25px;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 13px;
+     
+         line-height: 1.7;
+     
+     }
+     
+     
+     .tysmm-service-card ul {
+     
+         margin: 0;
+     
+         padding: 0;
+     
+         list-style: none;
+     
+     }
+     
+     
+     .tysmm-service-card li {
+     
+         padding:
+             7px
+             0;
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.07);
+     
+         color:
+             rgba(255,255,255,.62);
+     
+         font-size: 11px;
+     
+     }
+     
+     
+     .tysmm-service-arrow {
+     
+         position: absolute;
+     
+         right: 25px;
+     
+         bottom: 25px;
+     
+         width: 40px;
+     
+         height: 40px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 50%;
+     
+         color: white;
+     
+         transition:
+             transform .3s ease,
+             background .3s ease;
+     
+     }
+     
+     
+     .tysmm-service-card:hover
+     .tysmm-service-arrow {
+     
+         transform:
+             rotate(45deg);
+     
+         background:
+             var(--tysmm-gradient);color:#ffffff}
+     
+     
+     /* ============================================================
+        PLATFORM STRIP
+     ============================================================ */
+     
+     .tysmm-platforms {
+     
+         overflow: hidden;
+     
+         padding:
+             35px
+             0;
+     
+         border-top:
+             1px solid
+             var(--tysmm-line);
+     
+         border-bottom:
+             1px solid
+             var(--tysmm-line);
+     
+     }
+     
+     
+     .tysmm-platform-track {
+     
+         width: max-content;
+     
+         display: flex;
+     
+         align-items: center;
+     
+         gap: 40px;
+     
+         animation:
+             tysmmMarquee 25s linear infinite;
+     
+     }
+     
+     
+     .tysmm-platform-track span {
+     
+         color:
+             rgba(255,255,255,.25);
+     
+         font-size: 13px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-platform-track i {
+     
+         color:
+             var(--tysmm-purple);
+     
+         font-style: normal;
+     
+     }
+     
+     
+     @keyframes tysmmMarquee {
+     
+         to {
+             transform:
+                 translateX(-50%);
+         }
+     
+     }
+     
+     
+     /* ============================================================
+        STRATEGY
+     ============================================================ */
+     
+     .tysmm-strategy {
+     
+         padding:
+             150px
+             0;
+     
+     }
+     
+     
+     .tysmm-strategy-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             1fr
+             1fr;
+     
+         align-items: center;
+     
+         gap: 90px;
+     
+     }
+     
+     
+     .tysmm-strategy-visual {
+     
+         perspective: 1000px;
+     
+     }
+     
+     
+     .tysmm-strategy-card {
+     
+         position: relative;
+     
+         min-height: 500px;
+     
+         padding: 30px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 28px;
+     
+         background:
+             radial-gradient(
+                 circle at center,
+                 rgba(81,108,245,.14),
+                 transparent 45%
+             ),
+             #0f1d4b;
+     
+         box-shadow:
+             0 40px 100px
+             rgba(13,25,63,.35);
+     
+         transform:
+             rotateY(8deg)
+             rotateX(3deg);
+     
+         transition:
+             transform .5s ease;
+     
+     }
+     
+     
+     .tysmm-strategy-card:hover {
+     
+         transform:
+             rotateY(0)
+             rotateX(0)
+             translateY(-8px);
+     
+     }
+     
+     
+     .tysmm-strategy-header {
+     
+         display: flex;
+     
+         justify-content: space-between;
+     
+         color:
+             rgba(255,255,255,.4);
+     
+         font-size: 9px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-content-wheel {
+     
+         position: absolute;
+     
+         top: 50%;
+     
+         left: 50%;
+     
+         width: 340px;
+     
+         height: 340px;
+     
+         transform:
+             translate(-50%,-50%);
+     
+         border:
+             1px dashed
+             rgba(255,255,255,.15);
+     
+         border-radius: 50%;
+     
+     }
+     
+     
+     .tysmm-content-wheel::before,
+     .tysmm-content-wheel::after {
+     
+         content: "";
+     
+         position: absolute;
+     
+         inset: 35px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.08);
+     
+         border-radius: 50%;
+     
+     }
+     
+     
+     .tysmm-content-wheel::after {
+     
+         inset: 80px;
+     
+     }
+     
+     
+     .tysmm-wheel-center {
+     
+         position: absolute;
+     
+         top: 50%;
+     
+         left: 50%;
+     
+         z-index: 3;
+     
+         width: 105px;
+     
+         height: 105px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         transform:
+             translate(-50%,-50%);
+     
+         border:
+             1px solid
+             rgba(255,255,255,.15);
+     
+         border-radius: 50%;
+     
+         color: white;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         box-shadow:
+             0 0 50px
+             rgba(81,108,245,.3);
+     
+         font-size: 10px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-wheel-item {
+     
+         position: absolute;
+     
+         width: 72px;
+     
+         height: 72px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.13);
+     
+         border-radius: 50%;
+     
+         color:
+             rgba(255,255,255,.75);
+     
+         background:
+             rgba(255,255,255,.04);
+     
+         backdrop-filter:
+             blur(10px);
+     
+         font-size: 8px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .08em;
+     
+     }
+     
+     
+     .wheel-1 {
+     
+         top: -30px;
+     
+         left: 50%;
+     
+         transform:
+             translateX(-50%);
+     
+     }
+     
+     
+     .wheel-2 {
+     
+         top: 50%;
+     
+         right: -30px;
+     
+         transform:
+             translateY(-50%);
+     
+     }
+     
+     
+     .wheel-3 {
+     
+         bottom: -30px;
+     
+         left: 50%;
+     
+         transform:
+             translateX(-50%);
+     
+     }
+     
+     
+     .wheel-4 {
+     
+         top: 50%;
+     
+         left: -30px;
+     
+         transform:
+             translateY(-50%);
+     
+     }
+     
+     
+     .tysmm-strategy-footer {
+     
+         position: absolute;
+     
+         right: 30px;
+     
+         bottom: 25px;
+     
+         left: 30px;
+     
+         padding-top: 15px;
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.08);
+     
+         color:
+             rgba(255,255,255,.3);
+     
+         font-size: 8px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .13em;
+     
+     }
+     
+     
+     .tysmm-strategy-content h2 {
+     
+         max-width: 650px;
+     
+         margin: 0 0 25px;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 42px,
+                 5vw,
+                 70px
+             );
+     
+         line-height: .98;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-strategy-content h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-strategy-content > p {
+     
+         max-width: 600px;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 15px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     .tysmm-strategy-points {
+     
+         margin-top: 40px;
+     
+     }
+     
+     
+     .tysmm-strategy-points > div {
+     
+         display: grid;
+     
+         grid-template-columns:
+             40px
+             120px
+             1fr;
+     
+         gap: 15px;
+     
+         align-items: center;
+     
+         padding:
+             15px
+             0;
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.08);
+     
+     }
+     
+     
+     .tysmm-strategy-points span {
+     
+         color:
+             rgba(255,255,255,.3);
+     
+         font-size: 10px;
+     
+     }
+     
+     
+     .tysmm-strategy-points strong {
+     
+         color: white;
+     
+         font-size: 13px;
+     
+     }
+     
+     
+     .tysmm-strategy-points small {
+     
+         color:
+             var(--tysmm-muted);
+     
+         font-size: 11px;
+     
+     }
+     
+     
+     /* ============================================================
+        CALENDAR
+     ============================================================ */
+     
+     .tysmm-calendar {
+     
+         padding:
+             120px
+             0;
+     
+         background:
+             rgba(255,255,255,.012);
+     
+     }
+     
+     
+     .tysmm-calendar-board {
+     
+         overflow: hidden;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 25px;
+     
+         background:
+             #0f1d4b;
+     
+         box-shadow:
+             0 40px 100px
+             rgba(13,25,63,.3);
+     
+     }
+     
+     
+     .tysmm-calendar-top {
+     
+         display: flex;
+     
+         justify-content: space-between;
+     
+         align-items: center;
+     
+         padding: 30px;
+     
+         border-bottom:
+             1px solid
+             rgba(255,255,255,.08);
+     
+     }
+     
+     
+     .tysmm-calendar-top small {
+     
+         display: block;
+     
+         color:
+             rgba(255,255,255,.4);
+     
+         font-size: 8px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-calendar-top strong {
+     
+         display: block;
+     
+         margin-top: 5px;
+     
+         color: white;
+     
+         font-size: 20px;
+     
+     }
+     
+     
+     .tysmm-calendar-top > span {
+     
+         padding:
+             8px
+             12px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 50px;
+     
+         color:
+             rgba(255,255,255,.55);
+     
+         font-size: 9px;
+     
+         font-weight: 800;
+     
+     }
+     
+     
+     .tysmm-calendar-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             repeat(7,1fr);
+     
+     }
+     
+     
+     .tysmm-calendar-day {
+     
+         min-height: 180px;
+     
+         padding: 20px;
+     
+         border-right:
+             1px solid
+             rgba(255,255,255,.07);
+     
+     }
+     
+     
+     .tysmm-calendar-day:last-child {
+     
+         border-right: none;
+     
+     }
+     
+     
+     .tysmm-calendar-day small {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 8px;
+     
+         font-weight: 800;
+     
+     }
+     
+     
+     .tysmm-calendar-day strong {
+     
+         display: block;
+     
+         margin:
+             8px
+             0
+             35px;
+     
+         color: white;
+     
+         font-size: 25px;
+     
+     }
+     
+     
+     .tysmm-dot {
+     
+         display: inline-block;
+     
+         padding:
+             6px
+             8px;
+     
+         border-radius: 5px;
+     
+         color: #fff;
+     
+         background:
+             rgba(81,108,245,.25);
+     
+         font-size: 7px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .08em;
+     
+     }
+     
+     
+     .tysmm-dot.purple {
+     
+         background:
+             rgba(80,108,247,.25);
+     
+     }
+     
+     
+     .tysmm-dot.blue {
+     
+         background:
+             rgba(59,134,246,.25);
+     
+     }
+     
+     
+     .tysmm-dot.pink {
+     
+         background:
+             rgba(65,184,243,.25);
+     
+     }
+     
+     
+     .tysmm-calendar-bottom {
+     
+         display: flex;
+     
+         flex-wrap: wrap;
+     
+         gap: 25px;
+     
+         padding:
+             20px
+             30px;
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.08);
+     
+     }
+     
+     
+     .tysmm-calendar-bottom span {
+     
+         color:
+             rgba(255,255,255,.45);
+     
+         font-size: 8px;
+     
+         font-weight: 800;
+     
+         letter-spacing: .08em;
+     
+     }
+     
+     
+     /* ============================================================
+        RESULTS
+     ============================================================ */
+     
+     .tysmm-results {
+     
+         padding:
+             130px
+             0;
+     
+     }
+     
+     
+     .tysmm-results-heading {
+     
+         text-align: center;
+     
+     }
+     
+     
+     .tysmm-results-heading h2 {
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 45px,
+                 6vw,
+                 75px
+             );
+     
+         line-height: 1;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-results-heading h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-results-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             repeat(4,1fr);
+     
+         margin-top: 75px;
+     
+         border-top:
+             1px solid
+             var(--tysmm-line);
+     
+         border-bottom:
+             1px solid
+             var(--tysmm-line);
+     
+     }
+     
+     
+     .tysmm-result {
+     
+         padding:
+             45px
+             25px;
+     
+         text-align: center;
+     
+         border-right:
+             1px solid
+             var(--tysmm-line);
+     
+     }
+     
+     
+     .tysmm-result:last-child {
+     
+         border-right: none;
+     
+     }
+     
+     
+     .tysmm-result strong {
+     
+         display: block;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 48px,
+                 6vw,
+                 75px
+             );
+     
+         line-height: 1;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-result strong::after {
+     
+         content: "+";
+     
+         color:
+             var(--tysmm-purple);
+     
+     }
+     
+     
+     .tysmm-result span {
+     
+         display: block;
+     
+         margin-top: 12px;
+     
+         color:
+             rgba(255,255,255,.4);
+     
+         font-size: 8px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-results-note {
+     
+         max-width: 650px;
+     
+         margin:
+             25px
+             auto
+             0;
+     
+         text-align: center;
+     
+         color:
+             rgba(255,255,255,.32);
+     
+         font-size: 10px;
+     
+         line-height: 1.7;
+     
+     }
+     
+     
+     /* ============================================================
+        PRICING
+     ============================================================ */
+     
+     .tysmm-pricing {
+     
+         padding:
+             150px
+             0;
+     
+         background:
+             linear-gradient(
+                 180deg,
+                 rgba(255,255,255,.012),
+                 transparent
+             );
+     
+     }
+     
+     
+     .tysmm-pricing-heading {
+     
+         max-width: 800px;
+     
+         margin:
+             0
+             auto
+             70px;
+     
+         text-align: center;
+     
+     }
+     
+     
+     .tysmm-pricing-heading h2 {
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 44px,
+                 6vw,
+                 75px
+             );
+     
+         line-height: .95;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-pricing-heading h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-pricing-heading p {
+     
+         max-width: 550px;
+     
+         margin:
+             25px
+             auto
+             0;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 14px;
+     
+     }
+     
+     
+     /* ============================================================
+        PRICE GRID
+     ============================================================ */
+     
+     .tysmm-pricing-grid {
+     
+         display: grid;
+     
+         grid-template-columns:
+             repeat(3,1fr);
+     
+         align-items: stretch;
+     
+         gap: 18px;
+     
+     }
+     
+     
+     .tysmm-price-card {
+     
+         position: relative;
+     
+         padding: 35px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 25px;
+     
+         background:
+             linear-gradient(
+                 145deg,
+                 rgba(255,255,255,.05),
+                 rgba(255,255,255,.015)
+             );
+     
+         transition:
+             transform .35s ease,
+             border-color .35s ease,
+             box-shadow .35s ease;
+     
+     }
+     
+     
+     .tysmm-price-card:hover {
+     
+         transform:
+             translateY(-10px);
+     
+         border-color:
+             rgba(81,108,245,.4);
+     
+         box-shadow:
+             0 35px 80px
+             rgba(13,25,63,.3);
+     
+     }
+     
+     
+     .tysmm-price-featured {
+     
+         border-color:
+             rgba(80,108,247,.45);
+     
+         background:
+             linear-gradient(
+                 145deg,
+                 rgba(81,108,245,.13),
+                 rgba(65,184,243,.035)
+             );
+     
+     }
+     
+     
+     .tysmm-popular {
+     
+         position: absolute;
+     
+         top: 0;
+     
+         left: 50%;
+     
+         transform:
+             translate(-50%,-50%);
+     
+         padding:
+             7px
+             14px;
+     
+         border-radius: 50px;
+     
+         color: white;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         font-size: 8px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .13em;
+     
+         white-space: nowrap;
+     
+     }
+     
+     
+     .tysmm-price-top {
+     
+         display: flex;
+     
+         justify-content: space-between;
+     
+         align-items: center;
+     
+         margin-bottom: 35px;
+     
+     }
+     
+     
+     .tysmm-plan-number {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 10px;
+     
+         font-weight: 800;
+     
+     }
+     
+     
+     .tysmm-plan-tag {
+     
+         padding:
+             6px
+             9px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 5px;
+     
+         color:
+             rgba(255,255,255,.5);
+     
+         font-size: 7px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .12em;
+     
+     }
+     
+     
+     .tysmm-price-card h3 {
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size: 25px;
+     
+         letter-spacing: -.03em;
+     
+     }
+     
+     
+     .tysmm-price-description {
+     
+         min-height: 65px;
+     
+         margin:
+             12px
+             0
+             25px;
+     
+         color:
+             var(--tysmm-muted);
+     
+         font-size: 12px;
+     
+         line-height: 1.7;
+     
+     }
+     
+     
+     .tysmm-price {
+     
+         display: flex;
+     
+         align-items: baseline;
+     
+         gap: 5px;
+     
+     }
+     
+     
+     .tysmm-currency {
+     
+         color:
+             rgba(255,255,255,.5);
+     
+         font-size: 10px;
+     
+         font-weight: 900;
+     
+     }
+     
+     
+     .tysmm-price strong {
+     
+         color: white;
+     
+         font-size: 42px;
+     
+         line-height: 1;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-price small {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 10px;
+     
+     }
+     
+     
+     .tysmm-price-line {
+     
+         height: 1px;
+     
+         margin:
+             25px
+             0;
+     
+         background:
+             rgba(255,255,255,.08);
+     
+     }
+     
+     
+     .tysmm-price-card ul {
+     
+         min-height: 290px;
+     
+         margin: 0;
+     
+         padding: 0;
+     
+         list-style: none;
+     
+     }
+     
+     
+     .tysmm-price-card li {
+     
+         display: flex;
+     
+         align-items: flex-start;
+     
+         gap: 10px;
+     
+         padding:
+             8px
+             0;
+     
+         color:
+             rgba(255,255,255,.6);
+     
+         font-size: 11px;
+     
+         line-height: 1.5;
+     
+     }
+     
+     
+     .tysmm-price-card li span {
+     
+         color:
+             #526df4;
+     
+         font-weight: 900;
+     
+     }
+     
+     
+     .tysmm-price-button {
+     
+         min-height: 50px;
+     
+         display: flex;
+     
+         align-items: center;
+     
+         justify-content: space-between;
+     
+         padding:
+             0
+             18px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.12);
+     
+         border-radius: 100px;
+     
+         color: white;
+     
+         font-size: 10px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .08em;
+     
+         transition:
+             background .3s ease,
+             border-color .3s ease;
+     
+     }
+     
+     
+     .tysmm-price-button:hover {
+     
+         border-color:
+             transparent;
+     
+         background:
+             var(--tysmm-gradient);color:#ffffff}
+     
+     
+     /* ============================================================
+        PRICING NOTE
+     ============================================================ */
+     
+     .tysmm-pricing-note {
+     
+         margin-top: 25px;
+     
+         padding:
+             18px
+             20px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.08);
+     
+         border-radius: 12px;
+     
+         color:
+             rgba(255,255,255,.45);
+     
+         background:
+             rgba(255,255,255,.02);
+     
+         text-align: center;
+     
+         font-size: 10px;
+     
+         line-height: 1.7;
+     
+     }
+     
+     
+     .tysmm-pricing-note strong {
+     
+         color:
+             rgba(255,255,255,.75);
+     
+     }
+     
+     
+     /* ============================================================
+        CUSTOM PRICE
+     ============================================================ */
+     
+     .tysmm-custom-pricing {
+     
+         display: flex;
+     
+         align-items: center;
+     
+         justify-content: space-between;
+     
+         gap: 30px;
+     
+         margin-top: 20px;
+     
+         padding:
+             25px
+             30px;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.08);
+     
+         border-radius: 20px;
+     
+         background:
+             rgba(255,255,255,.02);
+     
+     }
+     
+     
+     .tysmm-custom-pricing small {
+     
+         color:
+             rgba(255,255,255,.35);
+     
+         font-size: 8px;
+     
+         font-weight: 900;
+     
+         letter-spacing: .15em;
+     
+     }
+     
+     
+     .tysmm-custom-pricing h3 {
+     
+         margin:
+             7px
+             0
+             0;
+     
+         color: white;
+     
+         font-size: 18px;
+     
+     }
+     
+     
+     .tysmm-custom-pricing > a {
+     
+         display: inline-flex;
+     
+         align-items: center;
+     
+         gap: 10px;
+     
+         color:
+             #4766ff;
+     
+         font-size: 10px;
+     
+         font-weight: 900;
+     
+         white-space: nowrap;
+     
+     }
+     
+     
+     /* ============================================================
+        PROCESS
+     ============================================================ */
+     
+     .tysmm-process {
+     
+         padding:
+             140px
+             0;
+     
+     }
+     
+     
+     .tysmm-process-heading {
+     
+         max-width: 750px;
+     
+         margin-bottom: 60px;
+     
+     }
+     
+     
+     .tysmm-process-heading h2 {
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 44px,
+                 6vw,
+                 75px
+             );
+     
+         line-height: .95;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-process-heading h2 span {
+     
+         display: block;
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-process-item {
+     
+         display: grid;
+     
+         grid-template-columns:
+             70px
+             1fr
+             50px;
+     
+         gap: 30px;
+     
+         align-items: center;
+     
+         padding:
+             30px
+             0;
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.1);
+     
+     }
+     
+     
+     .tysmm-process-item > div {
+     
+         color:
+             rgba(255,255,255,.3);
+     
+         font-size: 11px;
+     
+         font-weight: 900;
+     
+     }
+     
+     
+     .tysmm-process-item h3 {
+     
+         margin: 0 0 5px;
+     
+         color: white;
+     
+         font-size: 22px;
+     
+     }
+     
+     
+     .tysmm-process-item p {
+     
+         max-width: 650px;
+     
+         margin: 0;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 12px;
+     
+         line-height: 1.7;
+     
+     }
+     
+     
+     .tysmm-process-item > span {
+     
+         width: 40px;
+     
+         height: 40px;
+     
+         display: grid;
+     
+         place-items: center;
+     
+         border:
+             1px solid
+             rgba(255,255,255,.1);
+     
+         border-radius: 50%;
+     
+         color:
+             rgba(255,255,255,.6);
+     
+         transition:
+             transform .3s ease,
+             background .3s ease;
+     
+     }
+     
+     
+     .tysmm-process-item:hover > span {
+     
+         transform:
+             rotate(45deg);
+     
+         background:
+             var(--tysmm-gradient);
+     
+         color: white;
+     
+     }
+     
+     
+     /* ============================================================
+        FAQ
+     ============================================================ */
+     
+     .tysmm-faq {
+     
+         padding:
+             120px
+             0;
+     
+         background:
+             rgba(255,255,255,.012);
+     
+     }
+     
+     
+     .tysmm-faq-heading {
+     
+         text-align: center;
+     
+         margin-bottom: 60px;
+     
+     }
+     
+     
+     .tysmm-faq-heading h2 {
+     
+         margin: 0;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 45px,
+                 6vw,
+                 75px
+             );
+     
+         line-height: .95;
+     
+         letter-spacing: -.06em;
+     
+     }
+     
+     
+     .tysmm-faq-heading h2 span {
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-faq-list {
+     
+         max-width: 850px;
+     
+         margin: auto;
+     
+     }
+     
+     
+     .tysmm-faq-item {
+     
+         border-top:
+             1px solid
+             rgba(255,255,255,.1);
+     
+     }
+     
+     
+     .tysmm-faq-item:last-child {
+     
+         border-bottom:
+             1px solid
+             rgba(255,255,255,.1);
+     
+     }
+     
+     
+     .tysmm-faq-item summary {
+     
+         display: flex;
+     
+         align-items: center;
+     
+         justify-content: space-between;
+     
+         gap: 20px;
+     
+         padding:
+             25px
+             0;
+     
+         color: white;
+     
+         cursor: pointer;
+     
+         font-size: 16px;
+     
+         font-weight: 700;
+     
+         list-style: none;
+     
+     }
+     
+     
+     .tysmm-faq-item summary::-webkit-details-marker {
+     
+         display: none;
+     
+     }
+     
+     
+     .tysmm-faq-item summary span {
+     
+         color:
+             rgba(255,255,255,.4);
+     
+         font-size: 25px;
+     
+         transition:
+             transform .3s ease;
+     
+     }
+     
+     
+     .tysmm-faq-item[open]
+     summary span {
+     
+         transform:
+             rotate(45deg);
+     
+     }
+     
+     
+     .tysmm-faq-item p {
+     
+         max-width: 750px;
+     
+         margin:
+             -5px
+             0
+             25px;
+     
+         color:
+             var(--tysmm-muted);
+     
+         font-size: 13px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     /* ============================================================
+        CTA
+     ============================================================ */
+     
+     .tysmm-cta {
+     
+         position: relative;
+     
+         padding:
+             180px
+             0;
+     
+         overflow: hidden;
+     
+         text-align: center;
+     
+         background:
+             radial-gradient(
+                 circle at center,
+                 rgba(81,108,245,.18),
+                 transparent 40%
+             );
+     
+     }
+     
+     
+     .tysmm-cta-orb {
+     
+         position: absolute;
+     
+         top: 50%;
+     
+         left: 50%;
+     
+         width: 550px;
+     
+         height: 550px;
+     
+         transform:
+             translate(-50%,-50%);
+     
+         border:
+             1px solid
+             rgba(81,108,245,.12);
+     
+         border-radius: 50%;
+     
+         box-shadow:
+             0 0 100px
+             rgba(81,108,245,.12);
+     
+         animation:
+             tysmmCtaOrb 8s ease-in-out infinite;
+     
+     }
+     
+     
+     @keyframes tysmmCtaOrb {
+     
+         0%,
+         100% {
+             transform:
+                 translate(-50%,-50%)
+                 scale(1);
+         }
+     
+         50% {
+             transform:
+                 translate(-50%,-50%)
+                 scale(1.1);
+         }
+     
+     }
+     
+     
+     .tysmm-cta-content {
+     
+         position: relative;
+     
+         z-index: 2;
+     
+     }
+     
+     
+     .tysmm-cta h2 {
+     
+         max-width: 900px;
+     
+         margin:
+             0
+             auto
+             25px;
+     
+         color: white;
+     
+         font-size:
+             clamp(
+                 48px,
+                 7vw,
+                 90px
+             );
+     
+         line-height: .92;
+     
+         letter-spacing: -.07em;
+     
+     }
+     
+     
+     .tysmm-cta h2 span {
+     
+         display: block;
+     
+         color: transparent;
+     
+         background:
+             var(--tysmm-gradient);
+     
+         -webkit-background-clip: text;
+     
+         background-clip: text;
+     
+     }
+     
+     
+     .tysmm-cta p {
+     
+         max-width: 650px;
+     
+         margin:
+             0
+             auto
+             35px;
+     
+         color: var(--tysmm-muted);
+     
+         font-size: 15px;
+     
+         line-height: 1.8;
+     
+     }
+     
+     
+     .tysmm-btn-dark {
+     
+         color:
+             #0f1c48;
+     
+         background:
+             white;
+     
+         border-color: white;
+     
+     }
+     
+     
+     .tysmm-btn-dark:hover {
+     
+         color: white;
+     
+         background:
+             transparent;
+     
+     }
+     
+     
+     /* ============================================================
+        RESPONSIVE
+     ============================================================ */
+     
+     @media (max-width: 1050px) {
+     
+         .tysmm-hero .tysmm-container {
+     
+             grid-template-columns: 1fr;
+     
+         }
+     
+     
+         .tysmm-hero {
+     
+             padding-top: 100px;
+     
+         }
+     
+     
+         .tysmm-hero-content {
+     
+             text-align: center;
+     
+         }
+     
+     
+         .tysmm-eyebrow,
+         .tysmm-buttons,
+         .tysmm-trust {
+     
+             justify-content: center;
+     
+         }
+     
+     
+         .tysmm-hero-content > p {
+     
+             margin-inline: auto;
+     
+         }
+     
+     
+         .tysmm-hero-visual {
+     
+             min-height: 600px;
+     
+         }
+     
+     
+         .tysmm-services-grid {
+     
+             grid-template-columns:
+                 repeat(2,1fr);
+     
+         }
+     
+     
+         .tysmm-pricing-grid {
+     
+             grid-template-columns: 1fr;
+     
+             max-width: 620px;
+     
+             margin-inline: auto;
+     
+         }
+     
+     
+         .tysmm-price-card ul {
+     
+             min-height: auto;
+     
+         }
+     
+     
+         .tysmm-strategy-grid {
+     
+             grid-template-columns: 1fr;
+     
+         }
+     
+     
+         .tysmm-strategy-visual {
+     
+             max-width: 600px;
+     
+             margin-inline: auto;
+     
+             width: 100%;
+     
+         }
+     
+     
+         .tysmm-calendar-grid {
+     
+             overflow-x: auto;
+     
+         }
+     
+     
+         .tysmm-calendar-day {
+     
+             min-width: 130px;
+     
+         }
+     
+     }
+     
+     
+     @media (max-width: 700px) {
+     
+         .tysmm-container {
+     
+             width:
+                 min(
+                     100% - 30px,
+                     1180px
+                 );
+     
+         }
+     
+     
+         .tysmm-hero {
+     
+             min-height: auto;
+     
+             padding:
+                 90px
+                 0
+                 80px;
+     
+         }
+     
+     
+         .tysmm-hero h1 {
+     
+             font-size:
+                 clamp(
+                     45px,
+                     15vw,
+                     70px
+                 );
+     
+         }
+     
+     
+         .tysmm-hero-content > p {
+     
+             font-size: 14px;
+     
+         }
+     
+     
+         .tysmm-buttons {
+     
+             flex-direction: column;
+     
+             align-items: stretch;
+     
+         }
+     
+     
+         .tysmm-btn {
+     
+             width: 100%;
+     
+         }
+     
+     
+         .tysmm-trust {
+     
+             text-align: left;
+     
+         }
+     
+     
+         .tysmm-hero-visual {
+     
+             min-height: 470px;
+     
+             transform:
+                 scale(.78);
+     
+             margin:
+                 -40px
+                 0;
+     
+         }
+     
+     
+         .tysmm-social-scene {
+     
+             transform:
+                 scale(.9);
+     
+         }
+     
+     
+         .tysmm-scroll {
+     
+             display: none;
+     
+         }
+     
+     
+         .tysmm-intro,
+         .tysmm-services,
+         .tysmm-strategy,
+         .tysmm-calendar,
+         .tysmm-results,
+         .tysmm-pricing,
+         .tysmm-process,
+         .tysmm-faq,
+         .tysmm-cta {
+     
+             padding:
+                 90px
+                 0;
+     
+         }
+     
+     
+         .tysmm-intro-grid {
+     
+             grid-template-columns: 1fr;
+     
+             gap: 25px;
+     
+         }
+     
+     
+         .tysmm-section-number span {
+     
+             font-size: 32px;
+     
+         }
+     
+     
+         .tysmm-heading {
+     
+             display: block;
+     
+         }
+     
+     
+         .tysmm-heading > p {
+     
+             margin-top: 25px;
+     
+         }
+     
+     
+         .tysmm-services-grid {
+     
+             grid-template-columns: 1fr;
+     
+         }
+     
+     
+         .tysmm-service-card {
+     
+             min-height: 350px;
+     
+         }
+     
+     
+         .tysmm-strategy-card {
+     
+             min-height: 420px;
+     
+             padding: 20px;
+     
+         }
+     
+     
+         .tysmm-content-wheel {
+     
+             width: 280px;
+     
+             height: 280px;
+     
+         }
+     
+     
+         .tysmm-wheel-center {
+     
+             width: 85px;
+     
+             height: 85px;
+     
+         }
+     
+     
+         .tysmm-wheel-item {
+     
+             width: 62px;
+     
+             height: 62px;
+     
+         }
+     
+     
+         .tysmm-strategy-points > div {
+     
+             grid-template-columns:
+                 35px
+                 90px
+                 1fr;
+     
+         }
+     
+     
+         .tysmm-calendar-top {
+     
+             align-items: flex-start;
+     
+             flex-direction: column;
+     
+             gap: 15px;
+     
+         }
+     
+     
+         .tysmm-calendar-grid {
+     
+             overflow-x: auto;
+     
+         }
+     
+     
+         .tysmm-results-grid {
+     
+             grid-template-columns:
+                 repeat(2,1fr);
+     
+         }
+     
+     
+         .tysmm-result {
+     
+             border-bottom:
+                 1px solid
+                 var(--tysmm-line);
+     
+         }
+     
+     
+         .tysmm-result:nth-child(2) {
+     
+             border-right: none;
+     
+         }
+     
+     
+         .tysmm-result:nth-child(3) {
+     
+             border-right:
+                 1px solid
+                 var(--tysmm-line);
+     
+         }
+     
+     
+         .tysmm-process-item {
+     
+             grid-template-columns:
+                 40px
+                 1fr;
+     
+             gap: 15px;
+     
+         }
+     
+     
+         .tysmm-process-item > span {
+     
+             display: none;
+     
+         }
+     
+     
+         .tysmm-custom-pricing {
+     
+             align-items: flex-start;
+     
+             flex-direction: column;
+     
+         }
+     
+     
+         .tysmm-custom-pricing > a {
+     
+             white-space: normal;
+     
+         }
+     
+     
+         .tysmm-cta h2 {
+     
+             font-size:
+                 clamp(
+                     45px,
+                     13vw,
+                     70px
+                 );
+     
+         }
+     
+     }
+     
+     
+     @media (max-width: 430px) {
+     
+         .tysmm-hero-visual {
+     
+             transform:
+                 scale(.67);
+     
+             margin:
+                 -100px
+                 0;
+     
+         }
+     
+     
+         .tysmm-results-grid {
+     
+             grid-template-columns: 1fr;
+     
+         }
+     
+     
+         .tysmm-result {
+     
+             border-right: none !important;
+     
+         }
+     
+     
+         .tysmm-result:last-child {
+     
+             border-bottom: none;
+     
+         }
+     
+     
+         .tysmm-price-card {
+     
+             padding: 25px;
+     
+         }
+     
+     
+         .tysmm-price strong {
+     
+             font-size: 36px;
+     
+         }
+     
+     }
+     
+     
+     /* ============================================================
+        REDUCED MOTION
+     ============================================================ */
+     
+     @media (prefers-reduced-motion: reduce) {
+     
+         .tysmm-page *,
+         .tysmm-page *::before,
+         .tysmm-page *::after {
+     
+             animation-duration: .01ms !important;
+     
+             animation-iteration-count: 1 !important;
+     
+             scroll-behavior: auto !important;
+     
+             transition-duration: .01ms !important;
+     
+         }
+     
+     
+         .tysmm-reveal {
+     
+             opacity: 1;
+     
+             transform: none;
+     
+         }
+     
+     }
+
+/* 4 services in one row, no empty cells */
+@media(min-width:1051px){.tysmm-services-grid{grid-template-columns:repeat(4,1fr)}}

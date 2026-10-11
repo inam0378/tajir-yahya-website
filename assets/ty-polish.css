@@ -1,0 +1,145 @@
+/* =========================================================
+   Tajir Yahya Creative & Co. — SITE-WIDE POLISH
+   Loaded last on every page.
+   1. Light sections  (.ty-light / .ty-light.ty-soft) so the
+      all-navy service pages alternate navy ↔ white.
+      .ty-island marks dark mock-ups / featured cards that
+      should stay navy inside a light section.
+   2. Readability, focus states, touch fixes
+   3. Creative Print page contrast fixes
+   ========================================================= */
+
+/* ---------- 1. LIGHT SECTIONS ---------- */
+.ty-light{
+  --tl-ink:#0e1b45;--tl-text:#3d4866;--tl-muted:#5d6886;--tl-line:#e1e7f3;
+  --tl-card:#f7f9fd;--tl-accent:#2456e6;
+  position:relative;z-index:1;isolation:isolate;
+  background:#ffffff!important;background-image:none!important;color:var(--tl-text)!important
+}
+.ty-light.ty-soft{background:#f3f6fc!important;--tl-card:#ffffff}
+.ty-light::before,.ty-light::after{opacity:0!important}
+
+/* text */
+.ty-light :is(h1,h2,h3,h4,h5,h6,strong,summary,b):not(.ty-island,.ty-island *,[class*="btn"] *,[class*="button"] *,[class*="popular"],[class*="popular"] *){color:var(--tl-ink)!important}
+.ty-light :is(p,li,small,dd,label):not(.ty-island,.ty-island *,[class*="btn"] *,[class*="popular"] *){color:var(--tl-text)!important}
+.ty-light span:not(.ty-island *,[class*="btn"],[class*="btn"] *,[class*="button"] *,[class*="popular"],[class*="popular"] *){color:var(--tl-muted)!important}
+.ty-light :is(h1,h2) :is(span,em):not(.ty-island *){color:var(--tl-accent)!important;-webkit-text-fill-color:currentColor!important;background:none!important}
+.ty-light :is([class*="section-label"],[class*="-label"],[class*="section-number"],[class*="plan-number"],[class*="card-number"],[class*="service-number"],[class*="statement-number"],[class*="process-number"],[class*="-number"]):not(.ty-island,.ty-island *,[class*="btn"] *){color:var(--tl-accent)!important;-webkit-text-fill-color:currentColor!important}
+.ty-light sup:not(.ty-island *){color:var(--tl-accent)!important}
+.ty-light :is([class*="item"],[class*="card"]) > div:not([class]):not(.ty-island *){color:var(--tl-accent)!important}
+.ty-light :is([class*="text-link"],[class*="price-btn"]:not(.primary),[class*="price-button"]):not(.ty-island *){color:var(--tl-ink)!important;border-color:#cfd8ea!important;background:#fff!important}
+.ty-light :is([class*="price-btn"]:not(.primary),[class*="price-button"]):not(.ty-island *):hover{border-color:var(--tl-accent)!important;color:var(--tl-accent)!important}
+
+/* cards */
+.ty-light :is([class*="service-card"],[class*="price-card"],[class*="process-item"],[class*="process-card"],[class*="tilt-card"],[class*="big-statement"],[class*="custom-package"],[class*="custom-pricing"],[class*="faq-item"],[class*="pricing-toggle"]):not(.ty-island){
+  background:var(--tl-card)!important;background-image:none!important;
+  border-color:var(--tl-line)!important;
+  box-shadow:0 1px 2px rgba(14,27,69,.04),0 10px 30px -12px rgba(14,27,69,.12)!important
+}
+.ty-light :is([class*="service-card"],[class*="price-card"],[class*="tilt-card"]):not(.ty-island):hover{border-color:#b9cbf5!important;box-shadow:0 2px 4px rgba(14,27,69,.05),0 22px 44px -16px rgba(30,70,180,.25)!important}
+.ty-light :is([class*="stats"],[class*="divider"],[class*="price-line"],[class*="price-divider"],[class*="process-grid"]):not(.ty-island *){border-color:var(--tl-line)!important}
+.ty-light :is([class*="divider"],[class*="price-line"],[class*="price-divider"]):not(.ty-island *){background:var(--tl-line)!important}
+.ty-light [class*="process-grid"]:not(.ty-island *){background:var(--tl-line)!important}
+.ty-light li:not(.ty-island *){border-color:var(--tl-line)!important}
+.ty-light [class*="card-glow"],.ty-light [class*="pricing-glow"],.ty-light [class*="pricing-bg"]{opacity:.35!important}
+.ty-light [class*="pricing-toggle"] button:not(.active){color:var(--tl-muted)!important}
+.ty-light [class*="pricing-toggle"] button.active{background:var(--tl-ink)!important;color:#fff!important}
+
+/* featured / dark islands keep the navy look */
+.ty-light .ty-island:is([class*="price-card"]){
+  background:linear-gradient(160deg,#13245d,#0e1b45)!important;border-color:#13245d!important;
+  box-shadow:0 30px 60px -20px rgba(14,27,69,.55)!important;color:#eef2fa
+}
+.ty-light .ty-island :is(h3,strong,b){color:#fff!important}
+.ty-light .ty-island :is(p,li,small){color:#c9d6ff!important}
+
+/* ---------- 2. READABILITY, FOCUS, TOUCH ---------- */
+:where(a,button,summary,[tabindex]):focus-visible{outline:3px solid #5bb8f7;outline-offset:3px;border-radius:6px}
+@media(hover:none){.hero-hint{display:none!important}}
+
+/* buttons: arrow nudges toward the click (pattern adapted from 21st.dev "Section CTA") */
+:is(.btn,.typ-btn,.tyma-btn,.tyvc-btn,.tysmm-btn,.tydmbs-btn,.tygd-btn,.ty-cpa-btn,.typrint-btn,.tyh-cta,.tyh-btn) span{display:inline-block;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+:is(.btn,.typ-btn,.tyma-btn,.tyvc-btn,.tysmm-btn,.tydmbs-btn,.tygd-btn,.ty-cpa-btn,.typrint-btn,.tyh-cta,.tyh-btn):hover span{transform:translate(3px,-2px)}
+:is(.btn,.typ-btn,.tyma-btn,.tyvc-btn,.tysmm-btn,.tydmbs-btn,.tygd-btn,.ty-cpa-btn,.typrint-btn):active{transform:scale(.98)}
+/* touch screens: every real button is at least 44px tall */
+@media(pointer:coarse){
+  :is(.btn,.typ-btn,.tyma-btn,.tyvc-btn,.tysmm-btn,.tydmbs-btn,.tygd-btn,.ty-cpa-btn,.typrint-btn,.tyh-cta){min-height:44px;display:inline-flex;align-items:center}
+  .tyh-footer-grid a{padding:4px 0}
+}
+@media(prefers-reduced-motion:reduce){:is(.btn,.typ-btn,.tyma-btn,.tyvc-btn,.tysmm-btn,.tydmbs-btn,.tygd-btn,.ty-cpa-btn,.typrint-btn,.tyh-cta) span{transition:none}}
+img{max-width:100%;height:auto}
+/* phones: hero text columns were sized by their widest child and ran off-screen */
+@media(max-width:767px){
+  .tysmm-hero .tysmm-container,.typrint-hero-layout{grid-template-columns:minmax(0,1fr)!important}
+  .tysmm-hero-content,.tysmm-hero-visual,.typrint-hero-copy,.typrint-hero-visual{min-width:0!important;max-width:100%!important}
+  h1,h2{overflow-wrap:break-word}
+}
+html,body{overflow-x:clip}
+
+/* deeper brand blue so white text on blue buttons / cards / bands passes contrast */
+:root,.typ-page{--grad:linear-gradient(135deg,#2456e6,#2f6bff);--accent:#2a5ee8;--muted:#5f6b92}
+.manifesto h2 em{color:#d3e8ff!important}
+.manifesto .eyebrow{color:#e6eeff!important}
+.typ-dark .typ-num,.typ-card.feature .typ-num{color:#9fc6ff}
+
+/* low-contrast text on the navy sections of the service pages */
+.tysmm-cta .tysmm-btn-dark{color:#0e1b45!important}
+.tysmm-platforms span{color:#c9d6ff!important}
+.tysmm-results-note{color:#a9b6d8!important}
+.tyma-funnel-card>span{color:#5f6fa3!important}
+.tyma-funnel p,.tyma-showcase>.tyma-container p,.tyma-final p,.tyvc-final-cta p,.tyvc-showcase p{color:#b9c5e4!important}
+
+/* Digital marketing page */
+.tydmbs-matrix span:not(.positive),.tydmbs-metrics span{color:#b9c5e4!important}
+.tydmbs-matrix span.positive{color:#7fc4ff!important}
+@media(max-width:600px){
+  .tydmbs-matrix-card .matrix-row{min-width:0!important;grid-template-columns:1fr 1fr!important}
+  .tydmbs-matrix-card .matrix-row>span:first-child{grid-column:1/-1;padding-bottom:0!important;color:#fff!important;font-weight:700}
+  .tydmbs-matrix-card .matrix-head>span:first-child{display:none}
+}
+/* Graphic design page */
+.tygd-service-number{color:#6f7fb3!important}
+.tygd-why p{color:#b9c5e4!important}
+.tygd-cta{background:radial-gradient(circle at 85% 0%,rgba(91,184,247,.30),transparent 45%),linear-gradient(135deg,#1a2f73,#0f1d4b)!important}
+.tygd-cta h2{color:#fff!important}
+.tygd-cta h2 span{color:#5bb8f7!important}
+.tygd-cta .tygd-label{color:#5bb8f7!important}
+.tygd-cta p{color:#c9d6ff!important}
+
+/* ---------- 3. CREATIVE PRINT PAGE ---------- */
+/* dark ad section: readable body copy */
+.ty-cpa-dark-grid>div>p,.ty-cpa-checks small,.ty-cpa-billboard p{color:#c9d6ff!important}
+.ty-cpa-checks>div{border-top-color:rgba(255,255,255,.12)!important}
+.ty-cpa-checks b{margin-top:-19px!important}
+/* quality: navy card */
+.ty-cpa-quality-dark p,.ty-cpa-quality-dark>span{color:#c9d6ff!important}
+.ty-cpa-quality-dark hr,.ty-cpa-quality-dark>span{border-color:rgba(255,255,255,.14)!important}
+.ty-cpa-materials i:nth-child(3){color:#fff!important}
+/* featured price card + custom bar */
+.ty-cpa-price-featured>p,.ty-cpa-price-featured li,.ty-cpa-price-featured .ty-cpa-price small,.ty-cpa-price-featured .ty-cpa-price-top{color:#c9d6ff!important}
+.ty-cpa-price-featured ul{border-color:rgba(255,255,255,.14)!important}
+.ty-cpa-price-featured li:before{color:#5bb8f7!important}
+.ty-cpa-custom span{color:#9fb4ee!important}.ty-cpa-custom a{color:#5bb8f7!important}
+/* closing CTA: the heading accent and paragraph were blue-on-blue (invisible) */
+.ty-cpa-contact-box{background:radial-gradient(circle at 85% 0%,rgba(91,184,247,.28),transparent 45%),linear-gradient(135deg,#13245d,#0f1d4b)!important;color:#fff!important}
+.ty-cpa-contact-box:before,.ty-cpa-contact-box:after{border-color:rgba(255,255,255,.12)!important}
+.ty-cpa-contact-box .ty-cpa-label{color:#5bb8f7!important}
+.ty-cpa-contact-box h2{color:#fff!important}
+.ty-cpa-contact-box h2 em{color:#5bb8f7!important}
+.ty-cpa-contact-box p{color:#c9d6ff!important}
+.ty-cpa-contact-box>span:first-child{color:#5bb8f7}
+.ty-cpa-contact-box .ty-cpa-btn-dark{background:#fff!important;color:#13245d!important}
+/* labels were very faint grey */
+.ty-cpa-label{color:#2f6bff!important;font-weight:600}
+.ty-cpa-dark .ty-cpa-label{color:#5bb8f7!important}
+.ty-cpa-two-col p,.ty-cpa-section-heading>p,.ty-cpa-service-card p,.ty-cpa-quality-card p,.ty-cpa-process-grid p,.ty-cpa-price-card>p,.ty-cpa-faq-list details p{color:#55607c!important}
+.ty-cpa-impact small,.ty-cpa-work-grid footer small,.ty-cpa-trust small,.ty-cpa-pricing-note,.ty-cpa-end,.ty-cpa-hero-bottom{color:#66718d!important}
+.ty-cpa-btn{font-size:14.5px!important}
+/* the navy cards come after the generic grey-text rule, so they win */
+.ty-cpa .ty-cpa-price-featured>p,.ty-cpa .ty-cpa-price-featured li,.ty-cpa .ty-cpa-quality-dark p{color:#c9d6ff!important}
+/* small grey numbers / tags on cards */
+.ty-cpa-card-number,.ty-cpa-process-grid article>span{font-size:12px!important;color:#6b7896!important}
+.ty-cpa-service-card>small{font-size:11.5px!important;color:#6b7896!important}
+/* accent words that disappeared into their blue backgrounds */
+.ty-cpa .work-1 strong em,.ty-cpa .work-3 strong em,.ty-cpa .work-4 strong em,.ty-cpa-billboard h3 em{color:#9cc8ff!important}
+.ty-cpa .work-2 strong em{color:#0e1b45!important}

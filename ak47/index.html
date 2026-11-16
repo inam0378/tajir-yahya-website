@@ -189,6 +189,20 @@ td.r,th.r{text-align:right}
 .offcats label{display:flex;gap:6px;align-items:center;font-size:13px}
 .szrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
 [hidden]{display:none!important}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.chk2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px}
+.chk2 label{font-size:13px}
+@media (max-width:860px){
+ .two{grid-template-columns:minmax(0,1fr);gap:16px}
+ .stylepick{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .stylepick button{font-size:11px;padding:8px 4px}
+ .rcprev{max-height:none;padding:10px;overflow-x:auto}
+ .bnav{overflow-x:hidden}
+ .bnav .nav{flex:1 1 0;min-width:0;padding:6px 1px;font-size:9.5px;letter-spacing:-.1px}
+ .bnav .nav span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .card{padding:14px}
+}
 html,body{max-width:100%;overflow-x:hidden}
 .who{font-size:12px;color:var(--muted);white-space:nowrap}
 .side,.bnav{background:var(--side,#000)!important}
@@ -754,7 +768,7 @@ const ACCENTS=["#ffc800","#ff6b2c","#e63946","#ff3d81","#8b5cf6","#3f7cff","#14b
 function brandCard(){
   const s=S.settings;const t={...DEF_THEME,...(s.theme||{})};let logo=s.logo||"";const draft={...t};
   const box=$("#brandCard");
-  box.innerHTML=`<h3>Branding aur theme</h3><div class="fgrid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px">
+  box.innerHTML=`<h3>Branding aur theme</h3><div class="two">
    <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
     <label class="f">Software mein naam<input class="in" id="b_name" value="${esc(s.name)}"></label>
     <div class="f">Logo<div class="logobox"><div class="lp"><img id="b_lp" src="${esc(logo||DEF_LOGO)}" alt="Logo"></div><label class="btn sm" style="cursor:pointer">Logo upload karein<input type="file" id="b_file" accept="image/*" hidden></label><button class="btn sm bad" type="button" id="b_rm">Hatayen</button></div><span class="muted" style="font-weight:400">PNG ya JPG. Bari tasveer khud chhoti ho jayegi.</span></div>
@@ -787,15 +801,15 @@ function rcCard(){
   const s=S.settings;const r={...DEF_RC,...(s.receipt||{})};const box=$("#rcCard");
   const sample={no:S.seq+1,ts:Date.now(),type:"Takeaway",by:S.me.name,cust:{name:"Ali",phone:"0300-1234567"},lines:[{name:"Zinger Burger + Fries",qty:2,price:450},{name:"Tikka Pizza (M)",qty:1,price:899}],free:[{name:"Free Drink 500ml",qty:1}],sub:1799,offerAmt:0,discAmt:0,taxRate:s.cashTax,tax:248,fee:0,total:1799,cash:2000,change:201,status:"paid"};
   const chk=(k,l)=>`<label class="f" style="flex-direction:row;align-items:center;gap:8px;font-weight:500"><input type="checkbox" data-rk="${k}" ${r[k]?"checked":""}> ${l}</label>`;
-  box.innerHTML=`<h3>Receipt ka design</h3><div class="fgrid" style="grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px">
+  box.innerHTML=`<h3>Receipt ka design</h3><div class="two">
    <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
-    <div class="fgrid" style="grid-template-columns:1fr 1fr 1fr"><label class="f">Paper<select class="sel" id="r_w"><option value="w80">80 mm</option><option value="w58">58 mm</option></select></label>
+    <div class="three"><label class="f">Paper<select class="sel" id="r_w"><option value="w80">80 mm</option><option value="w58">58 mm</option></select></label>
      <label class="f">Font<select class="sel" id="r_font"><option value="s">Chhota</option><option value="m">Normal</option><option value="l">Bara</option></select></label>
      <label class="f">Logo size<select class="sel" id="r_ls"><option value="s">Chhota</option><option value="m">Normal</option><option value="l">Bara</option></select></label></div>
     <label class="f">Upar ki khaas line (jaise "Free Home Delivery")<input class="in" id="r_head" value="${esc(r.header)}"></label>
     <label class="f">Tagline<input class="in" id="r_tag" value="${esc(s.tagline)}"></label>
     <label class="f">Neeche ki line (footer)<input class="in" id="r_foot" value="${esc(s.footer)}"></label>
-    <div class="fgrid" style="grid-template-columns:1fr 1fr;gap:6px">${chk("logo","Logo dikhayen")}${chk("showAddress","Address")}${chk("showPhone","Phone")}${chk("showCashier","Cashier ka naam")}${chk("showCustomer","Customer ka naam")}${chk("showTaxLine","Tax ki line")}${chk("boldTotal","Total bold")}</div>
+    <div class="chk2">${chk("logo","Logo dikhayen")}${chk("showAddress","Address")}${chk("showPhone","Phone")}${chk("showCashier","Cashier ka naam")}${chk("showCustomer","Customer ka naam")}${chk("showTaxLine","Tax ki line")}${chk("boldTotal","Total bold")}</div>
     <p id="r_err" style="color:var(--bad);min-height:18px;margin:0"></p><div class="row" style="justify-content:flex-end"><button class="btn y" type="button" id="r_save">Receipt design save karein</button></div>
    </div>
    <div class="rcprev" id="r_prev"></div></div>`;
@@ -971,4 +985,13 @@ function payForm(p,info,me){
   .dgrid{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr}
   .mbar{display:flex;position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));background:var(--y);color:var(--ink);border:0;border-radius:12px;padding:12px 16px;font-weight:700;justify-content:space-between;z-index:19;box-shadow:0 8px 24px rgba(0,0,0,.6)}
-}html.m860{.toast{bottom:calc(132px + env(safe-area-inset-bottom,0px))}}html.m460{.kpis{grid-template-columns:1fr 1fr}.kpi .v{font-size:24px}.acts{grid-template-columns:1fr 1fr}.acts .pay{grid-column:1/-1}}html.m520{.stylepick{grid-template-columns:1fr 1fr}}</style></body></html>
+}html.m860{.toast{bottom:calc(132px + env(safe-area-inset-bottom,0px))}}html.m460{.kpis{grid-template-columns:1fr 1fr}.kpi .v{font-size:24px}.acts{grid-template-columns:1fr 1fr}.acts .pay{grid-column:1/-1}}html.m860{
+ .two{grid-template-columns:minmax(0,1fr);gap:16px}
+ .stylepick{grid-template-columns:repeat(4,minmax(0,1fr))}
+ .stylepick button{font-size:11px;padding:8px 4px}
+ .rcprev{max-height:none;padding:10px;overflow-x:auto}
+ .bnav{overflow-x:hidden}
+ .bnav .nav{flex:1 1 0;min-width:0;padding:6px 1px;font-size:9.5px;letter-spacing:-.1px}
+ .bnav .nav span{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .card{padding:14px}
+}html.m520{.stylepick{grid-template-columns:1fr 1fr}}</style></body></html>

@@ -465,6 +465,8 @@ async function busy(btn,fn){btn.disabled=true;const t=btn.textContent;btn.textCo
 
 /* ============ auth (server mode) ============ */
 const UDOM="@users.ak47.app";
+const uname=v=>String(v||"").trim().toLowerCase().replace(/\s+/g,".").replace(/[^a-z0-9._-]/g,"");
+function unameField(inp,hint){const f=()=>{const u=uname(inp.value);hint.textContent=inp.value.trim()&&u!==inp.value.trim()?"Username banega: "+u:""};inp.addEventListener("input",f);inp.addEventListener("blur",()=>{inp.value=uname(inp.value);f()})}
 async function loadBrand(){try{const b=await rpc("branding");if(b&&b.setup){LOGO=b.logo||DEF_LOGO;applyTheme(b.theme)}return b}catch(e){return null}}
 async function authScreen(){
   const b=await loadBrand();
@@ -479,7 +481,7 @@ async function authScreen(){
    <p class="muted" style="margin:0;font-size:12px;text-align:center">Username aur password owner se lein.</p>
    ${installBtn()}</div></form></div>`;
   $("#af").onsubmit=async e=>{e.preventDefault();const err=$("#aerr");err.textContent="";const btn=$("#ab");btn.disabled=true;
-    try{const {error}=await SB.auth.signInWithPassword({email:$("#a_login").value.trim().toLowerCase()+UDOM,password:$("#a_pw").value});
+    try{const {error}=await SB.auth.signInWithPassword({email:uname($("#a_login").value)+UDOM,password:$("#a_pw").value});
       if(error)throw new Error(/Invalid login/i.test(error.message)?"Username ya password ghalat hai.":error.message);
       TOKEN="sb";await enter();
     }catch(x){err.textContent=x.message||String(x);btn.disabled=false}};
@@ -491,13 +493,14 @@ function setupScreen(){
    <label class="f">Setup code<input class="in" id="u_code" required autocapitalize="characters" autofocus></label>
    <label class="f">Restaurant ka naam<input class="in" id="u_biz" required value="AK47"></label>
    <label class="f">Owner ka naam<input class="in" id="u_owner" required></label>
-   <label class="f">Owner ka username<input class="in" id="u_user" required pattern="[A-Za-z0-9._-]{3,30}" autocapitalize="none" placeholder="jaise owner"></label>
+   <label class="f">Owner ka username<input class="in" id="u_user" required autocapitalize="none" autocomplete="off" placeholder="jaise ali.khan"><span class="muted" style="font-weight:400">Chhote huroof, bina space. Space khud "." ban jayega.</span><span id="u_hint" style="color:var(--ok);font-weight:600"></span></label>
    <label class="f">Password<input class="in" id="u_pass" type="password" required minlength="6" autocomplete="new-password"></label>
    <label class="f" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="u_seed" checked> AK47 ka menu, rates aur shop details load karein</label>
    <p id="serr1" style="color:var(--bad);margin:0;min-height:18px"></p><button class="btn y" id="sbtn">Setup mukammal karein</button></div></form></div>`;
+  unameField($("#u_user"),$("#u_hint"));
   $("#sf1").onsubmit=async e=>{e.preventDefault();const err=$("#serr1");err.textContent="";const btn=$("#sbtn");btn.disabled=true;
     try{const seed=$("#u_seed").checked;const ak={...DEFAULT_SETTINGS};delete ak.name;
-      const user=$("#u_user").value.trim().toLowerCase(),pass=$("#u_pass").value;
+      const user=uname($("#u_user").value),pass=$("#u_pass").value;
       await rpc("setup_business",{p_code:$("#u_code").value.trim(),p_business:$("#u_biz").value,p_owner:$("#u_owner").value,p_username:user,p_password:pass,p_menu:seed?MENU:null,p_settings:seed?ak:null});
       const {error}=await SB.auth.signInWithPassword({email:user+UDOM,password:pass});if(error)throw error;
       TOKEN="sb";toast("Setup ho gaya");await enter();
@@ -844,7 +847,7 @@ function vSet(){
   <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
    ${MODE==="server"?`<div class="card"><h3>Plan</h3><p class="muted" style="line-height:1.6">${esc(S.sub.plan?S.sub.plan.name:"—")}${S.sub.expires?" · "+new Date(S.sub.expires).toLocaleDateString("en-GB")+" tak":""}${S.sub.plan&&S.sub.plan.maxDevices?"<br>"+S.sub.plan.maxDevices+" devices ek saath":""}</p>${S.me.role==="owner"?`<button class="btn y" id="renew" type="button">Renew / plan badlein</button>`:""}</div>
    <div class="card"><h3>Staff</h3><p class="muted" style="font-size:12px;margin-top:-6px">Staff ka username aur password yahan banayen aur unhe bata dein. Woh isi se login karenge.</p><div id="staff" class="muted">Load ho raha hai…</div>
-     <form id="uf" class="fgrid" style="margin-top:12px"><input class="in" id="u_name" placeholder="Naam" required><input class="in" id="u_login" placeholder="Username (jaise ali)" required pattern="[A-Za-z0-9._-]{3,30}" autocomplete="off"><input class="in" id="u_pw" type="text" placeholder="Password (6+)" required minlength="6" autocomplete="off"><select class="sel" id="u_role"><option value="cashier">Cashier</option><option value="manager">Manager</option></select><p id="uerr" class="full" style="color:var(--bad);margin:0"></p><button class="btn y full">+ Staff add karein</button></form></div>`
+     <form id="uf" class="fgrid" style="margin-top:12px"><input class="in" id="u_name" placeholder="Naam" required><input class="in" id="u_login" placeholder="Username (jaise ali.cashier)" required autocomplete="off" autocapitalize="none"><input class="in" id="u_pw" type="text" placeholder="Password (6+)" required minlength="6" autocomplete="off"><select class="sel" id="u_role"><option value="cashier">Cashier</option><option value="manager">Manager</option></select><p id="uerr" class="full" style="color:var(--bad);margin:0"></p><button class="btn y full">+ Staff add karein</button></form></div>`
    :`<div class="card"><h3>Demo data</h3><p class="muted">Yeh demo is browser mein chalta hai. Asal kaam ke liye server wala version istemal karein.</p><div class="row"><button class="btn" id="clrDemo">Demo orders hatao</button><button class="btn bad" id="reset">Sab reset</button></div></div>
    <div class="card"><h3>Naya: plans screen</h3><p class="muted">Register ke baad customer ko yeh screen milegi. Preview mein koi payment nahi hoti.</p><button class="btn y" id="pvPlans" type="button">Plans screen preview dekhein</button></div>`}
    <div class="card"><h3>Hardware</h3><p class="muted" style="line-height:1.6">Barcode scanner: USB scanner keyboard ki tarah kaam karta hai. Billing par kahin bhi scan karein, item cart mein aa jayega. Size wale item ka code + size bhi chalta hai (PZ04M, SW032pc).<br>Thermal printer: Windows mein printer driver install karein aur default bana dein, phir receipt par Print dabayen.</p></div>
@@ -862,7 +865,7 @@ function vSet(){
       document.querySelectorAll("[data-ua]").forEach(b=>b.onclick=()=>busy(b,async()=>{await api("/api/users/"+b.dataset.ua+"/active","POST",{active:b.dataset.a==="1"});loadStaff()}))}catch(e){$("#staff").textContent=e.message}};
     loadStaff();
     const rn=$("#renew");rn&&(rn.onclick=()=>plansScreen({business:S.business,me:S.me,sub:S.sub}));
-    $("#uf").onsubmit=async e=>{e.preventDefault();try{await api("/api/users","POST",{name:$("#u_name").value,login:$("#u_login").value,password:$("#u_pw").value,role:$("#u_role").value});e.target.reset();$("#uerr").textContent="";loadStaff();toast("Staff add ho gaya")}catch(err){$("#uerr").textContent=err.message}};
+    $("#uf").onsubmit=async e=>{e.preventDefault();try{await api("/api/users","POST",{name:$("#u_name").value,login:uname($("#u_login").value),password:$("#u_pw").value,role:$("#u_role").value});e.target.reset();$("#uerr").textContent="";loadStaff();toast("Staff add ho gaya")}catch(err){$("#uerr").textContent=err.message}};
   }else{
     $("#pvPlans").onclick=()=>plansScreen({business:{name:S.settings.name},me:{name:"Owner",role:"owner"},sub:{status:"none"}});
     $("#clrDemo").onclick=()=>{S.orders=S.orders.filter(o=>!o.demo);saveLocal();toast("Demo orders hat gaye")};

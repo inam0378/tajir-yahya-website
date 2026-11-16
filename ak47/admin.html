@@ -213,7 +213,7 @@ function login(err){
    <label class="f">Username<input class="in" id="em" required autofocus autocomplete="username" autocapitalize="none"></label>
    <label class="f" style="margin-top:10px">Password<input class="in" id="k" type="password" required autocomplete="current-password"></label>
    <p class="bad-t" style="min-height:18px">${esc(err||"")}</p><button class="btn y" style="width:100%">Login</button></form></div>`;
-  $("#lf").onsubmit=async e=>{e.preventDefault();const {error}=await SB.auth.signInWithPassword({email:$("#em").value.trim().toLowerCase()+"@users.ak47.app",password:$("#k").value});
+  $("#lf").onsubmit=async e=>{e.preventDefault();const {error}=await SB.auth.signInWithPassword({email:$("#em").value.trim().toLowerCase().replace(/\s+/g,".")+"@users.ak47.app",password:$("#k").value});
     if(error)return login("Username ya password ghalat hai.");
     if(!(await rpc("is_admin")))return login("Yeh account Super Admin nahi hai.");main()};
 }

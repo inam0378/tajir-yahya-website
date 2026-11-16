@@ -210,16 +210,16 @@ async function api(p,method="GET",body){
 }
 function login(err){
   $("#app").innerHTML=`<div class="auth"><form class="card" id="lf"><img src="${LOGO}" alt="AK47"><h3 style="text-align:center">Super Admin</h3>
-   <label class="f">Email<input class="in" id="em" type="email" required autofocus autocomplete="username"></label>
+   <label class="f">Username<input class="in" id="em" required autofocus autocomplete="username" autocapitalize="none"></label>
    <label class="f" style="margin-top:10px">Password<input class="in" id="k" type="password" required autocomplete="current-password"></label>
    <p class="bad-t" style="min-height:18px">${esc(err||"")}</p><button class="btn y" style="width:100%">Login</button></form></div>`;
-  $("#lf").onsubmit=async e=>{e.preventDefault();const {error}=await SB.auth.signInWithPassword({email:$("#em").value.trim(),password:$("#k").value});
-    if(error)return login("Email ya password ghalat hai.");
+  $("#lf").onsubmit=async e=>{e.preventDefault();const {error}=await SB.auth.signInWithPassword({email:$("#em").value.trim().toLowerCase()+"@users.ak47.app",password:$("#k").value});
+    if(error)return login("Username ya password ghalat hai.");
     if(!(await rpc("is_admin")))return login("Yeh account Super Admin nahi hai.");main()};
 }
 async function main(){
   let ov;try{ov=await api("/api/admin/overview")}catch(e){return}
-  $("#app").innerHTML=`<div class="hdr"><img src="${LOGO}" alt="AK47"><h1>Super Admin</h1><span style="flex:1"></span><button class="btn sm" id="out">Logout</button></div>
+  $("#app").innerHTML=`<div class="hdr"><img src="${LOGO}" alt="AK47"><h1>Super Admin</h1><span style="flex:1"></span><a class="btn sm" href="./">Software kholen</a><button class="btn sm" id="cpw">Password badlein</button><button class="btn sm" id="out">Logout</button></div>
   <div class="kpis">
    <div class="card kpi"><div class="l">Businesses</div><div class="v num">${ov.businesses}</div><div class="s">${ov.active} active · ${ov.expired} expired</div></div>
    <div class="card kpi"><div class="l">Payments pending</div><div class="v num" style="${ov.pending?"color:var(--warn)":""}">${ov.pending}</div><div class="s">approve karni hain</div></div>
@@ -229,6 +229,10 @@ async function main(){
   <div class="tabs">${[["payments","Payments"],["businesses","Businesses"],["plans","Plans"],["platform","Payment details"]].map(([k,l])=>`<button data-t="${k}" class="${TAB===k?"on":""}">${l}</button>`).join("")}</div>
   <div id="tab"></div>`;
   $("#out").onclick=async()=>{await SB.auth.signOut();login()};
+  $("#cpw").onclick=()=>{const box=document.createElement("div");box.className="ov";box.innerHTML=`<form class="md" id="pwf" style="display:flex;flex-direction:column;gap:12px"><h2>Naya password</h2><input class="in" id="np1" type="password" minlength="8" required placeholder="Kam az kam 8 huroof"><input class="in" id="np2" type="password" minlength="8" required placeholder="Dobara likhein"><p class="bad-t" id="pwe" style="margin:0"></p><div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="pwx">Wapas</button><button class="btn y">Save</button></div></form>`;document.body.appendChild(box);
+    box.querySelector("#pwx").onclick=()=>box.remove();
+    box.querySelector("#pwf").onsubmit=async e=>{e.preventDefault();const p1=box.querySelector("#np1").value;if(p1!==box.querySelector("#np2").value){box.querySelector("#pwe").textContent="Dono password ek jaise nahi.";return}
+      const {error}=await SB.auth.updateUser({password:p1});if(error){box.querySelector("#pwe").textContent=error.message;return}box.remove();toast("Password badal gaya")}};
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{TAB=b.dataset.t;main()});
   ({payments:tPay,businesses:tBiz,plans:tPlans,platform:tPlat})[TAB]();
 }

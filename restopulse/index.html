@@ -401,6 +401,7 @@ function seedLocal(){
   if(bg&&dr)st.items.push({id:uid(),code:"DL01",name:"Combo: "+bg.name+" + Drink",cat:"Deals",price:Math.round((bg.price+dr.price)*.9/10)*10,sizes:null,barcode:"",track:false,stock:0,components:[{id:bg.id,size:null,qty:1},{id:dr.id,size:null,qty:1}]});
   st.settings.offers=[{id:"o1",name:"Lunch time 10% off",on:true,type:"pct",scope:"bill",value:10,cats:[],items:[],minBill:1000,days:[],from:"12:00",to:"16:00",start:"",end:""}];
   st.settings.perms={manager:{profit:false},cashier:{profit:false}};
+  st.users=[{id:"u_owner",name:"Owner",login:"owner",password:"owner123",role:"owner",active:true}];
   const now=Date.now();const pick=()=>items[Math.floor(Math.random()*(items.length-1))];
   for(let d=6;d>=0;d--){const n=10+Math.floor(Math.random()*12);for(let k=0;k<n;k++){
     const lines=[];const c=1+Math.floor(Math.random()*3);
@@ -428,6 +429,17 @@ async function rpc(fn,args){
 /* old server paths mapped to database functions, so the screens stay the same */
 async function api(path,method="GET",body){
   let m;
+  if(MODE==="local"&&path.startsWith("/api/users")){
+    S.users=S.users||[];
+    if(path==="/api/users"&&method==="GET")return S.users.map(u=>({id:u.id,name:u.name,login:u.login,role:u.role,active:u.active}));
+    if(path==="/api/users"&&method==="POST"){
+      if(!/^[a-z0-9._-]{3,30}$/.test(body.login))throw new Error("Username 3 se 30 huroof ka ho (a-z, 0-9, . _ -).");
+      if((body.password||"").length<6)throw new Error("Password kam az kam 6 huroof ka ho.");
+      if(S.users.some(u=>u.login===body.login))throw new Error("Yeh username pehle se istemal ho raha hai.");
+      S.users.push({id:uid(),name:body.name||body.login,login:body.login,password:body.password,role:body.role==="manager"?"manager":"cashier",active:true});saveLocal();return{ok:true}}
+    if((m=path.match(/^\/api\/users\/([\w-]+)\/active$/))){const u=S.users.find(x=>x.id===m[1]);if(u&&u.role!=="owner")u.active=!!body.active;saveLocal();return{ok:true}}
+    if((m=path.match(/^\/api\/users\/([\w-]+)\/password$/))){if((body.password||"").length<6)throw new Error("Password kam az kam 6 huroof ka ho.");const u=S.users.find(x=>x.id===m[1]);if(u)u.password=body.password;saveLocal();return{ok:true}}
+  }
   if(path==="/api/state")return rpc("get_state");
   if(path==="/api/me")return rpc("me");
   if(path==="/api/orders")return rpc("create_order",{p:body});
@@ -438,6 +450,7 @@ async function api(path,method="GET",body){
   if(path==="/api/settings")return rpc("save_settings",{p:body});
   if(path==="/api/users"&&method==="GET")return rpc("list_staff");
   if(path==="/api/users"&&method==="POST")return rpc("staff_create",{p_name:body.name,p_username:body.login,p_password:body.password,p_role:body.role});
+  if((m=path.match(/^\/api\/users\/([\w-]+)\/password$/)))return rpc("staff_set_password",{p_user:m[1],p_password:body.password});
   if((m=path.match(/^\/api\/users\/([\w-]+)\/active$/)))return rpc("set_staff_active",{p_user:m[1],p_active:!!body.active});
   if(path==="/api/billing/plans")return rpc("billing_info");
   if(path==="/api/billing/request")return rpc("request_payment",{p_plan:body.plan_id,p_method:body.method,p_txn:body.txn,p_sender:body.sender||""});
@@ -470,7 +483,9 @@ const AUTHSTORE={getItem:k=>{try{return (localStorage.getItem("rp.remember")==="
   removeItem:k=>{try{localStorage.removeItem(k);sessionStorage.removeItem(k)}catch(e){}}};
 function setLocked(v){try{v?localStorage.setItem("rp.locked","1"):localStorage.removeItem("rp.locked")}catch(e){}}
 function isLocked(){try{return localStorage.getItem("rp.locked")==="1"}catch(e){return false}}
-function logout(silent){setLocked(false);const lk=document.getElementById("lockov");lk&&lk.remove();if(!silent)SB.auth.signOut().catch(()=>{});TOKEN=null;if(ES){SB.removeChannel(ES);ES=null}S=null;authScreen()}
+function logout(silent,why){setLocked(false);const lk=document.getElementById("lockov");lk&&lk.remove();close();
+  if(MODE==="local"){ls.set("rp.demo.me","");if(S)S.me=null;$("#root").innerHTML="";authScreen(why);return}
+  if(!silent)SB.auth.signOut().catch(()=>{});TOKEN=null;if(ES){SB.removeChannel(ES);ES=null}S=null;$("#root").innerHTML="";authScreen(why)}
 
 /* mutations: same call, local or server */
 const DO={
@@ -514,11 +529,10 @@ function frame(){
   $("#root").innerHTML=`<div class="app"><nav class="side" id="side"></nav><div class="main">
    <header class="top"><img class="mobile-logo" alt="RestoPulse" src="${LOGO}"><h1 id="vt"></h1><span class="sp"></span>
     <span class="chip" id="chip"><i></i><span></span></span>
-    ${MODE==="local"?`<select class="sel" id="role" aria-label="Role (demo)"><option value="owner">Owner</option><option value="manager">Manager</option><option value="cashier">Cashier</option></select>`:`${expiryPill()}${installBtn()}<span class="who">${esc(S.me.name)} · ${S.me.role}</span>${S.me.role!=="cashier"?`<button class="btn sm" id="lk" title="Screen lock — wapas khilne par password lagega">Lock</button>`:""}<button class="btn sm" id="lo">Logout</button>`}
+    ${MODE==="local"?"":`${expiryPill()}${installBtn()}`}<span class="who">${esc(S.me.name)} · ${S.me.role}</span>${S.me.role!=="cashier"?`<button class="btn sm" id="sw" title="Aap ka account band ho jayega; staff apne login se kaam karega">Staff ko dein</button>`:""}<button class="btn sm" id="lo">Logout</button>
    </header><main class="view" id="view"></main></div></div><nav class="bnav" id="bnav"></nav>`;
-  const r=$("#role");if(r){r.value=UI.role;r.onchange=e=>{UI.role=e.target.value;if(!can(UI.view))UI.view=PERM[UI.role][0];saveUI();render()}}
   const lo=$("#lo");lo&&(lo.onclick=()=>logout());
-  const lk=$("#lk");lk&&(lk.onclick=()=>lockScreen());
+  const sw=$("#sw");sw&&(sw.onclick=()=>logout(false,"handover"));
 }
 function chip(){
   const c=$("#chip");if(!c)return;
@@ -547,27 +561,32 @@ const UDOM="@users.ak47.app";
 const uname=v=>String(v||"").trim().toLowerCase().replace(/\s+/g,".").replace(/[^a-z0-9._-]/g,"");
 function unameField(inp,hint){const f=()=>{const u=uname(inp.value);hint.textContent=inp.value.trim()&&u!==inp.value.trim()?"Username banega: "+u:""};inp.addEventListener("input",f);inp.addEventListener("blur",()=>{inp.value=uname(inp.value);f()})}
 async function loadBrand(){try{const b=await rpc("branding");if(b&&b.setup){LOGO=b.logo||DEF_LOGO;applyTheme(b.theme)}return b}catch(e){return null}}
-async function authScreen(){
-  const b=await loadBrand();
+async function authScreen(why){
+  const b=MODE==="local"?null:await loadBrand();
   if(b&&b.setup===false)return setupScreen();
   $("#root").innerHTML=`<div class="auth"><form class="card" id="af"><img src="${LOGO}" alt="RestoPulse">
    <h3 style="text-align:center">Login</h3><p class="muted" style="text-align:center;margin:-8px 0 12px;font-size:13px">RestoPulse · restaurant billing &amp; POS</p>
+   ${why==="handover"?`<div class="card" style="background:var(--bg);border-color:var(--y);margin-bottom:12px;font-size:13px;line-height:1.6"><b style="color:var(--y)">Owner ka account band ho gaya.</b><br>Staff ab apna username aur password dale. Owner wapas apne hi username aur password se login karega.</div>`:""}
+   ${MODE==="local"?`<div class="card" style="background:var(--bg);margin-bottom:12px;font-size:13px;line-height:1.7"><b>Demo login</b><br>Owner: <b class="num">owner</b> / <b class="num">owner123</b><br><span class="muted">Owner Settings → Staff mein cashier/manager bana kar unke login se dekh sakta hai.</span></div>`:""}
    <div style="display:flex;flex-direction:column;gap:12px">
    <label class="f">Username<input class="in" id="a_login" required autocomplete="username" autocapitalize="none" autofocus></label>
    <label class="f">Password<input class="in" id="a_pw" type="password" required autocomplete="current-password" minlength="6"></label>
-   <label class="f" style="flex-direction:row;align-items:center;gap:8px;font-size:13px"><input type="checkbox" id="a_rem" ${(()=>{try{return localStorage.getItem("rp.remember")==="0"?"":"checked"}catch(e){return "checked"}})()}> Is device par login yaad rakhein (counter ka saanjha computer ho to khali chhorein)</label>
+   <label class="f" style="flex-direction:row;align-items:center;gap:8px;font-size:13px" ${MODE==="local"?"hidden":""}><input type="checkbox" id="a_rem" ${(()=>{try{return localStorage.getItem("rp.remember")==="0"?"":"checked"}catch(e){return "checked"}})()}> Is device par login yaad rakhein (counter ka saanjha computer ho to khali chhorein)</label>
    <p id="aerr" style="color:var(--bad);margin:0;min-height:18px"></p>
    <button class="btn y" id="ab">Login</button>
    <p class="muted" style="margin:0;font-size:12px;text-align:center">Staff: username aur password apne owner se lein.</p>
-   <button type="button" class="btn" id="goReg">Naya restaurant register karein</button>
+   ${MODE==="local"?"":`<button type="button" class="btn" id="goReg">Naya restaurant register karein</button>`}
    ${installBtn()}</div></form></div>`;
   $("#af").onsubmit=async e=>{e.preventDefault();const err=$("#aerr");err.textContent="";const btn=$("#ab");btn.disabled=true;
-    try{try{localStorage.setItem("rp.remember",$("#a_rem").checked?"1":"0")}catch(e){}setLocked(false);
+    try{if(MODE==="local"){const u=(S.users||[]).find(x=>x.login===uname($("#a_login").value)&&x.password===$("#a_pw").value);
+        if(!u)throw new Error("Username ya password ghalat hai.");if(!u.active)throw new Error("Yeh account owner ne band kiya hua hai.");
+        ls.set("rp.demo.me",u.id);S.me={id:u.id,name:u.name,role:u.role};UI.role=u.role;if(!can(UI.view))UI.view=PERM[UI.role][0];$("#root").innerHTML="";render();return}
+      try{localStorage.setItem("rp.remember",$("#a_rem").checked?"1":"0")}catch(e){}setLocked(false);
       const {error}=await SB.auth.signInWithPassword({email:uname($("#a_login").value)+UDOM,password:$("#a_pw").value});
       if(error)throw new Error(/Invalid login/i.test(error.message)?"Username ya password ghalat hai.":error.message);
       TOKEN="sb";await enter();
     }catch(x){err.textContent=x.message||String(x);btn.disabled=false}};
-  $("#goReg").onclick=registerScreen;
+  const gr=$("#goReg");gr&&(gr.onclick=registerScreen);
 }
 const SAMPLE_MENU=[{code:"BG01",name:"Zinger Burger",cat:"Burger",price:550},{code:"BG02",name:"Chicken Burger",cat:"Burger",price:450},{code:"BG03",name:"Beef Burger",cat:"Burger",price:650},
  {code:"PZ01",name:"Chicken Tikka Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},{code:"PZ02",name:"Fajita Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},
@@ -976,9 +995,9 @@ function vSet(){
   </div><p id="serr" style="color:var(--bad);min-height:18px"></p><div class="row" style="justify-content:flex-end"><button class="btn y" id="ssv">Save settings</button></div></form>
   <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
    ${MODE==="server"?`<div class="card"><h3>Plan</h3><p class="muted" style="line-height:1.6">${esc(S.sub.plan?S.sub.plan.name:"—")}${S.sub.expires?" · "+new Date(S.sub.expires).toLocaleDateString("en-GB")+" tak":""}${S.sub.plan&&S.sub.plan.maxDevices?"<br>"+S.sub.plan.maxDevices+" devices ek saath":""}</p>${S.me.role==="owner"?`<button class="btn y" id="renew" type="button">Renew / plan badlein</button>`:""}</div>
-   <div class="card"><h3>Staff</h3><p class="muted" style="font-size:12px;margin-top:-6px">Staff ka username aur password yahan banayen aur unhe bata dein. Woh isi se login karenge.</p><div id="staff" class="muted">Load ho raha hai…</div>
-     <form id="uf" class="fgrid" style="margin-top:12px"><input class="in" id="u_name" placeholder="Naam (jaise Ali)" required><input class="in" id="u_login" placeholder="Username — khud ban jayega" required autocomplete="off" autocapitalize="none"><div class="row" style="flex-wrap:nowrap;gap:6px"><input class="in" id="u_pw" type="text" placeholder="Password (8+)" required minlength="8" autocomplete="off" style="flex:1;min-width:0"><button type="button" class="btn sm" id="u_gen">Naya</button></div><select class="sel" id="u_role"><option value="cashier">Cashier</option><option value="manager">Manager</option></select><p id="uerr" class="full" style="color:var(--bad);margin:0"></p><button class="btn y full">+ Staff add karein</button></form></div>`
-   :`<div class="card"><h3>Demo data</h3><p class="muted">Yeh demo is browser mein chalta hai. Asal kaam ke liye server wala version istemal karein.</p><div class="row"><button class="btn" id="clrDemo">Demo orders hatao</button><button class="btn bad" id="reset">Sab reset</button></div></div>
+`:""}${S.me.role==="owner"?`<div class="card"><h3>Staff</h3><p class="muted" style="font-size:12px;margin-top:-6px">Cashier ya manager ka naam likhein: username aur password software khud bana dega. Har staff sirf apne username/password se login karta hai; owner ka account kisi aur ke liye nahi khulta.</p><div id="staff" class="muted">Load ho raha hai…</div>
+     <form id="uf" class="fgrid" style="margin-top:12px"><input class="in" id="u_name" placeholder="Naam (jaise Ali)" required><input class="in" id="u_login" placeholder="Username — khud ban jayega" required autocomplete="off" autocapitalize="none"><div class="row" style="flex-wrap:nowrap;gap:6px"><input class="in" id="u_pw" type="text" placeholder="Password (8+)" required minlength="8" autocomplete="off" style="flex:1;min-width:0"><button type="button" class="btn sm" id="u_gen">Naya</button></div><select class="sel" id="u_role"><option value="cashier">Cashier</option><option value="manager">Manager</option></select><p id="uerr" class="full" style="color:var(--bad);margin:0"></p><button class="btn y full">+ Staff add karein</button></form></div>`:""}
+   ${MODE==="server"?"":`<div class="card"><h3>Demo data</h3><p class="muted">Yeh demo is browser mein chalta hai. Asal kaam ke liye server wala version istemal karein.</p><div class="row"><button class="btn" id="clrDemo">Demo orders hatao</button><button class="btn bad" id="reset">Sab reset</button></div></div>
    <div class="card"><h3>Naya: plans screen</h3><p class="muted">Register ke baad customer ko yeh screen milegi. Preview mein koi payment nahi hoti.</p><button class="btn y" id="pvPlans" type="button">Plans screen preview dekhein</button></div>`}
    <div class="card"><h3>Hardware</h3><p class="muted" style="line-height:1.6">Barcode scanner: USB scanner keyboard ki tarah kaam karta hai. Billing par kahin bhi scan karein, item cart mein aa jayega. Size wale item ka code + size bhi chalta hai (PZ04M, SW032pc).<br>Thermal printer: Windows mein printer driver install karein aur default bana dein, phir receipt par Print dabayen.</p></div>
   </div></div>`;
@@ -988,52 +1007,32 @@ function vSet(){
     const ns={name:v("#s_name"),tagline:v("#s_tag"),address:v("#s_addr"),phone:v("#s_phone"),ntn:v("#s_ntn"),cashTax:+v("#s_cash")||0,cardTax:+v("#s_card")||0,taxOnTop:v("#s_top")==="1",deliveryFee:+v("#s_fee")||0,width:v("#s_w"),lowStock:+v("#s_low")||0,footer:v("#s_foot"),
       offer:{on:$("#o_on").checked,amt:+v("#o_amt")||0,cats:[...document.querySelectorAll("[data-oc]")].filter(x=>x.checked).map(x=>x.dataset.oc)},pizzaDrink:$("#o_pd").checked};
     busy($("#ssv"),async()=>{try{await DO.settings(ns);toast("Settings saved")}catch(e){$("#serr").textContent=e.message}})};
-  if(MODE==="server"){
+  if($("#uf")){
     const loadStaff=async()=>{try{const us=await api("/api/users");$("#staff").innerHTML=us.map(u=>`<div class="top-item"><div><b style="color:var(--fg)">${esc(u.name)}</b> <span class="pill ${u.role==="owner"?"y":"ok"}">${u.role}</span><div>${esc(u.login)}</div></div><div class="row" style="flex-wrap:nowrap"><button class="btn sm" data-upw="${u.id}" data-un="${esc(u.name)}">Password</button>${u.role!=="owner"?`<button class="btn sm" data-ua="${u.id}" data-a="${u.active?0:1}">${u.active?"Band karein":"Chalu karein"}</button>`:""}</div></div>`).join("");
       document.querySelectorAll("[data-upw]").forEach(b=>b.onclick=()=>{const m=modal(`<h2>${esc(b.dataset.un)}: naya password</h2><form id="pwf" style="display:flex;flex-direction:column;gap:12px"><input class="in" id="np" type="text" minlength="6" required autofocus placeholder="Naya password (6+)"><p id="pwe" style="color:var(--bad);margin:0"></p><div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="x">Wapas</button><button class="btn y">Save</button></div></form>`);
-        m.querySelector("#x").onclick=close;m.querySelector("#pwf").onsubmit=async e=>{e.preventDefault();try{await rpc("staff_set_password",{p_user:b.dataset.upw,p_password:m.querySelector("#np").value});close();toast("Password badal gaya")}catch(x){m.querySelector("#pwe").textContent=x.message}}});
+        m.querySelector("#x").onclick=close;m.querySelector("#pwf").onsubmit=async e=>{e.preventDefault();try{await api("/api/users/"+b.dataset.upw+"/password","POST",{password:m.querySelector("#np").value});close();toast("Password badal gaya")}catch(x){m.querySelector("#pwe").textContent=x.message}}});
       document.querySelectorAll("[data-ua]").forEach(b=>b.onclick=()=>busy(b,async()=>{await api("/api/users/"+b.dataset.ua+"/active","POST",{active:b.dataset.a==="1"});loadStaff()}))}catch(e){$("#staff").textContent=e.message}};
     loadStaff();
-    const rn=$("#renew");rn&&(rn.onclick=()=>plansScreen({business:S.business,me:S.me,sub:S.sub}));
     const gen=()=>{const a="abcdefghjkmnpqrstuvwxyz23456789";let p="";const r=crypto.getRandomValues(new Uint32Array(9));r.forEach(x=>p+=a[x%a.length]);$("#u_pw").value=p.slice(0,4)+"-"+p.slice(4)};
     const slug=uname(S.business.name||S.settings.name||"").replace(/[._-]/g,"").slice(0,12);let touched=false;
     const sug=()=>{if(touched)return;const n=uname($("#u_name").value).split(".")[0];$("#u_login").value=n?(n+"."+($("#u_role").value==="manager"?"mgr":"cash")+(slug?"."+slug:"")).slice(0,30):""};
     $("#u_name").oninput=sug;$("#u_role").onchange=sug;$("#u_login").oninput=()=>{touched=true};$("#u_gen").onclick=gen;gen();
     $("#uf").onsubmit=async e=>{e.preventDefault();const cred={name:$("#u_name").value.trim(),login:uname($("#u_login").value),password:$("#u_pw").value,role:$("#u_role").value};
       try{await api("/api/users","POST",cred);e.target.reset();touched=false;gen();$("#uerr").textContent="";loadStaff();showCred(cred)}catch(err){$("#uerr").textContent=err.message}};
-  }else{
+  }
+  if(MODE==="server"){const rn=$("#renew");rn&&(rn.onclick=()=>plansScreen({business:S.business,me:S.me,sub:S.sub}))}
+  else{
     $("#pvPlans").onclick=()=>plansScreen({business:{name:S.settings.name},me:{name:"Owner",role:"owner"},sub:{status:"none"}});
     $("#clrDemo").onclick=()=>{S.orders=S.orders.filter(o=>!o.demo);saveLocal();toast("Demo orders hat gaye")};
     $("#reset").onclick=e=>{const b=e.target;if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka? Dobara dabayen";return}S=seedLocal();saveLocal();UI.cart=newCart();render();toast("Reset ho gaya")};
   }
 }
 
-/* ============ screen lock (owner / manager on a shared counter) ============ */
-let LASTACT=Date.now();["pointerdown","keydown","touchstart"].forEach(ev=>addEventListener(ev,()=>{LASTACT=Date.now()},{passive:true}));
-setInterval(()=>{if(MODE!=="server"||!S||!S.me||S.me.role==="cashier"||document.getElementById("lockov"))return;
-  const mins=+((S.settings&&S.settings.lockMin)||10);if(mins>0&&Date.now()-LASTACT>mins*60000)lockScreen()},20000);
-async function lockScreen(){
-  if(document.getElementById("lockov")||!S||!S.me)return;setLocked(true);close();
-  const {data}=await SB.auth.getSession();const email=data&&data.session&&data.session.user.email;const user=(email||"").replace(UDOM,"");
-  const d=document.createElement("div");d.id="lockov";d.className="auth";d.style.cssText="position:fixed;inset:0;z-index:9999;background:var(--bg)";
-  d.innerHTML=`<form class="card" id="lkf"><img src="${LOGO}" alt="RestoPulse"><h3 style="text-align:center">Screen lock hai</h3>
-   <p class="muted" style="text-align:center;margin-top:-6px">${esc(S.me.name)} (${esc(user)}) · ${esc(S.me.role)}</p>
-   <div style="display:flex;flex-direction:column;gap:12px"><label class="f">Password<input class="in" id="lk_pw" type="password" required autocomplete="current-password" autofocus></label>
-   <p id="lkerr" style="color:var(--bad);margin:0;min-height:18px"></p><button class="btn y" id="lkb">Kholen</button>
-   <button type="button" class="btn" id="lkout">Doosre user se login karein</button></div></form>`;
-  document.body.appendChild(d);setTimeout(()=>{const i=d.querySelector("#lk_pw");i&&i.focus()},50);
-  d.querySelector("#lkout").onclick=()=>logout();
-  d.querySelector("#lkf").onsubmit=async e=>{e.preventDefault();const b=d.querySelector("#lkb");b.disabled=true;
-    const {error}=await SB.auth.signInWithPassword({email,password:d.querySelector("#lk_pw").value});
-    if(error){d.querySelector("#lkerr").textContent="Password ghalat hai.";b.disabled=false;return}
-    setLocked(false);LASTACT=Date.now();d.remove()};
-}
-
 function showCred(c){
   const link=location.origin+location.pathname;
   const txt=`${S.business.name||S.settings.name} — RestoPulse login\nNaam: ${c.name} (${c.role})\nLink: ${link}\nUsername: ${c.login}\nPassword: ${c.password}\nPehli dafa login ke baad yeh message mita dein.`;
   const m=modal(`<h2>${esc(c.name)} ka login ban gaya</h2><p class="muted" style="margin-top:-6px">Yeh ${esc(c.role)} sirf isi username aur password se login karega. Owner ka account is se nahi khulta.</p>
-   <div class="card" style="background:var(--bg);font-size:15px;line-height:1.9"><div>Username: <b class="num" style="color:var(--y)">${esc(c.login)}</b></div><div>Password: <b class="num" style="color:var(--y)">${esc(c.password)}</b></div><div class="muted" style="font-size:12px">Link: ${esc(link)}</div></div>
+   <div class="card" style="background:var(--bg);font-size:15px;line-height:1.9"><div>Username: <b class="num" style="color:var(--y)">${esc(c.login)}</b></div><div>Password: <b class="num" style="color:var(--y)">${esc(c.password)}</b></div>${MODE==="server"?`<div class="muted" style="font-size:12px">Link: ${esc(link)}</div>`:""}</div>
    <p class="muted" style="font-size:12px">Password abhi note kar lein ya bhej dein. Baad mein dobara nazar nahi aayega; bhool jaye to Staff list mein "Password" se naya bana dein.</p>
    <div class="row" style="justify-content:flex-end"><button class="btn" id="cp">Copy</button><a class="btn" id="wa" target="_blank" rel="noopener">WhatsApp par bhejein</a><button class="btn y" id="x">Theek hai</button></div>`);
   m.querySelector("#wa").href="https://wa.me/?text="+encodeURIComponent(txt);
@@ -1047,11 +1046,10 @@ function permCard(){
   c.innerHTML=`<h3>Staff ki ijazat</h3><p class="muted" style="font-size:13px;margin-top:-6px">Owner ko sab nazar aata hai. Neeche wale khaane band rahenge to manager ya cashier ko <b>profit aur cost price</b> nazar nahi aayegi (dashboard, orders, menu kahin bhi).</p>
    <div style="display:grid;gap:8px"><label class="chk2" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="pm_m" ${on("manager")?"checked":""}> Manager profit aur cost dekh sakta hai</label>
    <label class="chk2" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="pm_c" ${on("cashier")?"checked":""}> Cashier profit aur cost dekh sakta hai</label></div>
-   <label class="f" style="margin-top:12px;max-width:340px">Owner / manager ki screen khud lock ho jaye (khali chhorne ke baad)<select class="sel" id="pm_lk"><option value="5">5 minute</option><option value="10">10 minute</option><option value="30">30 minute</option><option value="0">Kabhi nahi</option></select></label>
-   <p class="muted" style="font-size:12px;margin:6px 0 0">Lock ke baad wahi password lagta hai, is liye cashier owner ke khule account par kaam nahi kar sakta. Upar "Lock" button se foran bhi lock kar sakte hain.</p>
+   <p class="muted" style="font-size:12px;margin:10px 0 0">Counter par staff ko kaam dena ho to upar <b>"Staff ko dein"</b> dabayen: aap ka account foran band ho jayega aur staff apne username/password se login karega. Wapas aane ke liye aap ko apna username aur password dobara dalna hoga.</p>
    <div class="row" style="justify-content:flex-end;margin-top:10px"><button class="btn y" id="pm_sv">Ijazat save karein</button></div>`;
-  $("#pm_lk").value=String(S.settings.lockMin??10);
-  $("#pm_sv").onclick=()=>busy($("#pm_sv"),async()=>{await DO.settings({perms:{manager:{profit:$("#pm_m").checked},cashier:{profit:$("#pm_c").checked}},lockMin:+$("#pm_lk").value});toast("Ijazat save ho gayi")});
+
+  $("#pm_sv").onclick=()=>busy($("#pm_sv"),async()=>{await DO.settings({perms:{manager:{profit:$("#pm_m").checked},cashier:{profit:$("#pm_c").checked}}});toast("Ijazat save ho gayi")});
 }
 
 /* ============ deals & offers ============ */
@@ -1130,7 +1128,6 @@ async function enter(){
   if(me.businessStatus!=="active"){$("#root").innerHTML=`<div class="auth"><div class="card"><img src="${LOGO}" alt="RestoPulse"><h3 style="text-align:center">Account band hai</h3><p class="muted">Yeh business account band kiya gaya hai. Support se rabta karein.</p><button class="btn" onclick="logout()">Logout</button></div></div>`;return}
   if(me.sub.status!=="active")return plansScreen(me);
   await pull();startSync();$("#root").innerHTML="";render();
-  if(isLocked()&&S.me.role!=="cashier")lockScreen();else setLocked(false);
 }
 function expiryPill(){if(!S||!S.sub||!S.sub.expires)return"";const d=Math.ceil((S.sub.expires-Date.now())/864e5);return d<=5?`<span class="pill warn">Plan ${d} din mein khatam</span>`:""}
 const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
@@ -1196,7 +1193,10 @@ function payForm(p,info,me){
   }
   try{S=JSON.parse(ls.get(KEY)||"null")}catch(e){S=null}
   if(!S||!S.items){S=seedLocal();saveLocal()}
-  S.me={name:UI.role[0].toUpperCase()+UI.role.slice(1),role:UI.role};
+  if(!S.users)S.users=[{id:"u_owner",name:"Owner",login:"owner",password:"owner123",role:"owner",active:true}];
+  const me=S.users.find(u=>u.id===ls.get("rp.demo.me")&&u.active);
+  if(!me){S.me=null;return authScreen()}
+  S.me={id:me.id,name:me.name,role:me.role};UI.role=me.role;
   render();
 })();
 </script>

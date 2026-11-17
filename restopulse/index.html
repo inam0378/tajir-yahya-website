@@ -172,7 +172,7 @@ td.r,th.r{text-align:right}
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 
-<style>.cats{flex-shrink:0;min-height:max-content}.grid{flex:1 1 auto;min-height:0;grid-auto-rows:auto}.tile{height:auto;min-height:142px}.tile .nm{flex:1 0 auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.6em}.tile .sz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile .pr{line-height:1.2}</style><style>
+<style>.cats{flex-shrink:0;min-height:max-content}.grid{flex:1 1 auto;min-height:0;grid-auto-rows:auto}.tile{height:auto;min-height:142px}.tile .nm{flex:1 0 auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.6em}.tile .sz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile .pr{line-height:1.2}.tools.one{grid-template-columns:1fr!important}.cart{overflow-y:auto}.cart-h,.cart-f{flex-shrink:0}.lines{min-height:120px}</style><style>
 .tile .sz{font-size:11px;color:var(--muted);line-height:1.4}
 .tile .pr small{font-family:var(--f-body);font-size:11px;color:var(--muted);font-weight:600;margin-right:3px}
 .sizes{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
@@ -682,21 +682,24 @@ function vDash(){
 function vBill(){
   const cats=["All",...new Set(S.items.map(i=>i.cat))];if(!cats.includes(UI.cat))UI.cat="All";
   $("#view").innerHTML=`<div class="pos"><div class="pos-left">
-    <div class="tools"><div class="scan">${svg("scan")}<input class="in" id="scan" placeholder="Barcode scan ya code + Enter (BG02, PZ04M)" autocomplete="off"></div>
-    <input class="in" id="q" placeholder="Item dhoondein…" value="${esc(UI.q)}" autocomplete="off"></div>
+    <div class="tools one"><div class="scan">${svg("scan")}<input class="in" id="q" placeholder="Item dhoondein · ya code / barcode + Enter (BG02, PZ04M)" value="${esc(UI.q)}" autocomplete="off" enterkeyhint="go"></div></div>
     <div class="cats">${cats.map(c=>`<button class="cat ${UI.cat===c?"on":""}" data-cat="${esc(c)}">${esc(c)}</button>`).join("")}</div>
     <div class="grid" id="grid"></div></div>
    <aside class="cart" id="cart"></aside></div><button class="mbar" id="mbar" hidden></button>`;
   renderGrid();renderCart();
   $("#q").addEventListener("input",e=>{UI.q=e.target.value;renderGrid()});
-  $("#scan").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();scanCode(e.target.value);e.target.value=""}});
+  $("#q").addEventListener("keydown",e=>{if(e.key!=="Enter")return;e.preventDefault();const v=e.target.value.trim();if(!v)return;const lv=v.toLowerCase();
+    const exact=S.items.some(i=>(i.barcode&&i.barcode===v)||i.code.toLowerCase()===lv||(i.sizes&&lv.startsWith(i.code.toLowerCase())&&i.sizes.some(z=>z.l.toLowerCase()===lv.slice(i.code.length))));
+    const list=S.items.filter(i=>(UI.cat==="All"||i.cat===UI.cat)&&(i.name.toLowerCase().includes(lv)||i.code.toLowerCase().includes(lv)));
+    if(exact)scanCode(v);else if(list.length===1)pickItem(list[0].id,true);else{toast(list.length?"Kai items mile — tile par tap karein":"Kuch nahi mila: "+v,!list.length);return}
+    e.target.value="";UI.q="";renderGrid()});
   document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{UI.cat=b.dataset.cat;document.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("on",x===b));renderGrid()});
   $("#mbar").onclick=()=>$("#cart").scrollIntoView({behavior:"smooth"});
-  if(matchMedia("(min-width:861px)").matches)$("#scan").focus();
+  if(matchMedia("(min-width:861px)").matches)$("#q").focus();
 }
 function renderGrid(){
   const q=UI.q.trim().toLowerCase();
-  const list=S.items.filter(i=>(UI.cat==="All"||i.cat===UI.cat)&&(!q||i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)));
+  const list=S.items.filter(i=>(UI.cat==="All"||i.cat===UI.cat)&&(!q||i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||(i.barcode&&i.barcode===UI.q.trim())));
   $("#grid").innerHTML=list.length?list.map(i=>{const out=i.track&&i.stock<=0;const multi=i.sizes&&i.sizes.length>1;
     return `<button class="tile ${out?"out":""}" data-add="${i.id}" ${out?"disabled":""}><span class="code">${esc(i.code)}</span>${i.track?`<span class="st pill ${i.stock<=0?"bad":i.stock<=S.settings.lowStock?"warn":"ok"}">${i.stock}</span>`:""}<span class="nm">${esc(i.name)}</span>${multi?`<span class="sz">${esc(i.sizes.map(z=>z.l).join(" · "))}</span>`:""}${i.addons&&i.addons.length?`<span class="sz">+ add-ons</span>`:""}<span class="pr num">${multi?"<small>se</small>":""}${pkr(minPrice(i))}</span></button>`}).join(""):`<div class="empty" style="grid-column:1/-1">Koi item nahi mila</div>`;
   document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>pickItem(b.dataset.add));
@@ -827,7 +830,7 @@ function receipt(o){
   const m=modal(`<h2>Receipt</h2>${receiptHTML(o)}
    <p class="muted" style="font-size:12px;margin-top:12px">${inFrame?"Is preview mein print band hai. App ko Windows par kholen to thermal printer par print hoga.":"Print dabane par thermal printer select karein (pehli dafa default bana dein)."}</p>
    <div class="row" style="justify-content:flex-end;margin-top:8px">${inFrame?"":`<button class="btn" id="pr">Print</button>`}<button class="btn y" id="x" autofocus>Agla order</button></div>`);
-  m.querySelector("#x").onclick=()=>{close();$("#scan")&&$("#scan").focus()};
+  m.querySelector("#x").onclick=()=>{close();$("#q")&&$("#q").focus()};
   const p=m.querySelector("#pr");p&&(p.onclick=()=>{$("#printArea").innerHTML=receiptHTML(o);window.print()});
 }
 

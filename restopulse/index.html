@@ -339,13 +339,13 @@ const DEFAULT_SETTINGS = {
   phone: "0300-0000000", ntn: "",
   cashTax: 16, cardTax: 5, taxOnTop: false, deliveryFee: 50,
   offer: { on: false, amt: 50, cats: [] },
-  pizzaDrink: true, width: "w80", lowStock: 10,
+  pizzaDrink: false, width: "w80", lowStock: 10,
   footer: "Shukriya! Dobara tashreef laiye.",
   perms: { manager: { profit: false }, cashier: { profit: false } }, offers: []
 };
 if (typeof module !== "undefined") module.exports = { calcOrder, freebies, evalOffers, offerLive, DEFAULT_SETTINGS };
 
-const MENU=[{"code":"SH01","name":"Medium Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":300},{"l":"Cheese","p":350}]},{"code":"SH02","name":"Large Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":350},{"l":"Cheese","p":400}]},{"code":"SH03","name":"AK47 Special Jambo Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":400},{"l":"Cheese","p":450}]},{"code":"SH04","name":"Platter Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":700},{"l":"Cheese","p":750}]},{"code":"SH05","name":"Paratha Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":400},{"l":"Cheese","p":450}]},{"code":"SH06","name":"Platter Paratha Shawarma","cat":"Shawarma","sizes":[{"l":"Regular","p":800},{"l":"Cheese","p":850}]},{"code":"SH07","name":"AK47 Shawarma Wrap","cat":"Shawarma","sizes":[{"l":"Regular","p":450},{"l":"Cheese","p":500}]},{"code":"SH08","name":"Wrap Platter","cat":"Shawarma","sizes":[{"l":"Regular","p":900},{"l":"Cheese","p":999}]},{"code":"PZ01","name":"AK47 Special Pizza","cat":"Pizza","sizes":[{"l":"M","p":999},{"l":"L","p":1599}]},{"code":"PZ02","name":"Malai Boti Pizza","cat":"Pizza","sizes":[{"l":"S","p":650},{"l":"M","p":899},{"l":"L","p":1499}]},{"code":"PZ03","name":"Cheese Lover Pizza","cat":"Pizza","sizes":[{"l":"S","p":599},{"l":"M","p":899},{"l":"L","p":1499}]},{"code":"PZ04","name":"Tikka Pizza","cat":"Pizza","sizes":[{"l":"S","p":599},{"l":"M","p":899},{"l":"L","p":1499}]},{"code":"PZ05","name":"Fajita Pizza","cat":"Pizza","sizes":[{"l":"S","p":599},{"l":"M","p":899},{"l":"L","p":1499}]},{"code":"PZ06","name":"Supreme Pizza","cat":"Pizza","sizes":[{"l":"S","p":599},{"l":"M","p":899},{"l":"L","p":1499}]},{"code":"BG01","name":"AK47 Special Zinger Burger + Fries","cat":"Burger","price":599},{"code":"BG02","name":"Zinger Burger + Fries","cat":"Burger","price":450},{"code":"BG03","name":"Big Zinger + Fries","cat":"Burger","price":599},{"code":"BG04","name":"AK47 Special Grill Burger + Fries","cat":"Burger","price":599},{"code":"BG05","name":"Grill Burger + Fries","cat":"Burger","price":499},{"code":"BG06","name":"Smokey Grill Burger + Fries","cat":"Burger","price":499},{"code":"BG07","name":"Jalapeno Crispy Burger + Fries","cat":"Burger","price":499},{"code":"BG08","name":"Chicken Petty Burger + Fries","cat":"Burger","price":399},{"code":"BG09","name":"Double Petty Chicken Burger + Fries","cat":"Burger","price":499},{"code":"WR01","name":"AK47 Special Grilled Wrap","cat":"Wrap","price":550},{"code":"WR02","name":"AK47 Special Zinger Wrap","cat":"Wrap","price":550},{"code":"WR03","name":"AK47 Special Zinger Pratha Roll","cat":"Wrap","price":499},{"code":"WR04","name":"AK47 Special Paratha Roll","cat":"Wrap","price":499},{"code":"WR05","name":"Grill Paratha Roll","cat":"Wrap","price":450},{"code":"WR06","name":"Grilled Wrap","cat":"Wrap","price":499},{"code":"WR07","name":"Zinger Wrap","cat":"Wrap","price":450},{"code":"WR08","name":"Jalapeno Crispy Wrap","cat":"Wrap","price":499},{"code":"WR09","name":"Zinger Pratha Roll","cat":"Wrap","price":499},{"code":"WR10","name":"Zinger Shawarma","cat":"Wrap","price":399},{"code":"SW01","name":"AK47 Special Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"3pc","p":600}]},{"code":"SW02","name":"Club Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"3pc","p":550}]},{"code":"SW03","name":"Smokey Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":550}]},{"code":"SW04","name":"Grill Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":550}]},{"code":"SW05","name":"Tikka Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":550}]},{"code":"SW06","name":"Turkish Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":600}]},{"code":"SW07","name":"Zinger Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":600}]},{"code":"SW08","name":"Fajita Sandwich + Fries","cat":"Sandwich","sizes":[{"l":"2pc","p":400},{"l":"3pc","p":600}]},{"code":"SD01","name":"AK47 Special Loaded Fries","cat":"Sides","price":600},{"code":"SD02","name":"French Fries Full","cat":"Sides","price":350},{"code":"SD03","name":"Masala Fries","cat":"Sides","price":300},{"code":"SD04","name":"Plain Fries","cat":"Sides","price":200},{"code":"SD05","name":"Smokey Dragon Wings Half + Fries","cat":"Sides","price":400},{"code":"SD06","name":"Smokey Dragon Wings Full + Fries","cat":"Sides","price":700},{"code":"SD07","name":"Crispy Hot Wings 5pc + Fries","cat":"Sides","price":400},{"code":"SD08","name":"Crispy Hot Wings 10pc + Fries","cat":"Sides","price":650},{"code":"SD09","name":"Nuggets 5pc + Dip + Fries","cat":"Sides","price":350},{"code":"SD10","name":"Nuggets 10pc + Dip + Fries","cat":"Sides","price":600},{"code":"PS01","name":"AK47 Special Baked Pasta","cat":"Pasta","price":650},{"code":"PS02","name":"Alfredo Pasta","cat":"Pasta","price":600},{"code":"PS03","name":"Italian Pasta","cat":"Pasta","price":500},{"code":"EX01","name":"Extra Mayo Dip","cat":"Extras","price":50},{"code":"EX02","name":"Extra Shawarma Bread","cat":"Extras","price":50}];
+const MENU=[];
 const DEF_LOGO="data:image/png;base64,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";let LOGO=DEF_LOGO;
 const hex2rgb=h=>{h=h.replace("#","");return[parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)]};
 const rgb2hex=a=>"#"+a.map(v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0")).join("");
@@ -393,8 +393,7 @@ const priceText=i=>i.sizes&&i.sizes.length?i.sizes.map(z=>z.l+" "+z.p).join(" ·
 let MODE="local",TOKEN=null,S=null,DEVICES=0,SYNC="local";
 const KEY="ak47.data.v2";
 function seedLocal(){
-  const items=MENU.map(m=>({id:uid(),code:m.code,name:m.name.replace(/AK47 /g,""),cat:m.cat,price:m.price||0,sizes:m.sizes||null,barcode:"",track:false,stock:0}));
-  items.push({id:uid(),code:"DR01",name:"Soft Drink 345ml (sample)",cat:"Drinks",price:120,sizes:null,barcode:"8961008200011",track:true,stock:48});
+  const items=[];
   const st={settings:JSON.parse(JSON.stringify(DEFAULT_SETTINGS)),items,orders:[],held:[],seq:0,me:{name:"Owner",role:"owner"},business:{name:"Demo Restaurant"}};
   st.items.forEach(i=>{i.cost=Math.round((i.price||(i.sizes?i.sizes[0].p:0))*.55);if(i.sizes){i.sizeCosts={};i.sizes.forEach(z=>i.sizeCosts[z.l]=Math.round(z.p*.55))}});
   const bg=st.items.find(i=>i.cat==="Burger"&&!i.sizes)||st.items.find(i=>!i.sizes),dr=st.items.find(i=>i.track);
@@ -403,7 +402,7 @@ function seedLocal(){
   st.settings.perms={manager:{profit:false},cashier:{profit:false}};
   st.users=[{id:"u_owner",name:"Owner",login:"owner",password:"owner123",role:"owner",active:true}];
   const now=Date.now();const pick=()=>items[Math.floor(Math.random()*(items.length-1))];
-  for(let d=6;d>=0;d--){const n=10+Math.floor(Math.random()*12);for(let k=0;k<n;k++){
+  if(items.length>1)for(let d=6;d>=0;d--){const n=10+Math.floor(Math.random()*12);for(let k=0;k<n;k++){
     const lines=[];const c=1+Math.floor(Math.random()*3);
     for(let j=0;j<c;j++){const it=pick();const z=it.sizes?it.sizes[Math.floor(Math.random()*it.sizes.length)]:null;lines.push({id:it.id,size:z?z.l:null,name:it.name+(z?" ("+z.l+")":""),price:z?z.p:it.price,qty:1+Math.floor(Math.random()*2),cat:it.cat})}
     st.orders.push(calcOrder({id:uid(),ts:now-d*864e5-Math.floor(Math.random()*6*36e5),type:["Dine-in","Takeaway","Delivery"][Math.floor(Math.random()*3)],lines,disc:0,discType:"pkr",pay:Math.random()<.35?"card":"cash",demo:true,status:"paid",by:"Owner",cust:Math.random()<.3?{name:["Ali","Hamza","Ayesha","Usman","Sana"][k%5],phone:"0300-000000"+(k%5)}:null},st.settings));
@@ -563,7 +562,6 @@ function unameField(inp,hint){const f=()=>{const u=uname(inp.value);hint.textCon
 async function loadBrand(){try{const b=await rpc("branding");if(b&&b.setup){LOGO=b.logo||DEF_LOGO;applyTheme(b.theme)}return b}catch(e){return null}}
 async function authScreen(why){
   const b=MODE==="local"?null:await loadBrand();
-  if(b&&b.setup===false)return setupScreen();
   $("#root").innerHTML=`<div class="auth"><form class="card" id="af"><img src="${LOGO}" alt="RestoPulse">
    <h3 style="text-align:center">Login</h3><p class="muted" style="text-align:center;margin:-8px 0 12px;font-size:13px">RestoPulse · restaurant billing &amp; POS</p>
    ${why==="handover"?`<div class="card" style="background:var(--bg);border-color:var(--y);margin-bottom:12px;font-size:13px;line-height:1.6"><b style="color:var(--y)">Owner ka account band ho gaya.</b><br>Staff ab apna username aur password dale. Owner wapas apne hi username aur password se login karega.</div>`:""}
@@ -585,55 +583,6 @@ async function authScreen(why){
       const {error}=await SB.auth.signInWithPassword({email:uname($("#a_login").value)+UDOM,password:$("#a_pw").value});
       if(error)throw new Error(/Invalid login/i.test(error.message)?"Username ya password ghalat hai.":error.message);
       TOKEN="sb";await enter();
-    }catch(x){err.textContent=x.message||String(x);btn.disabled=false}};
-}
-const SAMPLE_MENU=[{code:"BG01",name:"Zinger Burger",cat:"Burger",price:550},{code:"BG02",name:"Chicken Burger",cat:"Burger",price:450},{code:"BG03",name:"Beef Burger",cat:"Burger",price:650},
- {code:"PZ01",name:"Chicken Tikka Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},{code:"PZ02",name:"Fajita Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},
- {code:"SW01",name:"Chicken Shawarma",cat:"Shawarma",price:300},{code:"SW02",name:"Zinger Shawarma",cat:"Shawarma",price:400},
- {code:"FR01",name:"French Fries",cat:"Sides",sizes:[{l:"Regular",p:250},{l:"Large",p:400}]},{code:"FR02",name:"Loaded Fries",cat:"Sides",price:550},{code:"NG01",name:"Nuggets (6 pc)",cat:"Sides",price:450},
- {code:"DR01",name:"Soft Drink",cat:"Drinks",sizes:[{l:"345ml",p:120},{l:"1.5 Litre",p:250}]},{code:"DR02",name:"Mineral Water",cat:"Drinks",price:100}];
-function registerScreen(){
-  $("#root").innerHTML=`<div class="auth"><form class="card" id="rf"><img src="${LOGO}" alt="RestoPulse">
-   <h3 style="text-align:center">Naya restaurant register karein</h3>
-   <div style="display:flex;flex-direction:column;gap:12px">
-   <label class="f">Restaurant ka naam<input class="in" id="r_biz" required maxlength="80" autofocus placeholder="jaise Lahori Grill"></label>
-   <label class="f">Owner ka naam<input class="in" id="r_owner" required maxlength="60"></label>
-   <label class="f">Username (login ke liye)<input class="in" id="r_user" required autocomplete="username" autocapitalize="none" placeholder="jaise ali.khan"><span class="muted" id="r_uh" style="font-size:12px"></span></label>
-   <label class="f">Password (kam se kam 8)<input class="in" id="r_pw" type="password" required minlength="8" autocomplete="new-password"></label>
-   <label class="f">Password dobara<input class="in" id="r_pw2" type="password" required minlength="8" autocomplete="new-password"></label>
-   <label class="f" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="r_seed" checked> Sample menu daal dein (baad mein rates aur items badal sakte hain)</label>
-   <p id="rerr" style="color:var(--bad);margin:0;min-height:18px"></p>
-   <button class="btn y" id="rb">Register karein</button>
-   <button type="button" class="btn" id="goLogin">Pehle se account hai? Login</button></div></form></div>`;
-  unameField($("#r_user"),$("#r_uh"));
-  $("#goLogin").onclick=authScreen;
-  $("#rf").onsubmit=async e=>{e.preventDefault();const err=$("#rerr");err.textContent="";
-    const user=uname($("#r_user").value),pass=$("#r_pw").value;
-    if(pass!==$("#r_pw2").value){err.textContent="Dono password ek jaise nahi.";return}
-    const btn=$("#rb");btn.disabled=true;btn.textContent="Ban raha hai…";
-    try{await rpc("register_restaurant",{p_business:$("#r_biz").value.trim(),p_owner:$("#r_owner").value.trim(),p_username:user,p_password:pass,p_menu:$("#r_seed").checked?SAMPLE_MENU:null});
-      const {error}=await SB.auth.signInWithPassword({email:user+UDOM,password:pass});if(error)throw error;
-      TOKEN="sb";await enter();
-    }catch(x){err.textContent=x.message||String(x);btn.disabled=false;btn.textContent="Register karein"}};
-}
-function setupScreen(){
-  $("#root").innerHTML=`<div class="auth"><form class="card" id="sf1"><img src="${LOGO}" alt="RestoPulse">
-   <h3 style="text-align:center">Pehli dafa setup</h3><p class="muted" style="margin:-4px 0 12px;font-size:13px;text-align:center">Yeh sirf ek dafa hota hai. Setup code Power Pulse se milega.</p>
-   <div style="display:flex;flex-direction:column;gap:12px">
-   <label class="f">Setup code<input class="in" id="u_code" required autocapitalize="characters" autofocus></label>
-   <label class="f">Restaurant ka naam<input class="in" id="u_biz" required value="AK47"></label>
-   <label class="f">Owner ka naam<input class="in" id="u_owner" required></label>
-   <label class="f">Owner ka username<input class="in" id="u_user" required autocapitalize="none" autocomplete="off" placeholder="jaise ali.khan"><span class="muted" style="font-weight:400">Chhote huroof, bina space. Space khud "." ban jayega.</span><span id="u_hint" style="color:var(--ok);font-weight:600"></span></label>
-   <label class="f">Password<input class="in" id="u_pass" type="password" required minlength="6" autocomplete="new-password"></label>
-   <label class="f" style="flex-direction:row;align-items:center;gap:8px"><input type="checkbox" id="u_seed" checked> AK47 ka menu, rates aur shop details load karein</label>
-   <p id="serr1" style="color:var(--bad);margin:0;min-height:18px"></p><button class="btn y" id="sbtn">Setup mukammal karein</button></div></form></div>`;
-  unameField($("#u_user"),$("#u_hint"));
-  $("#sf1").onsubmit=async e=>{e.preventDefault();const err=$("#serr1");err.textContent="";const btn=$("#sbtn");btn.disabled=true;
-    try{const seed=$("#u_seed").checked;const ak={...DEFAULT_SETTINGS};delete ak.name;
-      const user=uname($("#u_user").value),pass=$("#u_pass").value;
-      await rpc("setup_business",{p_code:$("#u_code").value.trim(),p_business:$("#u_biz").value,p_owner:$("#u_owner").value,p_username:user,p_password:pass,p_menu:seed?MENU:null,p_settings:seed?ak:null});
-      const {error}=await SB.auth.signInWithPassword({email:user+UDOM,password:pass});if(error)throw error;
-      TOKEN="sb";toast("Setup ho gaya");await enter();
     }catch(x){err.textContent=x.message||String(x);btn.disabled=false}};
 }
 function noBusinessScreen(me){
@@ -700,8 +649,9 @@ function renderGrid(){
   const q=UI.q.trim().toLowerCase();
   const list=S.items.filter(i=>(UI.cat==="All"||i.cat===UI.cat)&&(!q||i.name.toLowerCase().includes(q)||i.code.toLowerCase().includes(q)||(i.barcode&&i.barcode===UI.q.trim())));
   $("#grid").innerHTML=list.length?list.map(i=>{const out=i.track&&i.stock<=0;const multi=i.sizes&&i.sizes.length>1;
-    return `<button class="tile ${out?"out":""}" data-add="${i.id}" ${out?"disabled":""}><span class="code">${esc(i.code)}</span>${i.track?`<span class="st pill ${i.stock<=0?"bad":i.stock<=S.settings.lowStock?"warn":"ok"}">${i.stock}</span>`:""}<span class="nm">${esc(i.name)}</span>${multi?`<span class="sz">${esc(i.sizes.map(z=>z.l).join(" · "))}</span>`:""}${i.addons&&i.addons.length?`<span class="sz">+ add-ons</span>`:""}<span class="pr num">${multi?"<small>se</small>":""}${pkr(minPrice(i))}</span></button>`}).join(""):`<div class="empty" style="grid-column:1/-1">Koi item nahi mila</div>`;
+    return `<button class="tile ${out?"out":""}" data-add="${i.id}" ${out?"disabled":""}><span class="code">${esc(i.code)}</span>${i.track?`<span class="st pill ${i.stock<=0?"bad":i.stock<=S.settings.lowStock?"warn":"ok"}">${i.stock}</span>`:""}<span class="nm">${esc(i.name)}</span>${multi?`<span class="sz">${esc(i.sizes.map(z=>z.l).join(" · "))}</span>`:""}${i.addons&&i.addons.length?`<span class="sz">+ add-ons</span>`:""}<span class="pr num">${multi?"<small>se</small>":""}${pkr(minPrice(i))}</span></button>`}).join(""):S.items.length?`<div class="empty" style="grid-column:1/-1">Koi item nahi mila</div>`:`<div class="empty" style="grid-column:1/-1;line-height:1.7">Menu abhi khaali hai.<br>${UI.role!=="cashier"?`<button class="btn y" id="emptyImp" style="margin-top:10px">Menu ki photo se items daalein</button>`:"Owner ya manager menu daalega."}</div>`;
   document.querySelectorAll("[data-add]").forEach(b=>b.onclick=()=>pickItem(b.dataset.add));
+  const ei=$("#emptyImp");ei&&(ei.onclick=()=>menuImport());
 }
 function pickItem(id,fromScan,presetSize){
   const it=S.items.find(i=>i.id===id);if(!it)return;
@@ -851,10 +801,10 @@ function vOrders(){
 
 /* ============ menu (rates change here, no code) ============ */
 function vMenu(){
-  $("#view").innerHTML=`<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="muted">Rate badalne ke liye item par Edit dabayen. Change sab devices par fauran pohanch jata hai.</span><button class="btn y" id="addI">+ Naya item</button></div>
+  $("#view").innerHTML=`<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:12px"><span class="muted">Rate badalne ke liye item par Edit dabayen. Change sab devices par fauran pohanch jata hai.</span><div class="row"><button class="btn" id="impI">Photo se menu</button><button class="btn y" id="addI">+ Naya item</button></div></div>
   <div class="tbl-wrap"><table><tr><th>Code</th><th>Naam</th><th>Category</th><th class="r">Rate (PKR)</th><th>Barcode</th><th>Stock</th><th></th></tr>
   ${S.items.map(i=>`<tr><td><span class="pill y">${esc(i.code)}</span></td><td>${esc(i.name)}</td><td class="muted">${esc(i.cat)}</td><td class="r num">${esc(priceText(i))}${i.addons&&i.addons.length?`<div class="muted" style="font-size:11px">+ ${i.addons.length} add-ons</div>`:""}</td><td class="muted num">${esc(i.barcode)||"—"}</td><td>${i.track?i.stock:'<span class="muted">—</span>'}</td><td><button class="btn sm" data-ed="${i.id}">Edit</button></td></tr>`).join("")}</table></div></div>`;
-  $("#addI").onclick=()=>itemForm();
+  $("#addI").onclick=()=>itemForm();$("#impI").onclick=()=>menuImport();
   document.querySelectorAll("[data-ed]").forEach(b=>b.onclick=()=>itemForm(S.items.find(i=>i.id===b.dataset.ed)));
 }
 function itemForm(it,preset){
@@ -975,7 +925,7 @@ function vCust(){
 /* ============ settings ============ */
 function vSet(){
   const s=S.settings;const cats=[...new Set(S.items.map(i=>i.cat))];
-  $("#view").innerHTML=`<div class="card" style="margin-bottom:14px" id="brandCard"></div><div class="card" style="margin-bottom:14px" id="rcCard"></div><div class="card" style="margin-bottom:14px" id="offCard"></div>${UI.role==="owner"?`<div class="card" style="margin-bottom:14px" id="permCard"></div>`:""}<div class="dgrid"><form class="card" id="sf"><h3>Shop, tax &amp; receipt</h3><div class="fgrid">
+  $("#view").innerHTML=`<div class="card" style="margin-bottom:14px" id="brandCard"></div><div class="card" style="margin-bottom:14px" id="rcCard"></div><div class="card" style="margin-bottom:14px"><div class="row" style="justify-content:space-between"><div><h3 style="margin:0">Menu photo se banayen</h3><p class="muted" style="font-size:13px;margin:6px 0 0">Apne menu card ki photo daalein. Software items, sizes aur rate parh kar list banata hai; aap check kar ke menu mein daal dete hain. Abhi menu mein ${S.items.length} items hain.</p></div><button class="btn y" id="setImp" type="button">Photo se menu</button></div></div><div class="card" style="margin-bottom:14px" id="offCard"></div>${UI.role==="owner"?`<div class="card" style="margin-bottom:14px" id="permCard"></div>`:""}<div class="dgrid"><form class="card" id="sf"><h3>Shop, tax &amp; receipt</h3><div class="fgrid">
    <label class="f">Shop naam<input class="in" id="s_name" value="${esc(s.name)}"></label>
    <label class="f">Tagline<input class="in" id="s_tag" value="${esc(s.tagline)}"></label>
    <label class="f full">Address<input class="in" id="s_addr" value="${esc(s.address)}"></label>
@@ -1004,7 +954,7 @@ function vSet(){
    <div class="card"><h3>Hardware</h3><p class="muted" style="line-height:1.6">Barcode scanner: USB scanner keyboard ki tarah kaam karta hai. Billing par kahin bhi scan karein, item cart mein aa jayega. Size wale item ka code + size bhi chalta hai (PZ04M, SW032pc).<br>Thermal printer: Windows mein printer driver install karein aur default bana dein, phir receipt par Print dabayen.</p></div>
   </div></div>`;
   $("#s_top").value=s.taxOnTop?"1":"0";$("#s_w").value=s.width;
-  brandCard();rcCard();offCard();permCard();
+  brandCard();rcCard();offCard();permCard();$("#setImp").onclick=()=>menuImport();
   $("#sf").onsubmit=e=>{e.preventDefault();const v=id=>$(id).value;
     const ns={name:v("#s_name"),tagline:v("#s_tag"),address:v("#s_addr"),phone:v("#s_phone"),ntn:v("#s_ntn"),cashTax:+v("#s_cash")||0,cardTax:+v("#s_card")||0,taxOnTop:v("#s_top")==="1",deliveryFee:+v("#s_fee")||0,width:v("#s_w"),lowStock:+v("#s_low")||0,footer:v("#s_foot"),
       offer:{on:$("#o_on").checked,amt:+v("#o_amt")||0,cats:[...document.querySelectorAll("[data-oc]")].filter(x=>x.checked).map(x=>x.dataset.oc)},pizzaDrink:$("#o_pd").checked};
@@ -1038,6 +988,181 @@ function showCred(c){
   m.querySelector("#wa").href="https://wa.me/?text="+encodeURIComponent(txt);
   m.querySelector("#cp").onclick=async()=>{try{await navigator.clipboard.writeText(txt);toast("Copy ho gaya")}catch(e){toast("Copy nahi hua, khud likh lein",true)}};
   m.querySelector("#x").onclick=close;
+}
+
+/* RestoPulse: turn OCR text of a menu photo into items. Owner checks the list before it is saved. */
+const MENU_CAT_WORDS = ["pizza","pizzas","burger","burgers","wrap","wraps","roll","rolls","sandwich","sandwiches","shawarma","shawarmas","pasta","pastas","drink","drinks","beverage","beverages","deal","deals","combo","combos","side","sides","sided","starter","starters","starts","appetizer","appetizers","fries","bbq","karahi","handi","rice","biryani","dessert","desserts","sweet","sweets","shake","shakes","juice","juices","tea","coffee","chinese","soup","soups","salad","salads","breakfast","platter","platters","steak","steaks","wings","snack","snacks","special","specials","main","course","menu","extra","extras","add","ons","addons","naan","roti","bread","breads","broast","fried","chicken","grill","grilled","tikka","kabab","kebab","paratha","family","kids","hot","cold","ice","cream","&","/","and","+","our","item","items"];
+const SIZE_WORDS = {s:"S",m:"M",l:"L",xl:"XL",small:"Small",medium:"Medium",large:"Large",regular:"Regular",reg:"Regular",half:"Half",full:"Full",single:"Single",double:"Double",quarter:"Quarter"};
+function mpTitle(s){return s.toLowerCase().replace(/(^|[\s/&(+-])([a-z])/g,(a,b,c)=>b+c.toUpperCase()).replace(/\bAk47\b/gi,"AK47").replace(/\bBbq\b/g,"BBQ")}
+function mpSizeHeader(line){
+  // a row like "S M L", "Small Medium Large", "2pc 3pc", 7" 10" 13"
+  const t=line.replace(/[^\w"'\s]/g," ").trim().split(/\s+/).filter(Boolean);
+  if(t.length<2||t.length>5)return null;
+  const out=[];
+  for(const w of t){const lw=w.toLowerCase().replace(/['"]/g,"");
+    if(SIZE_WORDS[lw])out.push(SIZE_WORDS[lw]);
+    else if(/^\d{1,2}(pc|pcs|piece|pieces|"|inch|in|ml|ltr|l)$/i.test(w))out.push(w.replace(/pieces?$/i,"pc").replace(/pcs$/i,"pc"));
+    else return null}
+  return out.length>=2?out:null;
+}
+function mpIsCategory(name, hasPrice){
+  const words=name.toLowerCase().replace(/[^a-z&/+ ]/g," ").split(/\s+/).filter(Boolean);
+  if(!words.length||words.length>4)return false;
+  const allCat=words.every(w=>MENU_CAT_WORDS.includes(w));
+  const letters=name.replace(/[^A-Za-z]/g,"");
+  const upper=letters.length>=3&&letters===letters.toUpperCase();
+  const HEAD=["sided","starts","starters","sides","deals","drinks","beverages","extras","desserts","appetizers","burgers","pizzas","wraps","rolls","sandwiches","shakes","juices","soups","salads","snacks","specials","platters","steaks","combos","breads","sweets","menu"];
+  if(allCat&&(upper||words.some(w=>HEAD.includes(w))))return true;
+  if(!hasPrice&&upper&&words.length<=3)return true;
+  return false;
+}
+function parseMenuText(text){
+  const items=[];let cat="",sizes=null,pending=null;
+  const lines=String(text).replace(/\r/g,"").split("\n");
+  for(let raw of lines){
+    let line=raw.replace(/[“”«»‘’]/g," ").replace(/\b(rs|pkr)\.?\s*/gi," ").replace(/(\d)\s*\/\s*-?/g,"$1 ").replace(/(\d),(?=\s|$)/g,"$1").replace(/\s+/g," ").trim();
+    if(!line)continue;
+    const sh=mpSizeHeader(line);if(sh){sizes=sh;continue}
+    const tok=line.split(" ");
+    // last token that is a real word (3+ letters, or letters+digits like 5Pc / AK47)
+    let lw=-1;
+    for(let i=0;i<tok.length;i++){const w=tok[i].replace(/^[^A-Za-z0-9(]+|[^A-Za-z0-9)]+$/g,"");
+      if(/[A-Za-z]{3,}/.test(w)||/^AK\d+$/i.test(w)||/^\d+(pc|pcs|ml|ltr|l|kg|g)$/i.test(w)||/^\(.*\)$/.test(tok[i]))lw=i;}
+    const head=lw>=0?tok.slice(0,lw+1).join(" "):"";
+    const tail=lw>=0?tok.slice(lw+1):tok;
+    const slots=[];
+    for(const t of tail){const c=t.replace(/^[^\d-–—]+|[^\d]+$/g,"");
+      if(/^[-–—]+$/.test(t.trim())){slots.push(null);continue}
+      if(/^\d{2,5}$/.test(c)&&!/[A-Za-z]/.test(t)){const n=+c;if(n>=10&&n<=99999)slots.push(n)}}
+    while(slots.length&&slots[0]===null&&slots.slice(1).every(x=>x===null))slots.shift();
+    const prices=slots.filter(x=>x!==null);
+    let name=head.replace(/^[^A-Za-z0-9(]+/,"").replace(/[^A-Za-z0-9)]+$/,"").replace(/\s+[^\sA-Za-z0-9()+&]+(?=\s|$)/g,"").trim();
+    // OCR leaves short junk after the name ("Masala Fries Shy", "Roll P47"): drop it
+    const KEEP=["dip","tea","hot","ice","egg","bun","pie","bbq","mix","veg","jam","cup","pc","ml","h","f"];
+    let nt=name.split(" ");
+    while(nt.length>1){const w=nt[nt.length-1];const lw2=w.toLowerCase().replace(/[^a-z0-9]/g,"");
+      if(/\)$/.test(w)&&/\(/.test(nt.join(" ")))break;
+      if((lw2.length<=3&&!KEEP.includes(lw2)&&!/^\d+(pc|ml|l)$/.test(lw2))||/^[a-z]{1,2}\d+\)?$/i.test(lw2)&&!/^ak\d+$/i.test(lw2)){nt.pop();continue}
+      break}
+    name=nt.join(" ").replace(/[^A-Za-z0-9)]+$/,"");
+    // "WRAP Ses": category word in capitals at the start, junk after it
+    if(!prices.length){const lead=[];for(const w of name.split(" ")){if(w===w.toUpperCase()&&MENU_CAT_WORDS.includes(w.toLowerCase()))lead.push(w);else break}
+      if(lead.length&&lead.join("").length>=3)name=lead.join(" ")}
+    if(!name&&prices.length){ // price on its own line: belongs to the item above
+      if(pending){pending.slots=slots;finish(pending);pending=null}
+      continue}
+    if(!name)continue;
+    if(mpIsCategory(name,prices.length>0)){cat=mpTitle(name.replace(/[^A-Za-z&/ ]/g," ").replace(/\s+/g," ").trim());sizes=null;if(pending){items.push(pending);pending=null}continue}
+    if(!prices.length){if(pending)items.push(pending);pending={name,cat,slots:[],sizesHint:sizes,noPrice:true};continue}
+    if(pending){items.push(pending);pending=null}
+    finish({name,cat,slots,sizesHint:sizes});
+  }
+  if(pending)items.push(pending);
+  function finish(it){
+    const s=it.slots;const real=s.filter(x=>x!==null);
+    it.noPrice=!real.length;
+    if(s.length===1||real.length===1&&!(it.sizesHint&&s.length===it.sizesHint.length)){it.price=real[0]||0;it.sizes=null}
+    else if(real.length){
+      const labels=it.sizesHint&&it.sizesHint.length===s.length?it.sizesHint:s.length===3?["S","M","L"]:s.length===2?["Regular","Large"]:s.map((_,k)=>"Size "+(k+1));
+      it.sizes=s.map((p,k)=>p===null?null:{l:labels[k],p}).filter(Boolean);it.price=0}
+    items.push(it);
+  }
+  const seen=new Set();
+  return items.map(it=>({name:it.name.replace(/\s+/g," ").trim(),cat:it.cat||"Menu",price:it.price||0,sizes:it.sizes||null,ok:!it.noPrice}))
+    .filter(it=>it.name.replace(/[^A-Za-z]/g,"").length>=3)
+    .filter(it=>{const k=(it.name+"|"+it.price+"|"+JSON.stringify(it.sizes)).toLowerCase();if(seen.has(k))return false;seen.add(k);return true});
+}
+
+/* ============ menu from photos (free OCR in the browser) ============ */
+let TESS=null;
+function loadTesseract(){if(window.Tesseract)return Promise.resolve();if(TESS)return TESS;
+  TESS=new Promise((ok,no)=>{const sc=document.createElement("script");sc.src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";sc.onload=ok;sc.onerror=()=>{TESS=null;no(new Error("OCR load nahi hua. Internet check karein."))};document.head.appendChild(sc)});return TESS}
+function prepCanvas(img,r){ // crop, 2x, grayscale, stretch contrast: far better OCR on coloured menus
+  const sx=Math.round(r.x*img.naturalWidth),sy=Math.round(r.y*img.naturalHeight),sw=Math.max(8,Math.round(r.w*img.naturalWidth)),sh=Math.max(8,Math.round(r.h*img.naturalHeight));
+  const k=Math.min(2,2600/sw,4000/sh);const c=document.createElement("canvas");c.width=Math.round(sw*k);c.height=Math.round(sh*k);
+  const g=c.getContext("2d");g.imageSmoothingQuality="high";g.drawImage(img,sx,sy,sw,sh,0,0,c.width,c.height);
+  const d=g.getImageData(0,0,c.width,c.height),a=d.data;let lo=255,hi=0;const gray=new Uint8ClampedArray(a.length/4);
+  for(let i=0,j=0;i<a.length;i+=4,j++){const v=.299*a[i]+.587*a[i+1]+.114*a[i+2];gray[j]=v;if(v<lo)lo=v;if(v>hi)hi=v}
+  const sc=hi>lo?255/(hi-lo):1;for(let i=0,j=0;i<a.length;i+=4,j++){const v=(gray[j]-lo)*sc;a[i]=a[i+1]=a[i+2]=v}
+  g.putImageData(d,0,0);return c}
+function rateText(it){return it.sizes&&it.sizes.length?it.sizes.map(z=>z.l+" "+z.p).join(" / "):(it.price?String(it.price):"")}
+function readRate(t){t=String(t||"").trim();if(!t)return null;
+  if(/^\d+$/.test(t))return{price:+t,sizes:null};
+  const parts=t.split(/[\/,|]+/).map(x=>x.trim()).filter(Boolean),sizes=[];
+  for(const p of parts){const m=p.match(/^(.*?)[\s:=-]*(\d{1,6})$/);if(!m||!m[1].trim())return null;sizes.push({l:m[1].replace(/[:=-]+$/,"").trim().slice(0,20),p:+m[2]})}
+  return sizes.length===1?{price:sizes[0].p,sizes:null}:{price:0,sizes}}
+function menuImport(){
+  const P=[];let cur=0;
+  const m=modal(`<h2>Menu photo se banayen</h2>
+   <p class="muted" style="margin-top:-6px;font-size:13px">1) Menu card ki saaf, seedhi photo chunein. 2) Behtar nateeje ke liye har section (Pizza, Burger…) par ungli/mouse se dabba banayen, ya "2 column" dabayen. 3) "Parhein" dabayen aur list check karein.</p>
+   <div class="row"><label class="btn y" style="cursor:pointer">Photo chunein<input type="file" id="mi_f" accept="image/*" multiple hidden></label><span class="muted" id="mi_n" style="font-size:13px">Koi photo nahi</span></div>
+   <div id="mi_ed" hidden><div class="row" style="margin:10px 0;gap:6px" id="mi_tabs"></div>
+    <div class="row" style="gap:6px;margin-bottom:8px"><button class="btn sm" id="mi_two" type="button">2 column</button><button class="btn sm" id="mi_clr" type="button">Dabbe hatayen (poori photo)</button><span class="muted" id="mi_hint" style="font-size:12px"></span></div>
+    <div id="mi_box" style="position:relative;touch-action:none;user-select:none;border-radius:10px;overflow:hidden;background:#000;max-height:60vh;overflow-y:auto"><img id="mi_img" style="display:block;width:100%;pointer-events:none"></div></div>
+   <p id="mi_st" class="muted" style="min-height:18px;margin:10px 0 0"></p>
+   <div class="row" style="justify-content:flex-end;margin-top:8px"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_go" disabled>Parhein</button></div>`);
+  m.querySelector(".md").style.width="min(760px,100%)";m.querySelector("#x").onclick=close;
+  const q=x=>m.querySelector(x),box=q("#mi_box"),im=q("#mi_img");
+  const draw=()=>{box.querySelectorAll(".mi_r").forEach(e=>e.remove());const p=P[cur];if(!p)return;
+    p.regions.forEach((r,k)=>{const d=document.createElement("div");d.className="mi_r";d.style.cssText=`position:absolute;left:${r.x*100}%;top:${r.y*100}%;width:${r.w*100}%;height:${r.h*100}%;border:2px solid var(--y);background:#ffc80022`;
+      d.innerHTML=`<span style="position:absolute;top:0;left:0;background:var(--y);color:#000;font:700 12px/1 Poppins,sans-serif;padding:3px 6px">${k+1} ✕</span>`;
+      d.firstChild.onpointerdown=e=>{e.stopPropagation();p.regions.splice(k,1);draw()};box.appendChild(d)});
+    q("#mi_hint").textContent=p.regions.length?p.regions.length+" hissay chune":"Poori photo parhi jayegi"};
+  const tabs=()=>{q("#mi_tabs").innerHTML=P.map((p,k)=>`<button type="button" class="btn sm ${k===cur?"y":""}" data-pt="${k}">Photo ${k+1}</button>`).join("");
+    q("#mi_tabs").querySelectorAll("[data-pt]").forEach(b=>b.onclick=()=>{cur=+b.dataset.pt;show()})};
+  const show=()=>{const p=P[cur];im.src=p.url;q("#mi_ed").hidden=false;tabs();im.onload=draw;if(im.complete)draw()};
+  q("#mi_f").onchange=e=>{[...e.target.files].slice(0,8).forEach(f=>P.push({url:URL.createObjectURL(f),regions:[]}));
+    if(P.length){cur=P.length-1;show();q("#mi_go").disabled=false;q("#mi_n").textContent=P.length+" photo"}};
+  let st=null;
+  const pt=e=>{const r=im.getBoundingClientRect();return{x:Math.min(1,Math.max(0,(e.clientX-r.left)/r.width)),y:Math.min(1,Math.max(0,(e.clientY-r.top)/r.height))}};
+  box.onpointerdown=e=>{if(!P[cur])return;st=pt(e);box.setPointerCapture(e.pointerId);const d=document.createElement("div");d.id="mi_tmp";d.style.cssText="position:absolute;border:2px dashed var(--y)";box.appendChild(d)};
+  box.onpointermove=e=>{if(!st)return;const p=pt(e),d=q("#mi_tmp");if(!d)return;d.style.left=Math.min(st.x,p.x)*100+"%";d.style.top=Math.min(st.y,p.y)*100+"%";d.style.width=Math.abs(p.x-st.x)*100+"%";d.style.height=Math.abs(p.y-st.y)*100+"%"};
+  box.onpointerup=e=>{if(!st)return;const p=pt(e),d=q("#mi_tmp");d&&d.remove();const r={x:Math.min(st.x,p.x),y:Math.min(st.y,p.y),w:Math.abs(p.x-st.x),h:Math.abs(p.y-st.y)};st=null;
+    if(r.w>.05&&r.h>.03){P[cur].regions.push(r);draw()}};
+  q("#mi_two").onclick=()=>{P[cur].regions=[{x:0,y:0,w:.5,h:1},{x:.5,y:0,w:.5,h:1}];draw()};
+  q("#mi_clr").onclick=()=>{P[cur].regions=[];draw()};
+  q("#mi_go").onclick=()=>busy(q("#mi_go"),async()=>{const stt=q("#mi_st");
+    try{stt.textContent="OCR tayyar ho raha hai (pehli dafa ~10 MB download)…";await loadTesseract();
+      const w=await Tesseract.createWorker("eng",1,{logger:x=>{if(x.status==="recognizing text")stt.textContent=`Parh raha hai… ${Math.round(x.progress*100)}%`}});
+      await w.setParameters({tessedit_pageseg_mode:"6",preserve_interword_spaces:"0"});
+      let found=[];const jobs=[];P.forEach(p=>(p.regions.length?p.regions:[{x:0,y:0,w:1,h:1}]).forEach(r=>jobs.push({p,r})));
+      for(let k=0;k<jobs.length;k++){stt.textContent=`Hissa ${k+1} / ${jobs.length} parh raha hai…`;
+        const img=new Image();img.src=jobs[k].p.url;await img.decode();const {data}=await w.recognize(prepCanvas(img,jobs[k].r));found=found.concat(parseMenuText(data.text))}
+      await w.terminate();
+      if(!found.length){stt.textContent="Is photo se koi item nahi mila. Section par dabba bana kar dobara try karein, ya items khud daalein.";return}
+      menuReview(found);
+    }catch(x){stt.textContent=x.message||String(x)}});
+}
+function menuReview(list){
+  const cats=[...new Set(S.items.map(i=>i.cat).concat(list.map(i=>i.cat)))];
+  const rows=list.map(it=>({...it,rate:rateText(it)}));
+  const m=modal(`<h2>Parhe gaye items (${rows.length})</h2>
+   <p class="muted" style="margin-top:-6px;font-size:13px">Photo se parhne mein ghalti ho sakti hai. Har line check karein: naam, category aur rate. Size wale item ka rate aise likhein: <b class="num">S 599 / M 899 / L 1499</b>. Jo line ghalat ho uska tick hata dein.</p>
+   <datalist id="mi_cats">${cats.map(c=>`<option value="${esc(c)}">`).join("")}</datalist>
+   <div class="tbl-wrap" style="max-height:52vh;overflow:auto"><table id="mi_t"><tr><th></th><th>Naam</th><th>Category</th><th>Rate (PKR)</th></tr>
+   ${rows.map((r,k)=>`<tr><td><input type="checkbox" data-k="${k}" ${r.ok?"checked":""}></td><td><input class="in" data-n="${k}" value="${esc(r.name)}" style="min-width:180px"></td><td><input class="in" data-c="${k}" list="mi_cats" value="${esc(r.cat)}" style="min-width:110px"></td><td><input class="in num" data-r="${k}" value="${esc(r.rate)}" placeholder="jaise 450" style="min-width:150px"></td></tr>`).join("")}</table></div>
+   ${S.items.length?`<label class="f" style="flex-direction:row;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="mi_rep"> Pehle wala sara menu (${S.items.length} items) hata kar yeh naya menu lagayen</label>`:""}
+   <p id="mi_err" style="color:var(--bad);min-height:18px;margin:8px 0 0"></p>
+   <div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_sv">Menu mein add karein</button></div>`);
+  m.querySelector(".md").style.width="min(900px,100%)";m.querySelector("#x").onclick=close;
+  const q=x=>m.querySelector(x),cnt=()=>{const n=m.querySelectorAll("[data-k]:checked").length;q("#mi_sv").textContent=n+" items menu mein add karein"};
+  m.querySelectorAll("[data-k]").forEach(c=>c.onchange=cnt);cnt();
+  q("#mi_sv").onclick=()=>{const err=t=>q("#mi_err").textContent=t;const out=[];
+    for(const c of m.querySelectorAll("[data-k]:checked")){const k=c.dataset.k,name=m.querySelector(`[data-n="${k}"]`).value.trim(),cat=m.querySelector(`[data-c="${k}"]`).value.trim()||"Menu",rt=readRate(m.querySelector(`[data-r="${k}"]`).value);
+      if(!name)return err("Line "+(+k+1)+": naam khali hai.");if(!rt||(!rt.price&&!(rt.sizes&&rt.sizes.length)))return err(`"${name}": rate sahi likhein (jaise 450 ya S 599 / M 899).`);
+      out.push({name:name.slice(0,60),cat:cat.slice(0,30),price:rt.price,sizes:rt.sizes})}
+    if(!out.length)return err("Koi item chuna nahi.");
+    const rep=q("#mi_rep")&&q("#mi_rep").checked;
+    busy(q("#mi_sv"),async()=>{try{
+      if(rep){for(const it of S.items.slice()){q("#mi_sv").textContent="Purana menu hata raha hai…";if(MODE==="server")await api("/api/items/"+it.id,"DELETE");else S.items=S.items.filter(i=>i.id!==it.id)}}
+      const used=new Set((rep?[]:S.items).map(i=>i.code.toUpperCase()));
+      const code=c=>{const pre=(c.replace(/[^A-Za-z]/g,"").slice(0,2)||"IT").toUpperCase();let n=1,x;do{x=pre+String(n).padStart(2,"0");n++}while(used.has(x));used.add(x);return x};
+      for(let i=0;i<out.length;i++){const it={id:uid(),code:code(out[i].cat),...out[i],barcode:"",track:false,stock:0};q("#mi_sv").textContent=`Daal raha hai ${i+1} / ${out.length}…`;
+        if(MODE==="server")await api("/api/items","POST",it);else S.items.push(it)}
+      if(MODE==="server")await pull();else saveLocal();
+      close();toast(out.length+" items menu mein aa gaye");UI.view==="settings"?vSet():UI.view==="billing"?render():vMenu();
+    }catch(x){err(x.message||String(x));if(MODE==="server")pull().catch(()=>{})}});
+  };
 }
 
 /* ============ staff permissions ============ */

@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0b09"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><script>(function(){function fit(){var R=document.documentElement,sw=screen.width||0,iw=window.innerWidth/(parseFloat(R.style.zoom)||1);["m1100","m860","m520","m460"].forEach(function(c){R.classList.remove(c)});R.style.zoom="";iw=window.innerWidth;if(sw&&iw>sw+40){R.style.zoom=(iw/sw).toFixed(3);[1100,860,520,460].forEach(function(n){if(sw<=n)R.classList.add("m"+n)})}}fit();addEventListener("resize",function(){clearTimeout(window.__fz);window.__fz=setTimeout(fit,150)});addEventListener("orientationchange",function(){setTimeout(fit,300)})})();</script><script>window.AK47_CONFIG={url:"https://bqgnjpbqbsphzwfwlhin.supabase.co",key:"sb_publishable_46o6KGtmErFkaPp97qEIjw_1Gl1NXyE"}</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script></head><body style="margin:0"><title>RestoPulse</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0c0b09"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="robots" content="noindex"><script>(function(){function fit(){var R=document.documentElement,sw=screen.width||0,iw=window.innerWidth/(parseFloat(R.style.zoom)||1);["m1100","m860","m520","m460"].forEach(function(c){R.classList.remove(c)});R.style.zoom="";iw=window.innerWidth;if(sw&&iw>sw+40){R.style.zoom=(iw/sw).toFixed(3);[1100,860,520,460].forEach(function(n){if(sw<=n)R.classList.add("m"+n)})}R.style.setProperty("--vh",(window.innerHeight/(parseFloat(R.style.zoom)||1)/100).toFixed(3)+"px")}fit();addEventListener("resize",function(){clearTimeout(window.__fz);window.__fz=setTimeout(fit,150)});addEventListener("orientationchange",function(){setTimeout(fit,300)})})();</script><script>window.AK47_CONFIG={url:"https://bqgnjpbqbsphzwfwlhin.supabase.co",key:"sb_publishable_46o6KGtmErFkaPp97qEIjw_1Gl1NXyE"}</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script></head><body style="margin:0"><title>RestoPulse</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -122,7 +122,7 @@ td.r,th.r{text-align:right}
 
 /* modal */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
-.md{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:20px}
+.md{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(520px,100%);max-height:calc(var(--vh,1vh)*92);overflow:auto;padding:20px}
 .md h2{margin:0 0 14px;font-family:var(--f-display);text-transform:uppercase;font-size:26px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fgrid .full{grid-column:1/-1}
@@ -237,6 +237,15 @@ td.r,td.num,th,td .pill,td .btn,td .row{white-space:nowrap}
 a.btn{color:inherit;text-decoration:none}
 a.btn.y{color:var(--ink)}
 td .sel{max-width:100%}
+/* dialogs: action buttons always reachable, even on short phone screens */
+.md{max-height:calc(var(--vh,1vh)*92);max-height:calc(var(--vh,1vh)*92);overscroll-behavior:contain}
+.md .mfoot{position:sticky;bottom:-20px;margin:12px -20px -20px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--line);z-index:3;display:flex;flex-direction:column;gap:8px}
+.md .mfoot p:empty{display:none}
+.mi_pic{max-height:calc(var(--vh,1vh)*58);max-height:min(calc(var(--vh,1vh)*58),560px)}
+@media (max-width:520px){
+.mi_pic{max-height:calc(var(--vh,1vh)*42);max-height:calc(var(--vh,1vh)*42)}
+.md .mfoot .row .btn{flex:1}
+}
 </style><style>
 .tile .sz{font-size:11px;color:var(--muted);line-height:1.4}
 .tile .pr small{font-family:var(--f-body);font-size:11px;color:var(--muted);font-weight:600;margin-right:3px}
@@ -1194,14 +1203,13 @@ function readRate(t){t=String(t||"").trim();if(!t)return null;
 function menuImport(){
   const P=[];let cur=0;loadTesseract().catch(()=>{}); // start the download while the owner picks photos
   const m=modal(`<h2>Menu photo se banayen</h2>
-   <p class="muted" style="margin-top:-6px;font-size:13px;line-height:1.6">1) Menu card ki saaf, seedhi photo chunein. 2) Behtar nateeje ke liye har section (Pizza, Burger…) par ungli ya mouse se dabba banayen, ya "2 column" dabayen. 3) "Parhein" dabayen aur list check karein.</p>
+   <p class="muted" style="margin-top:-6px;font-size:13px;line-height:1.55">Saaf, seedhi photo chunein. Har section (Pizza, Burger…) par ungli se dabba banayen ya "2 column" dabayen, phir neeche <b>Parhein</b>.</p>
    <div class="row" style="gap:10px"><label class="btn y" style="cursor:pointer">Photo chunein<input type="file" id="mi_f" accept="image/*" multiple hidden></label><span class="muted" id="mi_n" style="font-size:13px">Koi photo nahi</span></div>
    <div id="mi_ed" hidden><div class="row" style="margin:12px 0 8px;gap:6px" id="mi_tabs"></div>
     <div class="row" style="gap:6px;margin-bottom:10px"><button class="btn sm" id="mi_two" type="button">2 column</button><button class="btn sm" id="mi_clr" type="button">Dabbe hatayen</button><button class="btn sm bad" id="mi_del" type="button">Photo hatayen</button><span class="muted" id="mi_hint" style="font-size:12px"></span></div>
     <div style="display:flex;justify-content:center;background:var(--bg);border-radius:12px;padding:8px"><div id="mi_box" style="position:relative;touch-action:none;user-select:none;-webkit-user-select:none;line-height:0;max-width:100%">
-     <img id="mi_img" alt="" draggable="false" decoding="async" style="display:block;max-width:100%;max-height:70vh;width:auto;height:auto;border-radius:8px;pointer-events:none"><div id="mi_tmp" hidden style="position:absolute;border:2px dashed var(--y);background:#ffc80018;pointer-events:none"></div></div></div></div>
-   <p id="mi_st" class="muted" style="min-height:18px;margin:10px 0 0"></p>
-   <div class="row" style="justify-content:flex-end;margin-top:8px"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_go" disabled>Parhein</button></div>`);
+     <img id="mi_img" alt="" draggable="false" decoding="async" style="display:block;max-width:100%;width:auto;height:auto;border-radius:8px;pointer-events:none" class="mi_pic"><div id="mi_tmp" hidden style="position:absolute;border:2px dashed var(--y);background:#ffc80018;pointer-events:none"></div></div></div></div>
+   <div class="mfoot"><p id="mi_st" class="muted" style="margin:0;font-size:13px"></p><div class="row" style="justify-content:flex-end;gap:8px"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_go" disabled>Parhein</button></div></div>`);
   const q=x=>m.querySelector(x),md=q(".md"),box=q("#mi_box"),im=q("#mi_img"),tmp=q("#mi_tmp"),stt=q("#mi_st");
   md.style.width="min(760px,100%)";q("#x").onclick=close;
   const draw=()=>{box.querySelectorAll(".mi_r").forEach(e=>e.remove());const p=P[cur];if(!p)return;
@@ -1245,11 +1253,10 @@ function menuReview(list){
   const m=modal(`<h2>Parhe gaye items (${rows.length})</h2>
    <p class="muted" style="margin-top:-6px;font-size:13px">Photo se parhne mein ghalti ho sakti hai. Har line check karein: naam, category aur rate. Size wale item ka rate aise likhein: <b class="num">S 599 / M 899 / L 1499</b>. Jo line ghalat ho uska tick hata dein.</p>
    <datalist id="mi_cats">${cats.map(c=>`<option value="${esc(c)}">`).join("")}</datalist>
-   <div class="tbl-wrap" style="max-height:52vh;overflow:auto"><table id="mi_t"><tr><th></th><th>Naam</th><th>Category</th><th>Rate (PKR)</th></tr>
+   <div class="tbl-wrap" style="max-height:calc(var(--vh,1vh)*52);overflow:auto"><table id="mi_t"><tr><th></th><th>Naam</th><th>Category</th><th>Rate (PKR)</th></tr>
    ${rows.map((r,k)=>`<tr><td><input type="checkbox" data-k="${k}" ${r.ok?"checked":""}></td><td><input class="in" data-n="${k}" value="${esc(r.name)}" style="min-width:180px"></td><td><input class="in" data-c="${k}" list="mi_cats" value="${esc(r.cat)}" style="min-width:110px"></td><td><input class="in num" data-r="${k}" value="${esc(r.rate)}" placeholder="jaise 450" style="min-width:150px"></td></tr>`).join("")}</table></div>
    ${S.items.length?`<label class="f" style="flex-direction:row;align-items:center;gap:8px;margin-top:10px"><input type="checkbox" id="mi_rep"> Pehle wala sara menu (${S.items.length} items) hata kar yeh naya menu lagayen</label>`:""}
-   <p id="mi_err" style="color:var(--bad);min-height:18px;margin:8px 0 0"></p>
-   <div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_sv">Menu mein add karein</button></div>`);
+   <div class="mfoot"><p id="mi_err" style="color:var(--bad);margin:0;font-size:13px"></p><div class="row" style="justify-content:flex-end;gap:8px"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="mi_sv">Menu mein add karein</button></div></div>`);
   m.querySelector(".md").style.width="min(900px,100%)";m.querySelector("#x").onclick=close;
   const q=x=>m.querySelector(x),cnt=()=>{const n=m.querySelectorAll("[data-k]:checked").length;q("#mi_sv").textContent=n+" items menu mein add karein"};
   m.querySelectorAll("[data-k]").forEach(c=>c.onchange=cnt);cnt();
@@ -1484,6 +1491,9 @@ function claimScreen(tok){
 }html.m520{
 .tbl-wrap td.wide,.tbl-wrap td.rate{width:100%;max-width:none}
 .tbl-wrap td{overflow-wrap:anywhere}
+}html.m520{
+.mi_pic{max-height:calc(var(--vh,1vh)*42);max-height:calc(var(--vh,1vh)*42)}
+.md .mfoot .row .btn{flex:1}
 }html.m860{
  .two{grid-template-columns:minmax(0,1fr);gap:16px}
  .stylepick{grid-template-columns:repeat(4,minmax(0,1fr))}

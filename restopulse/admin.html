@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><link rel="icon" href="icon-192.png"><script>(function(){function fit(){var R=document.documentElement,sw=screen.width||0,iw=window.innerWidth/(parseFloat(R.style.zoom)||1);["m1100","m860","m520","m460"].forEach(function(c){R.classList.remove(c)});R.style.zoom="";iw=window.innerWidth;if(sw&&iw>sw+40){R.style.zoom=(iw/sw).toFixed(3);[1100,860,520,460].forEach(function(n){if(sw<=n)R.classList.add("m"+n)})}}fit();addEventListener("resize",function(){clearTimeout(window.__fz);window.__fz=setTimeout(fit,150)});addEventListener("orientationchange",function(){setTimeout(fit,300)})})();</script><script>window.AK47_CONFIG={url:"https://bqgnjpbqbsphzwfwlhin.supabase.co",key:"sb_publishable_46o6KGtmErFkaPp97qEIjw_1Gl1NXyE"}</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script></head><body style="margin:0"><title>RestoPulse Super Admin</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><link rel="icon" href="icon-192.png"><script>(function(){function fit(){var R=document.documentElement,sw=screen.width||0,iw=window.innerWidth/(parseFloat(R.style.zoom)||1);["m1100","m860","m520","m460"].forEach(function(c){R.classList.remove(c)});R.style.zoom="";iw=window.innerWidth;if(sw&&iw>sw+40){R.style.zoom=(iw/sw).toFixed(3);[1100,860,520,460].forEach(function(n){if(sw<=n)R.classList.add("m"+n)})}R.style.setProperty("--vh",(window.innerHeight/(parseFloat(R.style.zoom)||1)/100).toFixed(3)+"px")}fit();addEventListener("resize",function(){clearTimeout(window.__fz);window.__fz=setTimeout(fit,150)});addEventListener("orientationchange",function(){setTimeout(fit,300)})})();</script><script>window.AK47_CONFIG={url:"https://bqgnjpbqbsphzwfwlhin.supabase.co",key:"sb_publishable_46o6KGtmErFkaPp97qEIjw_1Gl1NXyE"}</script><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script></head><body style="margin:0"><title>RestoPulse Super Admin</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -122,7 +122,7 @@ td.r,th.r{text-align:right}
 
 /* modal */
 .ov{position:fixed;inset:0;background:rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;z-index:50;padding:16px}
-.md{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:20px}
+.md{background:var(--panel);border:1px solid var(--line);border-radius:14px;width:min(520px,100%);max-height:calc(var(--vh,1vh)*92);overflow:auto;padding:20px}
 .md h2{margin:0 0 14px;font-family:var(--f-display);text-transform:uppercase;font-size:26px}
 .fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fgrid .full{grid-column:1/-1}
@@ -237,6 +237,15 @@ td.r,td.num,th,td .pill,td .btn,td .row{white-space:nowrap}
 a.btn{color:inherit;text-decoration:none}
 a.btn.y{color:var(--ink)}
 td .sel{max-width:100%}
+/* dialogs: action buttons always reachable, even on short phone screens */
+.md{max-height:calc(var(--vh,1vh)*92);max-height:calc(var(--vh,1vh)*92);overscroll-behavior:contain}
+.md .mfoot{position:sticky;bottom:-20px;margin:12px -20px -20px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--panel);border-top:1px solid var(--line);z-index:3;display:flex;flex-direction:column;gap:8px}
+.md .mfoot p:empty{display:none}
+.mi_pic{max-height:calc(var(--vh,1vh)*58);max-height:min(calc(var(--vh,1vh)*58),560px)}
+@media (max-width:520px){
+.mi_pic{max-height:calc(var(--vh,1vh)*42);max-height:calc(var(--vh,1vh)*42)}
+.md .mfoot .row .btn{flex:1}
+}
 </style><style>
 .wrap{max-width:1200px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
 .hdr{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
@@ -428,4 +437,7 @@ async function tPlat(){
 }html.m520{
 .tbl-wrap td.wide,.tbl-wrap td.rate{width:100%;max-width:none}
 .tbl-wrap td{overflow-wrap:anywhere}
+}html.m520{
+.mi_pic{max-height:calc(var(--vh,1vh)*42);max-height:calc(var(--vh,1vh)*42)}
+.md .mfoot .row .btn{flex:1}
 }</style></body></html>

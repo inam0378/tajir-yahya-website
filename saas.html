@@ -173,6 +173,16 @@
 .s-plan.hl .s-btn{background:var(--s-blue);color:#fff}
 .s-plan:not(.hl) .s-btn{background:#ffffff1a;color:#fff}
 .s-note{font-size:13px;color:#9fb0e6;margin-top:18px}
+/* apply */
+.s-form{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;max-width:760px}
+.s-form label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:14px}
+.s-form .full{grid-column:1/-1}
+.s-form input,.s-form select,.s-form textarea{font:inherit;font-weight:400;padding:12px 14px;border:1px solid var(--s-line);border-radius:12px;background:#fff;color:var(--s-ink);min-width:0}
+.s-form input:focus,.s-form select:focus,.s-form textarea:focus{outline:2px solid var(--s-blue);outline-offset:1px}
+.s-form .s-btn{justify-content:center;border:0;cursor:pointer}
+.s-apmsg{margin:0;min-height:20px;font-weight:600}
+.s-apmsg.ok{color:#1f8a4c}.s-apmsg.bad{color:#c0392b}
+@media (max-width:600px){.s-form{grid-template-columns:1fr}}
 /* install */
 .s-inst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:30px}
 .s-inst .s-card ol{margin:0;padding-left:18px;line-height:1.8;color:var(--s-muted)}
@@ -192,8 +202,8 @@
     <div>
       <span class="s-eyebrow">SaaS Software</span>
       <h1>Apne business ke liye <em>apna software.</em> Desktop aur mobile, ek saath.</h1>
-      <p class="s-lead">Hum Pakistani businesses ke liye cloud software banate hain. Browser se install karein, plan lein, aur counter, laptop aur mobile par ek hi data ke saath kaam karein.</p>
-      <div class="s-cta"><a class="s-btn ak" href="restopulse/">RestoPulse kholen aur install karein ↗</a><a class="s-btn gho" href="#pricing">Plans dekhein</a></div>
+      <p class="s-lead">Hum Pakistani businesses ke liye cloud software banate hain. Website par apply karein, 7 din free chala kar dekhein, aur counter, laptop aur mobile par ek hi data ke saath kaam karein.</p>
+      <div class="s-cta"><a class="s-btn ak" href="#apply">7 din free trial · Apply karein</a><a class="s-btn gho" href="#pricing">Plans dekhein</a><a class="s-btn gho" href="restopulse/">Login ↗</a></div>
       <div class="s-stats"><div><b>56</b><span>items wala asal menu</span></div><div><b>Live</b><span>sync har device par</span></div><div><b>PRA</b><span>16% cash · 8% card</span></div></div>
     </div>
     <div class="s-stage" id="sStage" aria-hidden="true">
@@ -246,10 +256,10 @@
     <span class="s-eyebrow">Shuru kaise karein</span>
     <h2>Chaar qadam, <em>aur software chal para.</em></h2>
     <div class="s-steps">
-      <div class="s-step"><h4>Install karein</h4><p>Chrome ya Edge mein app kholen aur "Install" dabayen. Desktop aur mobile par icon ban jata hai.</p></div>
-      <div class="s-step"><h4>Register karein</h4><p>Setup code se pehli dafa setup. Owner apna username banata hai aur staff ke account khud deta hai.</p></div>
-      <div class="s-step"><h4>Plan lein</h4><p>Plan chunein, JazzCash, Easypaisa ya bank se payment bhejen aur Transaction ID dalein.</p></div>
-      <div class="s-step"><h4>Kaam shuru</h4><p>Payment check hote hi software khud khul jata hai. Staff ko add karein aur billing shuru.</p></div>
+      <div class="s-step"><h4>Apply karein</h4><p>Neeche form mein restaurant, naam, email aur WhatsApp number likhen aur pasand ka plan chunein.</p></div>
+      <div class="s-step"><h4>Email verify karein</h4><p>Hum application check kar ke approve karte hain. Aap ki email par link aata hai: us se email verify hoti hai aur username/password milta hai.</p></div>
+      <div class="s-step"><h4>7 din free</h4><p>Login karein, apna password khud banayen, app install karein aur staff ke login dein. Pehle 7 din bilkul free.</p></div>
+      <div class="s-step"><h4>Phir plan</h4><p>Trial ke baad pasand ka plan lein. Payment hote hi software chalta rehta hai, data wahi rehta hai.</p></div>
     </div>
   </div>
 </section>
@@ -258,9 +268,28 @@
   <div class="wrap">
     <span class="s-eyebrow" style="color:var(--s-sky)">Pricing</span>
     <h2 style="color:#fff">Saaf qeemat, <em style="color:var(--s-sky)">koi chhupa kharcha nahi.</em></h2>
-    <p class="s-lead">Setup fee nahi. Plan khatam ho to data mehfooz rehta hai, aur renew karte hi wapas mil jata hai.</p>
+    <p class="s-lead">Pehle 7 din free trial. Setup fee nahi. Plan khatam ho to data mehfooz rehta hai, aur renew karte hi wapas mil jata hai.</p>
     <div class="s-plans" id="sPlans"></div>
     <p class="s-note" id="sNote">Qeematen PKR mein hain. Plans aur qeemat software ke Super Admin panel se aati hain.</p>
+  </div>
+</section>
+
+<section id="apply" class="s-apply">
+  <div class="wrap">
+    <span class="s-eyebrow">7 din free trial</span>
+    <h2>RestoPulse ke liye <em>apply karein.</em></h2>
+    <p class="s-lead">Form bharen. Hum check kar ke approve karenge, phir aap ki email par link aayega. Us link se email verify hogi aur username/password milega.</p>
+    <form class="s-form" id="apForm">
+      <label>Restaurant ka naam<input id="apBiz" required maxlength="80" placeholder="jaise Lahori Grill"></label>
+      <label>Owner ka naam<input id="apOwner" required maxlength="60"></label>
+      <label>Email<input id="apEmail" type="email" required maxlength="120" placeholder="aap@gmail.com"></label>
+      <label>Phone / WhatsApp<input id="apPhone" type="tel" required maxlength="20" placeholder="03xx-xxxxxxx"></label>
+      <label>Shehar<input id="apCity" maxlength="40" placeholder="Lahore"></label>
+      <label>Pasand ka plan (trial ke baad)<select id="apPlan"></select></label>
+      <label class="full">Kuch aur batana ho (optional)<textarea id="apNote" maxlength="300" rows="3"></textarea></label>
+      <p class="full s-apmsg" id="apMsg" role="status"></p>
+      <button class="s-btn ak full" id="apBtn">Apply karein · 7 din free</button>
+    </form>
   </div>
 </section>
 
@@ -290,8 +319,8 @@
 <section class="s-final">
   <div class="wrap">
     <h2>Counter par <em>RestoPulse</em> try karein.</h2>
-    <p class="s-lead" style="margin:0 auto 24px;color:#c9c2a8">App kholen, register karein aur apni dukaan ka menu dekhen.</p>
-    <a class="s-btn ak" href="restopulse/">RestoPulse kholen ↗</a>
+    <p class="s-lead" style="margin:0 auto 24px;color:#c9c2a8">Apply karein, 7 din free chala kar dekhein. Pasand aaye to plan lein.</p>
+    <a class="s-btn ak" href="#apply">7 din free trial · Apply karein</a>
   </div>
 </section>
 
@@ -309,10 +338,23 @@
   const draw=plans=>{box.innerHTML=plans.map(p=>`<div class="s-plan ${p.highlight?"hl":""}">${p.highlight?'<span class="s-badge" style="background:#3f7cff;color:#fff">Sab se zyada liya jata hai</span>':""}<h3>${esc(p.name)}</h3>
     <div class="amt">${p.price==null?"Jald":"PKR "+Number(p.price).toLocaleString("en-US")}<small> / ${p.days>=365?Math.round(p.days/365)+" saal":p.days+" din"}</small></div>
     <div style="opacity:.75">${p.maxDevices?p.maxDevices+" devices ek saath":"Unlimited devices"}</div>
-    <ul>${(p.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul><a class="s-btn" href="restopulse/">Yeh plan lein</a></div>`).join("")};
+    <ul>${(p.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul><a class="s-btn" href="#apply" data-plan="${esc(p.id)}">7 din free · Apply karein</a></div>`).join("");
+    const sel=document.getElementById("apPlan");if(sel){const cur=sel.value;sel.innerHTML=plans.map(p=>`<option value="${esc(p.id)}">${esc(p.name)}${p.price!=null?" · PKR "+Number(p.price).toLocaleString("en-US"):""}</option>`).join("");if(cur)sel.value=cur;else{const h=plans.find(p=>p.highlight);if(h)sel.value=h.id}}
+    box.querySelectorAll("[data-plan]").forEach(a=>a.addEventListener("click",()=>{const s2=document.getElementById("apPlan");if(s2)s2.value=a.dataset.plan}))};
   draw(fallback);
   try{const C=window.AK47_CONFIG;const r=await fetch(C.url+"/rest/v1/rpc/billing_info",{method:"POST",headers:{apikey:C.key,"Content-Type":"application/json"},body:"{}"});
     if(r.ok){const j=await r.json();if(j.plans&&j.plans.length){draw(j.plans);document.getElementById("sNote").textContent="Qeematen PKR mein hain, aur software ke database se seedhi aati hain.";}}}catch(e){}
+})();
+(()=>{ /* application goes straight to the Super Admin panel */
+  const f=document.getElementById("apForm");if(!f)return;const msg=document.getElementById("apMsg"),btn=document.getElementById("apBtn");
+  const v=id=>document.getElementById(id).value.trim();
+  f.addEventListener("submit",async e=>{e.preventDefault();msg.className="full s-apmsg";msg.textContent="";btn.disabled=true;btn.textContent="Bhej rahe hain…";
+    try{const C=window.AK47_CONFIG;const r=await fetch(C.url+"/rest/v1/rpc/apply_restaurant",{method:"POST",headers:{apikey:C.key,"Content-Type":"application/json"},
+      body:JSON.stringify({p_business:v("apBiz"),p_owner:v("apOwner"),p_email:v("apEmail"),p_phone:v("apPhone"),p_city:v("apCity"),p_plan:document.getElementById("apPlan").value||null,p_note:v("apNote")})});
+      const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.message||"Application nahi gayi. Dobara try karein.");
+      f.reset();msg.className="full s-apmsg ok";msg.textContent="Application mil gayi. Hum check kar ke approve karenge; approve hote hi aap ki email par link aayega. Spam folder bhi dekh lein.";
+    }catch(err){msg.className="full s-apmsg bad";msg.textContent=err.message}
+    btn.disabled=false;btn.textContent="Apply karein · 7 din free"});
 })();
 </script>
 </main>

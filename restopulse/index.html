@@ -452,7 +452,6 @@ async function api(path,method="GET",body){
   if(path==="/api/users"&&method==="POST")return rpc("staff_create",{p_name:body.name,p_username:body.login,p_password:body.password,p_role:body.role});
   if((m=path.match(/^\/api\/users\/([\w-]+)\/password$/)))return rpc("staff_set_password",{p_user:m[1],p_password:body.password});
   if((m=path.match(/^\/api\/users\/([\w-]+)\/active$/)))return rpc("set_staff_active",{p_user:m[1],p_active:!!body.active});
-  if(path==="/api/billing/plans")return rpc("billing_info");
   if(path==="/api/billing/request")return rpc("request_payment",{p_plan:body.plan_id,p_method:body.method,p_txn:body.txn,p_sender:body.sender||""});
   if(path==="/api/logout"){await SB.auth.signOut();return{}}
   throw new Error("Unknown "+path);
@@ -483,7 +482,7 @@ const AUTHSTORE={getItem:k=>{try{return (localStorage.getItem("rp.remember")==="
   removeItem:k=>{try{localStorage.removeItem(k);sessionStorage.removeItem(k)}catch(e){}}};
 function setLocked(v){try{v?localStorage.setItem("rp.locked","1"):localStorage.removeItem("rp.locked")}catch(e){}}
 function isLocked(){try{return localStorage.getItem("rp.locked")==="1"}catch(e){return false}}
-function logout(silent,why){setLocked(false);const lk=document.getElementById("lockov");lk&&lk.remove();close();
+function logout(silent,why){setLocked(false);const lk=document.getElementById("lockov");lk&&lk.remove();close(true);
   if(MODE==="local"){ls.set("rp.demo.me","");if(S)S.me=null;$("#root").innerHTML="";authScreen(why);return}
   if(!silent)SB.auth.signOut().catch(()=>{});TOKEN=null;if(ES){SB.removeChannel(ES);ES=null}S=null;$("#root").innerHTML="";authScreen(why)}
 
@@ -529,10 +528,11 @@ function frame(){
   $("#root").innerHTML=`<div class="app"><nav class="side" id="side"></nav><div class="main">
    <header class="top"><img class="mobile-logo" alt="RestoPulse" src="${LOGO}"><h1 id="vt"></h1><span class="sp"></span>
     <span class="chip" id="chip"><i></i><span></span></span>
-    ${MODE==="local"?"":`${expiryPill()}${installBtn()}`}<span class="who">${esc(S.me.name)} · ${S.me.role}</span>${S.me.role!=="cashier"?`<button class="btn sm" id="sw" title="Aap ka account band ho jayega; staff apne login se kaam karega">Staff ko dein</button>`:""}<button class="btn sm" id="lo">Logout</button>
+    ${MODE==="local"?"":`${expiryPill()}${installBtn()}`}<span class="who">${esc(S.me.name)} · ${S.me.role}</span>${S.me.role!=="cashier"?`<button class="btn sm" id="sw" title="Aap ka account band ho jayega; staff apne login se kaam karega">Staff ko dein</button>`:""}<button class="btn sm" id="mypw" title="Apna password badlein">Password</button><button class="btn sm" id="lo">Logout</button>
    </header><main class="view" id="view"></main></div></div><nav class="bnav" id="bnav"></nav>`;
   const lo=$("#lo");lo&&(lo.onclick=()=>logout());
   const sw=$("#sw");sw&&(sw.onclick=()=>logout(false,"handover"));
+  const mp=$("#mypw");mp&&(mp.onclick=()=>changePwModal(false));
 }
 function chip(){
   const c=$("#chip");if(!c)return;
@@ -552,7 +552,7 @@ document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(g
 function go(v){if(!can(v))return;UI.view=v;saveUI();render();$("#view").scrollTop=0}
 function toast(t,bad){const d=document.createElement("div");d.className="toast";if(bad){d.style.background="var(--bad)";d.style.color="#fff"}d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),bad?3500:1800)}
 function modal(html){close();const o=document.createElement("div");o.className="ov";o.id="ov";o.innerHTML=`<div class="md" role="dialog" aria-modal="true">${html}</div>`;o.addEventListener("click",e=>{if(e.target===o)close()});document.body.appendChild(o);const f=o.querySelector("[autofocus]");f&&f.focus();return o}
-function close(){const o=$("#ov");o&&o.remove()}
+function close(f){const o=$("#ov");if(o&&o.dataset.lock&&!f)return;o&&o.remove()}
 document.addEventListener("keydown",e=>{if(e.key==="Escape")close()});
 async function busy(btn,fn){btn.disabled=true;const t=btn.textContent;btn.textContent="…";try{return await fn()}catch(e){toast(e.message,true)}finally{btn.disabled=false;btn.textContent=t}}
 
@@ -575,7 +575,7 @@ async function authScreen(why){
    <p id="aerr" style="color:var(--bad);margin:0;min-height:18px"></p>
    <button class="btn y" id="ab">Login</button>
    <p class="muted" style="margin:0;font-size:12px;text-align:center">Staff: username aur password apne owner se lein.</p>
-   ${MODE==="local"?"":`<button type="button" class="btn" id="goReg">Naya restaurant register karein</button>`}
+   ${MODE==="local"?"":`<a class="btn" href="/saas.html#apply">Naya restaurant? 7 din free trial ke liye apply karein</a>`}
    ${installBtn()}</div></form></div>`;
   $("#af").onsubmit=async e=>{e.preventDefault();const err=$("#aerr");err.textContent="";const btn=$("#ab");btn.disabled=true;
     try{if(MODE==="local"){const u=(S.users||[]).find(x=>x.login===uname($("#a_login").value)&&x.password===$("#a_pw").value);
@@ -586,7 +586,6 @@ async function authScreen(why){
       if(error)throw new Error(/Invalid login/i.test(error.message)?"Username ya password ghalat hai.":error.message);
       TOKEN="sb";await enter();
     }catch(x){err.textContent=x.message||String(x);btn.disabled=false}};
-  const gr=$("#goReg");gr&&(gr.onclick=registerScreen);
 }
 const SAMPLE_MENU=[{code:"BG01",name:"Zinger Burger",cat:"Burger",price:550},{code:"BG02",name:"Chicken Burger",cat:"Burger",price:450},{code:"BG03",name:"Beef Burger",cat:"Burger",price:650},
  {code:"PZ01",name:"Chicken Tikka Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},{code:"PZ02",name:"Fajita Pizza",cat:"Pizza",sizes:[{l:"S",p:550},{l:"M",p:1050},{l:"L",p:1450}]},
@@ -997,11 +996,11 @@ function vSet(){
    </div>
   </div><p id="serr" style="color:var(--bad);min-height:18px"></p><div class="row" style="justify-content:flex-end"><button class="btn y" id="ssv">Save settings</button></div></form>
   <div style="display:flex;flex-direction:column;gap:14px;min-width:0">
-   ${MODE==="server"?`<div class="card"><h3>Plan</h3><p class="muted" style="line-height:1.6">${esc(S.sub.plan?S.sub.plan.name:"—")}${S.sub.expires?" · "+new Date(S.sub.expires).toLocaleDateString("en-GB")+" tak":""}${S.sub.plan&&S.sub.plan.maxDevices?"<br>"+S.sub.plan.maxDevices+" devices ek saath":""}</p>${S.me.role==="owner"?`<button class="btn y" id="renew" type="button">Renew / plan badlein</button>`:""}</div>
+   ${MODE==="server"?`<div class="card"><h3>Plan</h3><p class="muted" style="line-height:1.6">${esc(S.sub.plan?(S.sub.plan.id==="trial"?"Free trial (7 din)":S.sub.plan.name):"—")}${S.sub.expires?" · "+new Date(S.sub.expires).toLocaleDateString("en-GB")+" tak":""}${S.sub.plan&&S.sub.plan.maxDevices?"<br>"+S.sub.plan.maxDevices+" devices ek saath":""}</p><p class="muted" style="font-size:12px;margin:6px 0 0">Plan lene, renew ya badalne ke liye RestoPulse team se rabta karein.</p></div>
 `:""}${S.me.role==="owner"?`<div class="card"><h3>Staff</h3><p class="muted" style="font-size:12px;margin-top:-6px">Cashier ya manager ka naam likhein: username aur password software khud bana dega. Har staff sirf apne username/password se login karta hai; owner ka account kisi aur ke liye nahi khulta.</p><div id="staff" class="muted">Load ho raha hai…</div>
      <form id="uf" class="fgrid" style="margin-top:12px"><input class="in" id="u_name" placeholder="Naam (jaise Ali)" required><input class="in" id="u_login" placeholder="Username — khud ban jayega" required autocomplete="off" autocapitalize="none"><div class="row" style="flex-wrap:nowrap;gap:6px"><input class="in" id="u_pw" type="text" placeholder="Password (8+)" required minlength="8" autocomplete="off" style="flex:1;min-width:0"><button type="button" class="btn sm" id="u_gen">Naya</button></div><select class="sel" id="u_role"><option value="cashier">Cashier</option><option value="manager">Manager</option></select><p id="uerr" class="full" style="color:var(--bad);margin:0"></p><button class="btn y full">+ Staff add karein</button></form></div>`:""}
    ${MODE==="server"?"":`<div class="card"><h3>Demo data</h3><p class="muted">Yeh demo is browser mein chalta hai. Asal kaam ke liye server wala version istemal karein.</p><div class="row"><button class="btn" id="clrDemo">Demo orders hatao</button><button class="btn bad" id="reset">Sab reset</button></div></div>
-   <div class="card"><h3>Naya: plans screen</h3><p class="muted">Register ke baad customer ko yeh screen milegi. Preview mein koi payment nahi hoti.</p><button class="btn y" id="pvPlans" type="button">Plans screen preview dekhein</button></div>`}
+`}
    <div class="card"><h3>Hardware</h3><p class="muted" style="line-height:1.6">Barcode scanner: USB scanner keyboard ki tarah kaam karta hai. Billing par kahin bhi scan karein, item cart mein aa jayega. Size wale item ka code + size bhi chalta hai (PZ04M, SW032pc).<br>Thermal printer: Windows mein printer driver install karein aur default bana dein, phir receipt par Print dabayen.</p></div>
   </div></div>`;
   $("#s_top").value=s.taxOnTop?"1":"0";$("#s_w").value=s.width;
@@ -1023,9 +1022,7 @@ function vSet(){
     $("#uf").onsubmit=async e=>{e.preventDefault();const cred={name:$("#u_name").value.trim(),login:uname($("#u_login").value),password:$("#u_pw").value,role:$("#u_role").value};
       try{await api("/api/users","POST",cred);e.target.reset();touched=false;gen();$("#uerr").textContent="";loadStaff();showCred(cred)}catch(err){$("#uerr").textContent=err.message}};
   }
-  if(MODE==="server"){const rn=$("#renew");rn&&(rn.onclick=()=>plansScreen({business:S.business,me:S.me,sub:S.sub}))}
-  else{
-    $("#pvPlans").onclick=()=>plansScreen({business:{name:S.settings.name},me:{name:"Owner",role:"owner"},sub:{status:"none"}});
+  if(MODE!=="server"){
     $("#clrDemo").onclick=()=>{S.orders=S.orders.filter(o=>!o.demo);saveLocal();toast("Demo orders hat gaye")};
     $("#reset").onclick=e=>{const b=e.target;if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka? Dobara dabayen";return}S=seedLocal();saveLocal();UI.cart=newCart();render();toast("Reset ho gaya")};
   }
@@ -1129,58 +1126,67 @@ async function enter(){
   if(!me.member){if(me.admin){location.href="admin.html";return}return noBusinessScreen(me)}
   if(!me.active)return noBusinessScreen(me);
   if(me.businessStatus!=="active"){$("#root").innerHTML=`<div class="auth"><div class="card"><img src="${LOGO}" alt="RestoPulse"><h3 style="text-align:center">Account band hai</h3><p class="muted">Yeh business account band kiya gaya hai. Support se rabta karein.</p><button class="btn" onclick="logout()">Logout</button></div></div>`;return}
-  if(me.sub.status!=="active")return plansScreen(me);
+  if(me.sub.status!=="active")return expiredScreen(me);
+  if(me.me.mustChange){$("#root").innerHTML=`<div class="auth"><div class="card"><img src="${LOGO}" alt="RestoPulse"></div></div>`;return changePwModal(true,()=>enter())}
   await pull();startSync();$("#root").innerHTML="";render();
 }
-function expiryPill(){if(!S||!S.sub||!S.sub.expires)return"";const d=Math.ceil((S.sub.expires-Date.now())/864e5);return d<=5?`<span class="pill warn">Plan ${d} din mein khatam</span>`:""}
+function expiryPill(){if(!S||!S.sub||!S.sub.expires)return"";const d=Math.ceil((S.sub.expires-Date.now())/864e5);const tr=S.sub.plan&&S.sub.plan.id==="trial";return tr?`<span class="pill ${d<=2?"warn":"y"}">Free trial · ${d} din baqi</span>`:d<=5?`<span class="pill warn">Plan ${d} din mein khatam</span>`:""}
 const isStandalone=()=>matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
 addEventListener("beforeinstallprompt",e=>{e.preventDefault();DEFERRED=e;document.querySelectorAll(".inst").forEach(b=>b.hidden=false)});
 addEventListener("appinstalled",()=>{DEFERRED=null;document.querySelectorAll(".inst").forEach(b=>b.hidden=true);toast("RestoPulse install ho gaya")});
 function installBtn(){return MODE==="server"&&!isStandalone()?`<button type="button" class="btn sm inst" ${DEFERRED?"":"hidden"} onclick="doInstall()">Computer / mobile par install karein</button>`:""}
 async function doInstall(){if(!DEFERRED)return;DEFERRED.prompt();await DEFERRED.userChoice;DEFERRED=null;document.querySelectorAll(".inst").forEach(b=>b.hidden=true)}
-async function plansScreen(me){
+function contactLine(c){c=String(c||"");const ph=(c.match(/(\+?92|0)3\d{2}[-\s]?\d{7}/)||[])[0];return{text:c,wa:ph?"https://wa.me/"+ph.replace(/\D/g,"").replace(/^0/,"92"):""}}
+function expiredScreen(me){
   clearInterval(PLANPOLL);if(ES&&SB){SB.removeChannel(ES);ES=null}
-  let info;
-  if(MODE==="local")info={plans:[{id:"starter",name:"Starter",price:2499,days:30,maxDevices:2,features:["1 counter + 1 mobile","Billing, receipt, menu","Daily sales report"]},{id:"business",name:"Business",price:3999,days:30,maxDevices:5,highlight:true,features:["5 devices ek saath","Staff roles","Stock + customers","Live sync"]},{id:"yearly",name:"Business Yearly",price:39999,days:365,maxDevices:5,features:["Business plan ki sab cheezen","Saal bhar ke liye"]}],payInfo:"PREVIEW\nJazzCash: 03xx-xxxxxxx (Account title: Power Pulse)\nYeh details aap Super Admin panel mein likhenge."};
-  else{try{info=await api("/api/billing/plans")}catch(e){info={plans:[],payInfo:e.message}}}
-  const sub=me.sub,owner=me.me.role==="owner",d=t=>new Date(t).toLocaleDateString("en-GB");
-  const banner=sub.pending?`<div class="card" style="border-color:var(--warn)"><span class="pill warn">CHECK HO RAHI HAI</span><p style="margin:10px 0 0;line-height:1.6">Aap ki payment (ref <b>${esc(sub.pending.txn)}</b>, ${d(sub.pending.created)}) check ho rahi hai. Approve hote hi software khud khul jayega. Yeh screen khuli rehne dein.</p>${MODE==="local"?`<button class="btn y" id="fakeok" style="margin-top:12px">Preview: Super Admin ne approve kar diya</button>`:""}</div>`
-    :sub.status==="expired"?`<div class="card" style="border-color:var(--bad)"><span class="pill bad">PLAN KHATAM</span><p style="margin:10px 0 0">Aap ka ${esc(sub.plan?sub.plan.name:"")} plan ${d(sub.expires)} ko khatam ho gaya. Data mehfooz hai, renew karte hi wapas mil jayega.</p></div>`
-    :sub.status==="active"?`<div class="card"><span class="pill ok">ACTIVE</span> <span class="muted">${esc(sub.plan?sub.plan.name:"")} · ${d(sub.expires)} tak. Naya plan lene se din aage jur jayenge.</span></div>`:"";
-  const rej=!sub.pending&&sub.lastRejected?`<div class="card" style="border-color:var(--bad);margin-top:10px"><span class="pill bad">PICHLI PAYMENT REJECT</span> <span class="muted">${esc(sub.lastRejected.admin_note||"Details match nahi huin.")}</span></div>`:"";
-  $("#root").innerHTML=`<div class="plans-wrap">
-   <div class="plans-top"><img src="${LOGO}" alt="RestoPulse"><span class="sp" style="flex:1"></span>${installBtn()}<span class="who">${esc(me.business.name)} · ${esc(me.me.name)}</span>${sub.status==="active"?`<button class="btn sm" id="back">Software par wapas</button>`:""}<button class="btn sm" id="lo2">Logout</button></div>
-   <h1 class="ph">Apna plan chunein</h1><p class="muted" style="margin:0 0 14px">Plan active hote hi billing, menu aur reports khul jayenge. Desktop aur mobile dono par chalega.</p>
-   ${banner}${rej}
-   ${owner?"":`<div class="card" style="margin-top:10px"><span class="muted">Plan sirf owner le sakta hai. Owner se kahen ke login kar ke plan lein.</span></div>`}
-   <div class="plans">${info.plans.map(p=>`<div class="card plan ${p.highlight?"hl":""}">${p.highlight?'<span class="pill y" style="align-self:flex-start">Mashhoor</span>':""}<h3 style="margin:0">${esc(p.name)}</h3>
-     <div class="price num">${p.price==null?"Qeemat jald":pkr(p.price)}</div><div class="muted">${p.days>=365?Math.round(p.days/365)+" saal":p.days+" din"}${p.maxDevices?" · "+p.maxDevices+" devices":" · unlimited devices"}</div>
-     <ul>${(p.features||[]).map(f=>`<li>${esc(f)}</li>`).join("")}</ul>
-     <button class="btn y" data-plan="${esc(p.id)}" ${sub.pending||!owner?"disabled":""}>Yeh plan lein</button></div>`).join("")||`<div class="empty">Abhi koi plan available nahi. Support se rabta karein.</div>`}</div></div>`;
-  const leavePreview=()=>{$("#root").innerHTML="";render();toast(MODE==="local"?"Preview khatam":"")};
-  $("#lo2").onclick=()=>{clearInterval(PLANPOLL);MODE==="local"?leavePreview():logout()};
-  const bk=$("#back");bk&&(bk.onclick=()=>MODE==="local"?leavePreview():enter());
-  const fk=$("#fakeok");fk&&(fk.onclick=leavePreview);
-  document.querySelectorAll("[data-plan]").forEach(b=>b.onclick=()=>payForm(info.plans.find(p=>p.id===b.dataset.plan),info,me));
-  if(sub.pending&&MODE==="server")PLANPOLL=setInterval(async()=>{try{const m2=await api("/api/me");if(m2.sub.status==="active"&&!m2.sub.pending){clearInterval(PLANPOLL);toast("Plan active ho gaya");enter()}else if(!m2.sub.pending){clearInterval(PLANPOLL);plansScreen(m2)}}catch(e){}},10000);
+  const sub=me.sub||{},trial=sub.plan&&sub.plan.id==="trial",d=t=>new Date(t).toLocaleDateString("en-GB"),c=contactLine(me.contact);
+  $("#root").innerHTML=`<div class="auth"><div class="card"><img src="${LOGO}" alt="RestoPulse">
+   <h3 style="text-align:center">${trial?"Free trial khatam":"Plan khatam"}</h3>
+   <p class="muted" style="text-align:center;margin-top:-6px">${esc(me.business.name)} · ${esc(me.me.name)}</p>
+   <p style="line-height:1.7">${trial?"Aap ka 7 din ka free trial":"Aap ka plan"}${sub.expires?" "+d(sub.expires)+" ko":""} khatam ho gaya. Aap ka sara data mehfooz hai. Payment hote hi software wapas khul jayega.</p>
+   ${me.me.role==="owner"?`<div class="card" style="background:var(--bg)"><div class="muted" style="font-size:12px;font-weight:600;margin-bottom:6px">Payment aur plan ke liye rabta</div><div class="payinfo">${esc(c.text||"RestoPulse team se rabta karein.")}</div></div>`:`<p class="muted">Owner se kahen ke RestoPulse team se rabta kare.</p>`}
+   <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px">${c.wa&&me.me.role==="owner"?`<a class="btn y" href="${c.wa}" target="_blank" rel="noopener">WhatsApp par rabta</a>`:""}
+   <button class="btn" id="chk">Dobara check karein</button><button class="btn" id="lo2">Logout</button></div></div></div>`;
+  $("#lo2").onclick=()=>logout();$("#chk").onclick=()=>enter();
+  PLANPOLL=setInterval(async()=>{try{const m2=await api("/api/me");if(m2.sub&&m2.sub.status==="active"){clearInterval(PLANPOLL);toast("Account khul gaya");enter()}}catch(e){}},30000);
 }
-function payForm(p,info,me){
-  const m=modal(`<h2>${esc(p.name)} plan</h2>
-   <div class="sum" style="font-size:16px;margin-bottom:12px"><span>Raqam</span><b class="num">${p.price==null?"Support se poochein":pkr(p.price)}</b></div>
-   <div class="muted" style="font-size:12px;font-weight:600;margin-bottom:6px">Payment yahan bhejein</div><div class="payinfo">${esc(info.payInfo)}</div>
-   <form id="pf" style="display:flex;flex-direction:column;gap:12px;margin-top:14px">
-    <label class="f">Kis tareeqe se bheji<select class="sel" id="p_m"><option>JazzCash</option><option>Easypaisa</option><option>Bank transfer</option><option>Cash (support ko)</option></select></label>
-    <label class="f">Transaction ID / reference<input class="in" id="p_t" required minlength="4" autofocus></label>
-    <label class="f">Bhejne wale ka naam / number<input class="in" id="p_s"></label>
-    <p id="perr2" style="color:var(--bad);margin:0;min-height:18px"></p>
-    <p class="muted" style="margin:0;font-size:12px">Payment hum khud check kar ke approve karte hain. Approve hone tak plan active nahi hoga.</p>
-    <div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="x">Wapas</button><button class="btn y" id="psv">Payment ki details bhejein</button></div></form>`);
-  m.querySelector("#x").onclick=close;
-  m.querySelector("#pf").onsubmit=e=>{e.preventDefault();
-    if(MODE==="local"){close();return plansScreen({...me,sub:{status:"none",pending:{txn:m.querySelector("#p_t").value,created:Date.now()}}})}
-    busy(m.querySelector("#psv"),async()=>{try{
-    const sub=await api("/api/billing/request","POST",{plan_id:p.id,method:m.querySelector("#p_m").value,txn:m.querySelector("#p_t").value,sender:m.querySelector("#p_s").value});
-    close();toast("Details bhej di gayin");plansScreen({...me,sub})}catch(err){m.querySelector("#perr2").textContent=err.message}})};
+
+/* ============ first login: owner sets his own password ============ */
+function changePwModal(force,done){
+  const m=modal(`<h2>${force?"Apna naya password banayen":"Mera password badlein"}</h2>
+   <p class="muted" style="margin-top:-6px">${force?"Pehli dafa login hua hai. Aage se sirf aap ka apna password chalega.":"Naya password kam az kam 8 huroof ka ho."}</p>
+   <form id="cpf" style="display:flex;flex-direction:column;gap:12px">
+   <label class="f">Naya password<input class="in" id="cp1" type="password" minlength="8" required autocomplete="new-password" autofocus></label>
+   <label class="f">Naya password dobara<input class="in" id="cp2" type="password" minlength="8" required autocomplete="new-password"></label>
+   <p id="cperr" style="color:var(--bad);margin:0;min-height:18px"></p>
+   <div class="row" style="justify-content:flex-end">${force?`<button type="button" class="btn" id="cplo">Logout</button>`:`<button type="button" class="btn" id="x">Wapas</button>`}<button class="btn y" id="cpsv">Password save karein</button></div></form>`);
+  if(force){const ov=$("#ov");ov&&(ov.dataset.lock="1");m.querySelector("#cplo").onclick=()=>logout()}else m.querySelector("#x").onclick=close;
+  m.querySelector("#cpf").onsubmit=e=>{e.preventDefault();const p1=m.querySelector("#cp1").value,err=t=>m.querySelector("#cperr").textContent=t;
+    if(p1!==m.querySelector("#cp2").value)return err("Dono password ek jaise nahi.");
+    if(p1.length<8)return err("Password kam az kam 8 huroof ka ho.");
+    busy(m.querySelector("#cpsv"),async()=>{try{
+      if(MODE==="local"){const u=(S.users||[]).find(x=>x.id===S.me.id);if(u)u.password=p1;saveLocal()}
+      else{const {error}=await SB.auth.updateUser({password:p1});if(error)throw new Error(/different from the old/i.test(error.message)?"Naya password purane se mukhtalif ho.":error.message);await rpc("password_changed")}
+      close(true);toast("Password badal gaya");done&&done()}catch(x){err(x.message||String(x))}})};
+}
+
+/* ============ emailed link: verify email + get login once ============ */
+function claimScreen(tok){
+  $("#root").innerHTML=`<div class="auth"><div class="card" id="clc"><img src="${LOGO}" alt="RestoPulse"><h3 style="text-align:center">Email verify karein</h3>
+   <p class="muted" style="line-height:1.6;text-align:center">Neeche button dabate hi aap ki email verify hogi aur aap ka username aur password dikhaya jayega. Yeh <b>sirf ek dafa</b> dikhega.</p>
+   <p id="clerr" style="color:var(--bad);min-height:18px;margin:0"></p>
+   <div style="display:flex;flex-direction:column;gap:10px"><button class="btn y" id="clb">Verify karein aur login dekhein</button><button class="btn" id="clskip">Login screen par jayen</button></div></div></div>`;
+  const clear=()=>{try{history.replaceState(null,"",location.pathname+location.search)}catch(e){}};
+  $("#clskip").onclick=()=>{clear();authScreen()};
+  $("#clb").onclick=()=>busy($("#clb"),async()=>{try{const r=await rpc("claim_account",{p_token:tok});clear();
+    $("#clc").innerHTML=`<img src="${LOGO}" alt="RestoPulse"><h3 style="text-align:center">Email verify ho gayi</h3>
+     <p class="muted" style="text-align:center;margin-top:-6px">${esc(r.business)} · ${esc(r.owner)} · 7 din free trial</p>
+     <div class="card" style="background:var(--bg);font-size:16px;line-height:2"><div>Username: <b class="num" style="color:var(--y)">${esc(r.username)}</b></div><div>Password: <b class="num" style="color:var(--y)">${esc(r.password)}</b></div></div>
+     <p class="muted" style="font-size:12px">Abhi note kar lein. Login ke baad aap ko apna naya password banana hoga.</p>
+     <div style="display:flex;flex-direction:column;gap:10px"><button class="btn" id="clcp">Copy</button><button class="btn y" id="clgo">Ab login karein</button></div>`;
+    $("#clcp").onclick=async()=>{try{await navigator.clipboard.writeText("Username: "+r.username+"\nPassword: "+r.password);toast("Copy ho gaya")}catch(e){toast("Copy nahi hua, khud likh lein",true)}};
+    $("#clgo").onclick=async()=>{await authScreen();const a=$("#a_login");a&&(a.value=r.username);const p=$("#a_pw");p&&p.focus()};
+  }catch(x){$("#clerr").textContent=x.message||String(x)}});
 }
 
 /* ============ boot ============ */
@@ -1190,6 +1196,8 @@ function payForm(p,info,me){
   if(!inFrame&&CFG&&window.supabase){MODE="server";SB=window.supabase.createClient(CFG.url,CFG.key,{auth:{persistSession:true,autoRefreshToken:true,storage:AUTHSTORE}})}
   if(MODE==="server"){
     try{navigator.serviceWorker&&navigator.serviceWorker.register("./sw.js")}catch(e){}
+    const cm=location.hash.match(/^#claim=([0-9a-f]{48})$/);
+    if(cm){await SB.auth.signOut().catch(()=>{});return claimScreen(cm[1])}
     const {data}=await SB.auth.getSession();
     if(data.session){TOKEN="sb";try{await enter();return}catch(e){if(!TOKEN)return;$("#root").innerHTML=`<div class="auth"><div class="card"><h3>Rabta nahi ho saka</h3><p class="muted">${esc(e.message)}</p><button class="btn y" onclick="location.reload()">Dobara try karein</button></div></div>`;return}}
     return authScreen();

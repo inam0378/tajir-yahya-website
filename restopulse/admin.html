@@ -191,7 +191,7 @@ const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pkr=n=>n==null?"—":"PKR "+Math.round(n).toLocaleString("en-US");
 const d=t=>t?new Date(t).toLocaleDateString("en-GB",{day:"2-digit",month:"short",year:"numeric"}):"—";
-let TAB="payments",SB=null;
+let TAB="apps",SB=null;
 function toast(t,bad){const x=document.createElement("div");x.className="toast";if(bad){x.style.background="var(--bad)";x.style.color="#fff"}x.textContent=t;document.body.appendChild(x);setTimeout(()=>x.remove(),2500)}
 async function rpc(fn,args){const r=await SB.rpc(fn,args||{});if(r.error){if(/Sirf Super Admin|JWT/.test(r.error.message)){login(r.error.message)}throw new Error(r.error.message)}return r.data}
 async function api(p,method="GET",body){
@@ -217,16 +217,17 @@ function login(err){
     if(error)return login("Username ya password ghalat hai.");
     if(!(await rpc("is_admin")))return login("Yeh account Super Admin nahi hai.");main()};
 }
+let APPN=0;
 async function main(){
-  let ov;try{ov=await api("/api/admin/overview")}catch(e){return}
+  let ov;try{ov=await api("/api/admin/overview");APPN=(await rpc("admin_applications",{p_status:"pending"})).length}catch(e){return}
   $("#app").innerHTML=`<div class="hdr"><img src="${LOGO}" alt="RestoPulse"><h1>Super Admin</h1><span style="flex:1"></span><a class="btn sm" href="./">Software kholen</a><button class="btn sm" id="cpw">Password badlein</button><button class="btn sm" id="out">Logout</button></div>
   <div class="kpis">
    <div class="card kpi"><div class="l">Businesses</div><div class="v num">${ov.businesses}</div><div class="s">${ov.active} active · ${ov.expired} expired</div></div>
-   <div class="card kpi"><div class="l">Payments pending</div><div class="v num" style="${ov.pending?"color:var(--warn)":""}">${ov.pending}</div><div class="s">approve karni hain</div></div>
+   <div class="card kpi"><div class="l">Nayi applications</div><div class="v num" style="${APPN?"color:var(--warn)":""}">${APPN}</div><div class="s">approve karni hain</div></div>
    <div class="card kpi"><div class="l">Orders · 24 ghante</div><div class="v num">${ov.ordersToday}</div><div class="s">sab businesses</div></div>
    <div class="card kpi"><div class="l">Active businesses</div><div class="v num">${ov.active}</div><div class="s">plan active</div></div>
   </div>
-  <div class="tabs">${[["payments","Payments"],["businesses","Businesses"],["plans","Plans"],["platform","Payment details"]].map(([k,l])=>`<button data-t="${k}" class="${TAB===k?"on":""}">${l}</button>`).join("")}</div>
+  <div class="tabs">${[["apps","Applications"+(APPN?" ("+APPN+")":"")],["businesses","Businesses"],["payments","Payments"],["plans","Plans"],["platform","Rabta / payment details"]].map(([k,l])=>`<button data-t="${k}" class="${TAB===k?"on":""}">${l}</button>`).join("")}</div>
   <div id="tab"></div>`;
   $("#out").onclick=async()=>{await SB.auth.signOut();login()};
   $("#cpw").onclick=()=>{const box=document.createElement("div");box.className="ov";box.innerHTML=`<form class="md" id="pwf" style="display:flex;flex-direction:column;gap:12px"><h2>Naya password</h2><input class="in" id="np1" type="password" minlength="8" required placeholder="Kam az kam 8 huroof"><input class="in" id="np2" type="password" minlength="8" required placeholder="Dobara likhein"><p class="bad-t" id="pwe" style="margin:0"></p><div class="row" style="justify-content:flex-end"><button type="button" class="btn" id="pwx">Wapas</button><button class="btn y">Save</button></div></form>`;document.body.appendChild(box);
@@ -234,7 +235,37 @@ async function main(){
     box.querySelector("#pwf").onsubmit=async e=>{e.preventDefault();const p1=box.querySelector("#np1").value;if(p1!==box.querySelector("#np2").value){box.querySelector("#pwe").textContent="Dono password ek jaise nahi.";return}
       const {error}=await SB.auth.updateUser({password:p1});if(error){box.querySelector("#pwe").textContent=error.message;return}box.remove();toast("Password badal gaya")}};
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{TAB=b.dataset.t;main()});
-  ({payments:tPay,businesses:tBiz,plans:tPlans,platform:tPlat})[TAB]();
+  ({apps:tApps,payments:tPay,businesses:tBiz,plans:tPlans,platform:tPlat})[TAB]();
+}
+async function approveCall(action,id){
+  const {data,error}=await SB.functions.invoke("approve-restaurant",{body:{action,id}});
+  if(error){let m=error.message;try{const j=await error.context.json();m=j.error||m}catch(e){}throw new Error(m)}
+  if(data&&data.error)throw new Error(data.error);return data;
+}
+function approvedBox(r){
+  const msg=`Assalam o Alaikum ${r.owner}, aap ka RestoPulse account (${r.business}) approve ho gaya hai. 7 din free trial.\nYeh link kholen, email verify hogi aur username/password milega (sirf ek dafa):\n${r.link}`;
+  const ph=String(r.phone||"").replace(/\D/g,"").replace(/^0/,"92");
+  const box=document.createElement("div");box.className="ov";
+  box.innerHTML=`<div class="md" style="display:flex;flex-direction:column;gap:12px"><h2>${esc(r.business)} approve</h2>
+   <p style="margin:0">Username: <b class="num">${esc(r.username)}</b> · 7 din free trial shuru</p>
+   ${r.emailed?`<p style="margin:0;color:var(--ok)">Email chali gayi: <b>${esc(r.email)}</b></p>`:`<p class="bad-t" style="margin:0">${esc(r.emailError||"Email nahi gayi.")}</p><p class="muted" style="margin:0;font-size:13px">Neeche wala link khud WhatsApp par bhej dein. Link 7 din chalega aur sirf ek dafa khulega.</p>`}
+   <textarea class="in" readonly style="min-height:90px;font-size:12px">${esc(r.link)}</textarea>
+   <div class="row" style="justify-content:flex-end"><button class="btn" id="acp">Link copy</button>${ph?`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${ph}?text=${encodeURIComponent(msg)}">WhatsApp par bhejein</a>`:""}<button class="btn y" id="ax">Theek hai</button></div></div>`;
+  document.body.appendChild(box);
+  box.querySelector("#acp").onclick=async()=>{try{await navigator.clipboard.writeText(r.link);toast("Copy ho gaya")}catch(e){toast("Copy nahi hua",true)}};
+  box.querySelector("#ax").onclick=()=>{box.remove();main()};
+}
+async function tApps(){
+  const all=await rpc("admin_applications",{p_status:"all"});const pend=all.filter(a=>a.status==="pending"),rest=all.filter(a=>a.status!=="pending").slice(0,40);
+  const row=a=>`<tr><td><b>${esc(a.business)}</b><div class="muted" style="font-size:11px">${esc(a.city)}</div></td><td>${esc(a.owner)}</td><td class="num">${esc(a.email)}<div>${esc(a.phone)}</div></td><td>${esc(a.plan||"—")}</td><td class="muted" style="max-width:220px">${esc(a.note)}</td><td class="muted">${d(a.created)}</td>`;
+  $("#tab").innerHTML=`<div class="card"><h3>Nayi applications (website se)</h3><div class="tbl-wrap"><table><tr><th>Restaurant</th><th>Owner</th><th>Email / phone</th><th>Plan pasand</th><th>Note</th><th>Kab</th><th></th></tr>
+   ${pend.map(a=>row(a)+`<td><div class="row" style="flex-wrap:nowrap"><button class="btn sm y" data-aa="${a.id}">Approve</button><button class="btn sm bad" data-ar="${a.id}">Reject</button></div></td></tr>`).join("")||`<tr><td colspan="7" class="empty">Koi nayi application nahi</td></tr>`}</table></div>
+   <p class="muted" style="font-size:12px">Approve karte hi account ban jata hai, 7 din free trial shuru hota hai, aur owner ki email par link jata hai. Link se email verify hoti hai aur username/password milta hai.</p></div>
+   <div class="card" style="margin-top:14px"><h3>Pichli applications</h3><div class="tbl-wrap"><table><tr><th>Restaurant</th><th>Owner</th><th>Email / phone</th><th>Plan pasand</th><th>Note</th><th>Kab</th><th>Status</th></tr>
+   ${rest.map(a=>row(a)+`<td><span class="pill ${a.status==="approved"?"ok":"bad"}">${a.status}</span> ${a.status==="approved"?(a.claimed?'<span class="pill ok">login le liya</span>':`<span class="pill warn">${a.emailed?"email gayi":"link baqi"}</span> <button class="btn sm" data-rs="${a.id}">Naya link</button>`):""}<div class="muted num" style="font-size:11px">${esc(a.username||"")}</div></td></tr>`).join("")||`<tr><td colspan="7" class="empty">Abhi kuch nahi</td></tr>`}</table></div></div>`;
+  document.querySelectorAll("[data-aa]").forEach(b=>b.onclick=async()=>{if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka?";return}b.disabled=true;b.textContent="Ban raha hai…";try{approvedBox(await approveCall("approve",b.dataset.aa))}catch(e){toast(e.message,true);main()}});
+  document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=async()=>{b.disabled=true;try{approvedBox(await approveCall("resend",b.dataset.rs))}catch(e){toast(e.message,true);b.disabled=false}});
+  document.querySelectorAll("[data-ar]").forEach(b=>b.onclick=async()=>{if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka reject?";return}try{await rpc("admin_reject_application",{p_id:b.dataset.ar});toast("Reject");main()}catch(e){toast(e.message,true)}});
 }
 async function tPay(){
   const list=await api("/api/admin/payments?status=pending"),all=await api("/api/admin/payments?status=all");
@@ -276,7 +307,7 @@ async function tPlans(){
 async function tPlat(){
   const p=await api("/api/admin/platform");
   $("#tab").innerHTML=`<form class="card" id="plf" style="display:flex;flex-direction:column;gap:12px;max-width:640px"><h3>Customer ko payment kahan bhejni hai</h3>
-   <label class="f">Payment details (plans screen par dikhti hain)<textarea class="in" id="pi" style="min-height:160px">${esc(p.payInfo)}</textarea></label>
+   <label class="f">Rabta / payment details (trial ya plan khatam hone par owner ko dikhti hain; WhatsApp number likhen to button ban jata hai)<textarea class="in" id="pi" style="min-height:160px">${esc(p.payInfo)}</textarea></label>
    <label class="f" style="max-width:220px">Free trial (din, 0 = koi trial nahi)<input class="in" id="td" type="number" min="0" max="90" value="${p.trialDays}"></label>
    <div class="row" style="justify-content:flex-end"><button class="btn y">Save</button></div></form>`;
   $("#plf").onsubmit=async e=>{e.preventDefault();try{await api("/api/admin/platform","POST",{payInfo:$("#pi").value,trialDays:+$("#td").value});toast("Saved")}catch(err){toast(err.message,true)}};

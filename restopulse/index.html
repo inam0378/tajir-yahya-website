@@ -1136,7 +1136,7 @@ addEventListener("beforeinstallprompt",e=>{e.preventDefault();DEFERRED=e;documen
 addEventListener("appinstalled",()=>{DEFERRED=null;document.querySelectorAll(".inst").forEach(b=>b.hidden=true);toast("RestoPulse install ho gaya")});
 function installBtn(){return MODE==="server"&&!isStandalone()?`<button type="button" class="btn sm inst" ${DEFERRED?"":"hidden"} onclick="doInstall()">Computer / mobile par install karein</button>`:""}
 async function doInstall(){if(!DEFERRED)return;DEFERRED.prompt();await DEFERRED.userChoice;DEFERRED=null;document.querySelectorAll(".inst").forEach(b=>b.hidden=true)}
-function contactLine(c){c=String(c||"");const ph=(c.match(/(\+?92|0)3\d{2}[-\s]?\d{7}/)||[])[0];return{text:c,wa:ph?"https://wa.me/"+ph.replace(/\D/g,"").replace(/^0/,"92"):""}}
+function contactLine(c){c=String(c||"");const re=/(\+?92[-\s]?|0)3\d{2}[-\s]?\d{7}/;const wl=c.split("\n").find(l=>/whats\s*app/i.test(l)&&re.test(l));const ph=((wl||c).match(re)||[])[0];return{text:c,wa:ph?"https://wa.me/"+ph.replace(/\D/g,"").replace(/^0/,"92"):""}}
 function expiredScreen(me){
   clearInterval(PLANPOLL);if(ES&&SB){SB.removeChannel(ES);ES=null}
   const sub=me.sub||{},trial=sub.plan&&sub.plan.id==="trial",d=t=>new Date(t).toLocaleDateString("en-GB"),c=contactLine(me.contact);

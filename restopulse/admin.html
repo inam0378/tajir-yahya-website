@@ -172,7 +172,72 @@ td.r,th.r{text-align:right}
 @media (prefers-reduced-motion:reduce){*{transition:none !important}}
 </style>
 
-<style>.cats{flex-shrink:0;min-height:max-content}.grid{flex:1 1 auto;min-height:0;grid-auto-rows:auto}.tile{height:auto;min-height:142px}.tile .nm{flex:1 0 auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.6em}.tile .sz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tile .pr{line-height:1.2}.tools.one{grid-template-columns:1fr!important}.cart{overflow-y:auto}.cart-h,.cart-f{flex-shrink:0}.lines{min-height:120px}</style><style>
+<style>.cats{flex-shrink:0;min-height:max-content}
+.grid{flex:1 1 auto;min-height:0;grid-auto-rows:auto}
+.tile{height:auto;min-height:142px}
+.tile .nm{flex:1 0 auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-height:2.6em}
+.tile .sz{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile .pr{line-height:1.2}
+.tools.one{grid-template-columns:1fr!important}
+.cart{overflow-y:auto}
+.cart-h,.cart-f{flex-shrink:0}
+.lines{min-height:120px}
+body:has(.ov) *{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+/* colour presets */
+.presets{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin-top:6px}
+.presets button{border:2px solid var(--line);border-radius:12px;padding:6px;background:var(--panel2);display:flex;flex-direction:column;gap:6px;align-items:stretch;cursor:pointer;font:inherit;color:var(--fg);min-width:0}
+.presets button.on{border-color:var(--y);box-shadow:0 0 0 2px color-mix(in srgb,var(--y) 35%,transparent)}
+.presets .pv{height:42px;border-radius:8px;position:relative;display:block;overflow:hidden;border:1px solid #ffffff14}
+.presets .pv i{position:absolute;left:8px;top:8px;right:26px;bottom:8px;border-radius:4px}
+.presets .pv b{position:absolute;right:7px;top:8px;width:12px;bottom:8px;border-radius:3px}
+.presets small{font-size:11px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+/* ---- tidy layout: nothing may spill out of its box ---- */
+td{white-space:normal;overflow-wrap:break-word}
+td.r,td.num,th,td .pill,td .btn,td .row{white-space:nowrap}
+.tbl-wrap td:not(.r):not(.num){min-width:90px}
+.tbl-wrap td.wide{min-width:200px;max-width:380px}
+.top-item{flex-wrap:wrap;align-items:center}
+.top-item>div:first-child,.top-item>span:first-child{min-width:0;flex:1 1 180px;overflow-wrap:anywhere}
+.top-item>.row{flex-wrap:wrap;justify-content:flex-end}
+.cmprow{grid-template-columns:minmax(0,2fr) minmax(0,1fr) 70px!important}
+.sel{min-width:0;max-width:100%;text-overflow:ellipsis}
+.cart .n,.line .n{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.kpi .v{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md{overflow-x:hidden}
+.md .row{flex-wrap:wrap}
+.md h2{overflow-wrap:anywhere}
+.payinfo{white-space:pre-line;overflow-wrap:anywhere}
+.who{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* phones: tables become neat cards */
+@media (max-width:520px){
+.kpi .v{font-size:min(22px,5.6vw)}
+.tbl-wrap{overflow:visible}
+.tbl-wrap table,.tbl-wrap tbody,.tbl-wrap tr,.tbl-wrap td{display:block;width:100%}
+.tbl-wrap tr:first-child:has(th){display:none}
+.tbl-wrap tr{border:1px solid var(--line);border-radius:12px;padding:6px 12px;margin-bottom:10px;background:var(--panel2)}
+.tbl-wrap td{display:flex;justify-content:space-between;align-items:center;gap:12px;border:0!important;padding:7px 0!important;text-align:right!important;min-width:0!important;max-width:none!important;white-space:normal}
+.tbl-wrap td>*{min-width:0}
+.tbl-wrap td[data-l]::before{content:attr(data-l);color:var(--muted);font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:600;text-align:left;flex:0 0 auto;max-width:42%}
+.tbl-wrap td:not([data-l]),.tbl-wrap td[data-l=""]{justify-content:flex-end}
+.tbl-wrap td.empty{justify-content:center;text-align:center!important}
+.tbl-wrap td .in,.tbl-wrap td .sel{max-width:62%}
+.who{max-width:140px}
+}
+.tbl-wrap td.wide{width:36%}
+.tbl-wrap td.rate{white-space:normal;max-width:280px}
+.tdv{display:inline}
+@media (max-width:520px){
+.tdv{display:block;text-align:right;min-width:0;overflow-wrap:anywhere}
+.tbl-wrap td.rate{max-width:none}
+}
+@media (max-width:520px){
+.tbl-wrap td.wide,.tbl-wrap td.rate{width:100%;max-width:none}
+.tbl-wrap td{overflow-wrap:anywhere}
+}
+a.btn{color:inherit;text-decoration:none}
+a.btn.y{color:var(--ink)}
+td .sel{max-width:100%}
+</style><style>
 .wrap{max-width:1200px;margin:0 auto;padding:20px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
 .hdr{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
 .hdr img{height:36px}
@@ -237,17 +302,24 @@ async function main(){
   document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{TAB=b.dataset.t;main()});
   ({apps:tApps,payments:tPay,businesses:tBiz,plans:tPlans,platform:tPlat})[TAB]();
 }
-async function approveCall(action,id){
-  const {data,error}=await SB.functions.invoke("approve-restaurant",{body:{action,id}});
+/* ============ phone-friendly tables: each cell knows its column name ============ */
+function labelTables(){document.querySelectorAll(".tbl-wrap table").forEach(t=>{const h=t.rows[0];if(!h||!h.querySelector("th"))return;const hs=[...h.cells].map(c=>c.textContent.trim());
+  for(let i=1;i<t.rows.length;i++){let k=0;for(const c of t.rows[i].cells){if(c.dataset.l===undefined&&!c.classList.contains("empty")){c.dataset.l=hs[k]||"";
+    if(c.childNodes.length>1){const sp=document.createElement("span");sp.className="tdv";while(c.firstChild)sp.appendChild(c.firstChild);c.appendChild(sp)}}k+=c.colSpan||1}}})}
+let LT=0;new MutationObserver(()=>{if(!LT)LT=requestAnimationFrame(()=>{LT=0;labelTables()})}).observe(document.documentElement,{childList:true,subtree:true});
+
+async function approveCall(action,id,extra){
+  const {data,error}=await SB.functions.invoke("approve-restaurant",{body:{action,id,...(extra||{})}});
   if(error){let m=error.message;try{const j=await error.context.json();m=j.error||m}catch(e){}throw new Error(m)}
   if(data&&data.error)throw new Error(data.error);return data;
 }
 function approvedBox(r){
-  const msg=`Assalam o Alaikum ${r.owner}, aap ka RestoPulse account (${r.business}) approve ho gaya hai. 7 din free trial.\nYeh link kholen, email verify hogi aur username/password milega (sirf ek dafa):\n${r.link}`;
+  const what=r.plan==="trial"?`${r.days} din free trial`:`${r.planName} plan ${r.days} din ke liye chalu`;
+  const msg=`Assalam o Alaikum ${r.owner}, aap ka RestoPulse account (${r.business}) approve ho gaya hai. ${what}.\nYeh link kholen, email verify hogi aur username/password milega (sirf ek dafa):\n${r.link}`;
   const ph=String(r.phone||"").replace(/\D/g,"").replace(/^0/,"92");
   const box=document.createElement("div");box.className="ov";
   box.innerHTML=`<div class="md" style="display:flex;flex-direction:column;gap:12px"><h2>${esc(r.business)} approve</h2>
-   <p style="margin:0">Username: <b class="num">${esc(r.username)}</b> · 7 din free trial shuru</p>
+   <p style="margin:0">Username: <b class="num">${esc(r.username)}</b> · ${esc(what)}</p>
    ${r.emailed?`<p style="margin:0;color:var(--ok)">Email chali gayi: <b>${esc(r.email)}</b></p>`:`<p class="bad-t" style="margin:0">${esc(r.emailError||"Email nahi gayi.")}</p><p class="muted" style="margin:0;font-size:13px">Neeche wala link khud WhatsApp par bhej dein. Link 7 din chalega aur sirf ek dafa khulega.</p>`}
    <textarea class="in" readonly style="min-height:90px;font-size:12px">${esc(r.link)}</textarea>
    <div class="row" style="justify-content:flex-end"><button class="btn" id="acp">Link copy</button>${ph?`<a class="btn" target="_blank" rel="noopener" href="https://wa.me/${ph}?text=${encodeURIComponent(msg)}">WhatsApp par bhejein</a>`:""}<button class="btn y" id="ax">Theek hai</button></div></div>`;
@@ -256,14 +328,19 @@ function approvedBox(r){
   box.querySelector("#ax").onclick=()=>{box.remove();main()};
 }
 async function tApps(){
-  const all=await rpc("admin_applications",{p_status:"all"});const pend=all.filter(a=>a.status==="pending"),rest=all.filter(a=>a.status!=="pending").slice(0,40);
-  const row=a=>`<tr><td><b>${esc(a.business)}</b><div class="muted" style="font-size:11px">${esc(a.city)}</div></td><td>${esc(a.owner)}</td><td class="num">${esc(a.email)}<div>${esc(a.phone)}</div></td><td>${esc(a.plan||"—")}</td><td class="muted" style="max-width:220px">${esc(a.note)}</td><td class="muted">${d(a.created)}</td>`;
+  const [all,plans]=await Promise.all([rpc("admin_applications",{p_status:"all"}),api("/api/admin/plans")]);const pend=all.filter(a=>a.status==="pending"),rest=all.filter(a=>a.status!=="pending").slice(0,40);
+  const row=a=>`<tr><td class="wide"><b>${esc(a.business)}</b><div class="muted" style="font-size:11px">${esc(a.city)}</div></td><td>${esc(a.owner)}</td><td class="num" style="white-space:normal;overflow-wrap:anywhere;max-width:220px">${esc(a.email)}<div style="white-space:nowrap">${esc(a.phone)}</div></td><td>${esc(a.plan||"—")}</td><td class="muted" style="min-width:140px">${esc(a.note)}</td><td class="muted">${d(a.created)}</td>`;
   $("#tab").innerHTML=`<div class="card"><h3>Nayi applications (website se)</h3><div class="tbl-wrap"><table><tr><th>Restaurant</th><th>Owner</th><th>Email / phone</th><th>Plan pasand</th><th>Note</th><th>Kab</th><th></th></tr>
    ${pend.map(a=>row(a)+`<td><div class="row" style="flex-wrap:nowrap"><button class="btn sm y" data-aa="${a.id}">Approve</button><button class="btn sm bad" data-ar="${a.id}">Reject</button></div></td></tr>`).join("")||`<tr><td colspan="7" class="empty">Koi nayi application nahi</td></tr>`}</table></div>
-   <p class="muted" style="font-size:12px">Approve karte hi account ban jata hai, 7 din free trial shuru hota hai, aur owner ki email par link jata hai. Link se email verify hoti hai aur username/password milta hai.</p></div>
+   <p class="muted" style="font-size:12px">Approve par chunein: 7 din free trial, ya payment le chuke hon to seedha plan. Account ban jata hai aur owner ki email par link jata hai; link se email verify hoti hai aur username/password milta hai.</p></div>
    <div class="card" style="margin-top:14px"><h3>Pichli applications</h3><div class="tbl-wrap"><table><tr><th>Restaurant</th><th>Owner</th><th>Email / phone</th><th>Plan pasand</th><th>Note</th><th>Kab</th><th>Status</th></tr>
    ${rest.map(a=>row(a)+`<td><span class="pill ${a.status==="approved"?"ok":"bad"}">${a.status}</span> ${a.status==="approved"?(a.claimed?'<span class="pill ok">login le liya</span>':`<span class="pill warn">${a.emailed?"email gayi":"link baqi"}</span> <button class="btn sm" data-rs="${a.id}">Naya link</button>`):""}<div class="muted num" style="font-size:11px">${esc(a.username||"")}</div></td></tr>`).join("")||`<tr><td colspan="7" class="empty">Abhi kuch nahi</td></tr>`}</table></div></div>`;
-  document.querySelectorAll("[data-aa]").forEach(b=>b.onclick=async()=>{if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka?";return}b.disabled=true;b.textContent="Ban raha hai…";try{approvedBox(await approveCall("approve",b.dataset.aa))}catch(e){toast(e.message,true);main()}});
+  document.querySelectorAll("[data-aa]").forEach(b=>b.onclick=()=>{const a=pend.find(x=>x.id===b.dataset.aa),td=b.closest("td");
+    td.innerHTML=`<div style="display:flex;flex-direction:column;gap:6px;min-width:190px"><select class="sel" id="ap_pl" style="width:100%"><option value="trial">Free trial</option>${plans.filter(p=>p.active!==false).map(p=>`<option value="${esc(p.id)}" data-d="${p.days}" ${a&&a.plan===p.id?"":""}>${esc(p.name)} · paid</option>`).join("")}</select>
+     <div class="row" style="flex-wrap:nowrap;gap:6px"><input class="in" id="ap_d" type="number" min="1" max="3700" value="7" style="width:80px"><span class="muted" style="font-size:12px">din</span><button class="btn sm y" id="ap_go">Approve</button><button class="btn sm" id="ap_x">✕</button></div></div>`;
+    const pl=td.querySelector("#ap_pl"),dd=td.querySelector("#ap_d");pl.onchange=()=>{const o=pl.selectedOptions[0];dd.value=pl.value==="trial"?7:(o.dataset.d||30)};
+    td.querySelector("#ap_x").onclick=()=>main();
+    td.querySelector("#ap_go").onclick=async e=>{const g=e.target;g.disabled=true;g.textContent="Ban raha hai…";try{approvedBox(await approveCall("approve",b.dataset.aa,{plan:pl.value,days:+dd.value||null}))}catch(x){toast(x.message,true);g.disabled=false;g.textContent="Approve"}}});
   document.querySelectorAll("[data-rs]").forEach(b=>b.onclick=async()=>{b.disabled=true;try{approvedBox(await approveCall("resend",b.dataset.rs))}catch(e){toast(e.message,true);b.disabled=false}});
   document.querySelectorAll("[data-ar]").forEach(b=>b.onclick=async()=>{if(!b.dataset.sure){b.dataset.sure=1;b.textContent="Pakka reject?";return}try{await rpc("admin_reject_application",{p_id:b.dataset.ar});toast("Reject");main()}catch(e){toast(e.message,true)}});
 }
@@ -332,4 +409,23 @@ async function tPlat(){
   .dgrid{grid-template-columns:1fr}
   .fgrid{grid-template-columns:1fr}
   .mbar{display:flex;position:fixed;left:max(12px,env(safe-area-inset-left,0px));right:max(12px,env(safe-area-inset-right,0px));bottom:calc(72px + env(safe-area-inset-bottom,0px));background:var(--y);color:var(--ink);border:0;border-radius:12px;padding:12px 16px;font-weight:700;justify-content:space-between;z-index:19;box-shadow:0 8px 24px rgba(0,0,0,.6)}
-}html.m860{.toast{bottom:calc(132px + env(safe-area-inset-bottom,0px))}}html.m460{.kpis{grid-template-columns:1fr 1fr}.kpi .v{font-size:24px}.acts{grid-template-columns:1fr 1fr}.acts .pay{grid-column:1/-1}}</style></body></html>
+}html.m860{.toast{bottom:calc(132px + env(safe-area-inset-bottom,0px))}}html.m460{.kpis{grid-template-columns:1fr 1fr}.kpi .v{font-size:24px}.acts{grid-template-columns:1fr 1fr}.acts .pay{grid-column:1/-1}}html.m520{
+.kpi .v{font-size:min(22px,5.6vw)}
+.tbl-wrap{overflow:visible}
+.tbl-wrap table,.tbl-wrap tbody,.tbl-wrap tr,.tbl-wrap td{display:block;width:100%}
+.tbl-wrap tr:first-child:has(th){display:none}
+.tbl-wrap tr{border:1px solid var(--line);border-radius:12px;padding:6px 12px;margin-bottom:10px;background:var(--panel2)}
+.tbl-wrap td{display:flex;justify-content:space-between;align-items:center;gap:12px;border:0!important;padding:7px 0!important;text-align:right!important;min-width:0!important;max-width:none!important;white-space:normal}
+.tbl-wrap td>*{min-width:0}
+.tbl-wrap td[data-l]::before{content:attr(data-l);color:var(--muted);font-size:11px;letter-spacing:.6px;text-transform:uppercase;font-weight:600;text-align:left;flex:0 0 auto;max-width:42%}
+.tbl-wrap td:not([data-l]),.tbl-wrap td[data-l=""]{justify-content:flex-end}
+.tbl-wrap td.empty{justify-content:center;text-align:center!important}
+.tbl-wrap td .in,.tbl-wrap td .sel{max-width:62%}
+.who{max-width:140px}
+}html.m520{
+.tdv{display:block;text-align:right;min-width:0;overflow-wrap:anywhere}
+.tbl-wrap td.rate{max-width:none}
+}html.m520{
+.tbl-wrap td.wide,.tbl-wrap td.rate{width:100%;max-width:none}
+.tbl-wrap td{overflow-wrap:anywhere}
+}</style></body></html>
